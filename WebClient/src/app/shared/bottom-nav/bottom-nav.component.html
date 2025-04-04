@@ -1,0 +1,16 @@
+<nav class="bottom-nav-container">
+    <a
+      *ngFor="let item of navItems"
+      [routerLink]="item.route"
+      routerLinkActive="active-link"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="nav-item"
+      matRipple
+      [matRippleCentered]="true"
+      [matRippleUnbounded]="true"
+      [title]="item.label"> <!-- Accessibility: title attribute -->
+  
+      <mat-icon aria-hidden="true">{{ item.icon }}</mat-icon>
+      <span class="nav-label">{{ item.label }}</span>
+    </a>
+  </nav>
