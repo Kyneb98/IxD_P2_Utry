@@ -1,0 +1,116 @@
+/* Styles for the host element <app-bottom-nav> */
+:host {
+  display: block; /* Make it a block element */
+  position: absolute; /* Position relative to .constrained-wrapper */
+  bottom: 0;      /* Stick to the bottom */
+  left: 0;        /* Align left */
+  width: 100%;    /* Take full width of parent */
+  height: 72px;   /* Define the height */
+  box-sizing: border-box;
+}
+
+/* Styles for the <nav> element inside the component's template */
+.bottom-nav-container {
+  display: flex;
+  justify-content: space-around; /* Distribute items */
+  align-items: center; /* Center items vertically */
+  width: 100%;        /* Full width of host */
+  height: 100%;       /* Full height of host */
+  background-color: var(--mdc-theme-surface-container-low, #f8f8f8); /* M3 variable or fallback */
+  box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.1), 0 -1px 2px rgba(0, 0, 0, 0.06);
+  padding: 0 8px; /* Padding at the ends of the bar */
+  box-sizing: border-box;
+}
+
+/* Styles for individual navigation links (<a> tags) */
+.nav-item {
+  display: flex;
+  /* Default: Center only the icon */
+  flex-direction: row; /* Stack icon and hidden label */
+  justify-content: center; /* Center vertically */
+  align-items: center; /* Center horizontally */
+
+  flex-grow: 1; /* Allow items to share space */
+  max-width: 25%; /* Prevent items getting too wide */
+  height: 48px; /* Height of the clickable area */
+  padding: 0 8px; /* Default horizontal padding */
+  margin: 0 4px; /* Space between items */
+  text-decoration: none;
+  overflow: hidden; /* For ripple and border-radius */
+  cursor: pointer;
+  border-radius: 50px; /* Rounded corners for active state */
+  color: var(--mdc-theme-on-surface-variant, #757575); /* Default icon color (greyish) */
+
+  /* Transitions for smooth changes */
+  transition: background-color 0.3s ease, color 0.3s ease, padding 0.2s ease;
+}
+
+/* Styles for the <mat-icon> inside a nav item */
+/* No specific selector needed due to encapsulation, but can use .nav-item mat-icon */
+mat-icon {
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+  margin-bottom: 0; /* Reset margin initially */
+  /* Add transition for margin changes on hover/active */
+  transition: margin-bottom 0.2s ease-in-out, margin-right 0.2s ease-in-out;
+}
+
+/* Styles for the <span class="nav-label"> inside a nav item */
+.nav-label {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.2;
+  white-space: nowrap;
+  /* Hide label by default */
+  opacity: 0;
+  max-height: 0; /* Use max-height for vertical hide/show */
+  overflow: hidden;
+  /* Transition for opacity and height */
+  transition: opacity 0.2s ease-in-out, max-height 0.2s ease-in-out;
+}
+
+/* --- Hover State (for INACTIVE items) --- */
+.nav-item:hover:not(.active-link) {
+  /* Optional: subtle background */
+  /* background-color: rgba(0, 0, 0, 0.04); */
+
+  /* Change layout to side-by-side */
+  flex-direction: row;
+  padding: 0 16px; /* Add padding for capsule shape */
+}
+
+/* Space icon from text on hover */
+.nav-item:hover:not(.active-link) mat-icon {
+  margin-right: 8px;
+  margin-bottom: 0; /* Ensure no bottom margin */
+}
+
+/* Show label on hover */
+.nav-item:hover:not(.active-link) .nav-label {
+  opacity: 1;
+  max-height: 20px; /* Allow space for label to appear */
+}
+
+/* --- Active State (.active-link class added by routerLinkActive) --- */
+.nav-item.active-link {
+  /* Layout */
+  flex-direction: row;
+  padding: 0 16px; /* Padding for capsule */
+
+  /* Appearance (Blue Capsule) */
+  background-color: var(--mdc-theme-primary, #041570); /* M3 primary or fallback blue */
+  color: var(--mdc-theme-on-primary, #ffffff); /* M3 on-primary or fallback white */
+}
+
+/* Space icon from text when active */
+.nav-item.active-link mat-icon {
+  margin-right: 8px;
+  margin-bottom: 0;
+}
+
+/* Show label when active */
+.nav-item.active-link .nav-label {
+  opacity: 1;
+  max-height: 20px; /* Make label visible */
+}

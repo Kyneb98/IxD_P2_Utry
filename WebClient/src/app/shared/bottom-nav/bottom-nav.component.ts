@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router'; // Import RouterModule for routerLink, routerLinkActive
+import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
-import { MatRippleModule } from '@angular/material/core'; // For ripple effect
-
 
 interface NavItem {
   label: string;
@@ -16,18 +14,17 @@ interface NavItem {
   standalone: true,
   imports: [
     CommonModule,
-    RouterModule, // Add RouterModule here
+    RouterModule,
     MatIconModule,
-    MatRippleModule
   ],
   templateUrl: './bottom-nav.component.html',
-  styleUrls: ['./bottom-nav.component.scss']
+  styleUrls: ['./bottom-nav.component.css'] 
 })
 export class BottomNavComponent {
   navItems: NavItem[] = [
     { label: 'Size & fit', icon: 'straighten', route: '/size-fit' },
-    { label: 'Compare', icon: 'safety_divider', route: '/compare' },
-    { label: 'Materials', icon: 'texture', route: '/materials' }, // Or 'inventory_2'
-    { label: 'Style', icon: 'checkroom', route: '/style' }       // Or 'style'
+    { label: 'Compare', icon: 'compare_arrows', route: '/compare' },
+    { label: 'Materials', icon: 'texture', route: '/materials' },
+    { label: 'Style', icon: 'checkroom', route: '/style' }
   ];
 }
