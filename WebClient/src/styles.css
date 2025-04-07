@@ -1,45 +1,4 @@
+/* You can add global styles to this file, and also import other style files */
 
-  
-  /* Optional: Apply padding around the constrained-wrapper */
-  app-root {
-    display: block;
-    padding: 20px;
-    box-sizing: border-box;
-  }
-  
-  /* Styles for the containing "smaller window" */
-  .constrained-wrapper {
-    /* Size */
-    width: 36%;
-    min-width: 320px; /* Prevent it getting too narrow */
-    max-width: 450px; /* Max width */
-    height: 85vh;     /* 85% of viewport height */
-    min-height: 500px;/* Minimum height */
-    margin: 0 auto;   /* Center horizontally */
-  
-    /* Positioning Context - CRUCIAL */
-    position: relative;
-  
-    /* Appearance */
-    border: 1px solid #ccc;
-    background-color: #fff;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    overflow: hidden; /* Clip content/nav that overflows */
-  
-    /* Optional: Flex layout if needed for vertical distribution */
-    /* display: flex; */
-    /* flex-direction: column; */
-  }
-  
-  /* Styles for the main content area inside the wrapper */
-  .app-content {
-    /* Allow scrolling if content overflows */
-    overflow-y: auto;
-    height: 100%; /* Take full height of wrapper initially */
-  
-    /* Padding - CRUCIAL for preventing overlap */
-    padding: 15px;
-    /* Bottom padding = Nav Bar Height (72px) + buffer (10px) */
-    padding-bottom: 82px;
-    box-sizing: border-box; /* Include padding in height calculation */
-  }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
