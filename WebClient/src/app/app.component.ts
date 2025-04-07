@@ -1,17 +1,12 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router'; // Changed from CommonModule
-import { BottomNavComponent } from './shared/bottom-nav/bottom-nav.component'; // Import the nav component
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [
-    RouterModule, // Use RouterModule for router-outlet
-    BottomNavComponent // Add BottomNavComponent here
-  ],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'material-bottom-nav';
+  title = 'WebClient';
 }
