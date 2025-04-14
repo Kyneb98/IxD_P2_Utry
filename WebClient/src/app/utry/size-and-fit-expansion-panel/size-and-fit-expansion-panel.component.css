@@ -1,0 +1,65 @@
+.custom-expansion-panel {
+  position: relative;
+  transform-origin: top; /* Adjust origin to make it expand upwards */
+  border-top-left-radius: 12px; /* Ensure the header matches the panel's top corners */
+  border-top-right-radius: 12px;
+}
+
+.custom-expansion-panel-content {
+  position: absolute;
+  top: -100%; /* Shift the content upwards */
+}
+
+.mat-expansion-panel-header.mat-expanded {
+  height: 35px;
+  border-top-left-radius: 12px; /* Ensure the header matches the panel's top corners */
+  border-top-right-radius: 12px;
+}
+
+.custom-expanded .mat-expansion-indicator {
+  transform: rotate(0deg);
+}
+
+.mat-expansion-panel-header{
+  height: 35px;
+  border-top-left-radius: 12px; /* Ensure the header matches the panel's top corners */
+  border-top-right-radius: 12px;
+}
+
+.mat-expansion-panel .custom-expansion-panel .mat-expansion-panel-animations-enabled{
+  border-top-left-radius: 12px; /* Ensure the header matches the panel's top corners */
+  border-top-right-radius: 12px;
+}
+
+.expansion-content {
+  display: flex; /* Enables Flexbox */
+  justify-content: space-between; /* Distributes content evenly */
+  align-items: center; /* Aligns items vertically */
+}
+
+.slider-container {
+  display: flex;
+  flex-direction: column; /* Stack everything vertically */
+  align-items: center; /* Center-align content */
+  
+}
+
+.main-label {
+  align-content: left;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: left;
+  margin-bottom: 30px;
+}
+
+.label-container {
+  display: flex;
+  justify-content: space-between; /* Space out "Slim" and "Loose" */
+  width: 100%; /* Match the slider's width */
+  font-size: 14px;
+}
+
+mat-slider {
+  flex-grow: 2;
+  width: 100%;
+}

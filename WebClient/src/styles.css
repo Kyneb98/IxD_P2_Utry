@@ -1,1 +1,16 @@
-/* You can add global styles to this file, and also import other style files */
+mat-expansion-panel {
+    border-radius: 0 !important;
+  }
+  
+
+  mat-expansion-panel-header .mat-expansion-indicator {
+    transform: rotate(180deg); /* Initial flipped state */
+    transition: transform 0.2s ease; /* Smooth rotation effect */
+  }
+  
+  mat-expansion-panel.mat-expanded .mat-expansion-indicator {
+    transform: rotate(0deg); /* Reset when expanded */
+  }
+  
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

@@ -1,0 +1,65 @@
+
+  
+  
+
+<!-- ======================== -->
+<!-- Dynamic Content Area     -->
+<!-- ======================== -->
+<div class="content-display-area" [ngSwitch]="activeSectionId">
+
+  <div *ngSwitchCase="'size-fit'" class="size-fit-container">
+    <app-model-viewer></app-model-viewer>
+    <app-size-and-fit-expansion-panel></app-size-and-fit-expansion-panel>
+    
+  </div>
+
+  <div *ngSwitchCase="'compare'">
+    <!-- Content for Compare -->
+    <h2>Compare Products</h2>
+    <p>Tools or information for comparing this item with others.</p>
+    <!-- Add more specific content here -->
+  </div>
+
+  <div *ngSwitchCase="'materials'">
+    <!-- Content for Materials -->
+    <h2>Material Details</h2>
+    <p>Information about fabrics, composition, sourcing, care instructions.</p>
+    <!-- Add more specific content here -->
+  </div>
+
+  <div *ngSwitchCase="'style'">
+    <!-- Content for Style -->
+    <h2>Style Information</h2>
+    <p>Styling tips, related items, different looks.</p>
+    <!-- Add more specific content here -->
+  </div>
+
+  <div *ngSwitchDefault>
+    <!-- Optional fallback content -->q
+    <p>Select an option below to view details.</p>
+  </div>
+
+</div>
+
+<!-- ======================== -->
+<!-- Bottom Navigation Bar    -->
+<!-- ======================== -->
+<nav class="bottom-nav-container">
+  <button 
+    *ngFor="let item of navItems"
+    type="button"
+    class="nav-item"
+    [class.active-link]="item.id === activeSectionId" 
+    (click)="setActiveSection(item.id)"            
+    [title]="item.label" >
+
+    <mat-icon aria-hidden="true">{{ item.icon }}</mat-icon>
+
+    <span class="nav-label" *ngIf="item.id === activeSectionId"> <!-- Ensures that only the active tab shows both icon and text   -->
+      {{ item.label }}
+    </span>
+
+  </button>
+</nav>
+  
+    
