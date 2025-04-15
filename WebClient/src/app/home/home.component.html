@@ -1,21 +1,181 @@
-<div class="start-page-image-container">
-    <!-- Image acts as background -->
-    <img src="zalando-bg.jpg" class="background-image-tag" alt="Background"/>
-  
-    <!-- UTRY Button -->
-    <button mat-button routerLink="/sign-up" class="signin-button">
-      Utry
-    </button>
-
-    <!--<button mat-fab routerLink="/utry" class="utry-button">
-        Let's get you into the fitting room
-</button> -->
-
-    <button routerLink="/utry" class="utry-button">
-        Let's get you into the fitting room
-        <img src="/logoWhite.svg" alt="Utry Logo" class="utry-logo">
-
-    </button>
+<div class="page-container">
+  <!-- Very Top Bar -->
+  <div class="promo-bar">
+    <span>ALLE DANMARKS FAVORITMÆRKER</span>
+    <span>Gratis standardlevering ved køb for minimum 299 kr*</span>
+    <span>30 Dages returret</span>
   </div>
 
-    
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="left">
+      <!-- Language selector placeholder -->
+      <span>DA</span>
+      <mat-icon>language</mat-icon>
+    </div>
+    <div class="right">
+      <mat-icon>person_outline</mat-icon>
+      <mat-icon>favorite_border</mat-icon>
+      <mat-icon>shopping_bag_outline</mat-icon>
+    </div>
+  </div>
+
+  <!-- Main Header -->
+  <header class="main-header">
+    <div class="tabs-container">
+      <!-- Select 'Herre' by default for this page -->
+      <mat-tab-group animationDuration="0ms" [selectedIndex]="1">
+        <mat-tab label="Dame"></mat-tab>
+        <mat-tab label="Herre"></mat-tab>
+        <mat-tab label="Børn"></mat-tab>
+      </mat-tab-group>
+    </div>
+    <div class="logo-container">
+      <img src="/zalandoHome/Zalando_Logo_Orange.svg" alt="Zalando Logo" class="zalando-logo">
+      <img src="/zalandoHome/zalando_wordmark_black_RGB.svg" alt="Zalando Logo" class="zalando-logo">
+    </div>
+    <div class="search-container">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-icon matPrefix>search</mat-icon>
+        <input matInput placeholder="Søg">
+      </mat-form-field>
+    </div>
+  </header>
+
+  <!-- Secondary Navigation -->
+  <nav class="secondary-nav">
+    <a href="#">Scandi Style</a>
+    <a href="#">Nyheder</a>
+    <a href="#">Tøj</a>
+    <a href="#">Sko</a>
+    <a href="#">Accessories</a>
+    <a href="#">Streetwear</a>
+    <a href="#">Sport</a>
+    <a href="#">Designer</a>
+    <a href="#">Pleje</a> <!-- Changed from Beauty -->
+    <a href="#" class="sale">Udsalg</a>
+    <a href="#">Second Hand</a>
+    <a href="#">Utry</a>
+  </nav>
+
+  <!-- Main Content Area -->
+  <main class="main-content">
+    <!-- Left Column: Images -->
+    <section class="image-gallery">
+      <div class="thumbnails">
+        <img *ngFor="let thumb of thumbnails" [src]="thumb" alt="T-shirt thumbnail" class="thumbnail-img">
+        <!-- No scroll down button in this version -->
+      </div>
+      <div class="main-image-container">
+        <img [src]="mainImageUrl" alt="White T-shirt Men" class="main-product-image">
+      </div>
+    </section>
+
+    <!-- Right Column: Product Details -->
+    <aside class="product-details">
+      <h1>WE Fashion</h1> <!-- Updated Brand -->
+      <h2>T-shirts basic - white</h2>
+      <p class="price">149,00 kr <span class="vat-info">inkl. moms</span></p> <!-- Updated Price -->
+
+      <div class="color-selector">
+        <p class="color-label">Farve: <strong>white</strong></p>
+        <div class="swatches">
+          <button *ngFor="let swatch of colorSwatches" class="swatch" [class.selected]="swatch.selected">
+            <img [src]="swatch.img" [alt]="swatch.name">
+          </button>
+        </div>
+      </div>
+
+      <mat-form-field appearance="outline" class="size-selector">
+        <mat-label>Vælg størrelse</mat-label>
+        <mat-select>
+          <mat-option value="s">S</mat-option>
+          <mat-option value="m">M</mat-option>
+          <mat-option value="l">L</mat-option>
+          <mat-option value="xl">XL</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div class="action-buttons">
+        <button mat-flat-button color="primary" class="add-to-cart">Læg i indkøbskurv</button>
+        <button mat-stroked-button class="wishlist-button">
+          <mat-icon>favorite_border</mat-icon>
+        </button>
+      </div>
+
+      <div class="info-banner popular-item">
+         <mat-icon>local_fire_department</mat-icon>
+         <span>Det her er en af vores mest populære varer denne måned</span>
+      </div>
+
+      <!-- Seller/Delivery/Returns Section -->
+      <div class="info-box">
+         <div class="info-line seller-info">
+            <span>Solgt af <a href="#">WE Fashion</a>, afsendt af Zalando.</span>
+         </div>
+         <div class="info-line delivery-info">
+            <mat-icon>local_shipping</mat-icon>
+            <div class="delivery-text">
+               <strong>ons 9 apr - tor 10 apr</strong> <!-- Static Date -->
+               <span>Standard levering</span>
+               <a href="#" class="free-shipping">Gratis ved køb for minimum 299 kr*</a>
+            </div>
+            <span class="delivery-cost">49,00 kr.</span>
+         </div>
+          <div class="info-line return-info">
+            <mat-icon>replay</mat-icon> <!-- Return icon -->
+            <span>30 dages fuld returret</span>
+         </div>
+         <div class="info-line sellback-info">
+            <mat-icon>sell</mat-icon> <!-- Sell icon -->
+            <span>Sælg tilbage</span>
+            <mat-icon class="info-icon" matTooltip="Information om at sælge tilbage">info_outline</mat-icon>
+         </div>
+      </div>
+
+      <!-- Expansion Panels for Details -->
+      <mat-accordion multi="true">
+        <mat-expansion-panel class="details-panel">
+          <mat-expansion-panel-header>
+            <mat-panel-title> Materiale og vaskeanvisning </mat-panel-title>
+          </mat-expansion-panel-header>
+          <p>Placeholder for material and washing instructions.</p>
+          <p>E.g., 100% Cotton, Machine wash at 30°C.</p>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel class="details-panel">
+          <mat-expansion-panel-header>
+            <mat-panel-title> Information om produktet </mat-panel-title>
+          </mat-expansion-panel-header>
+          <p>Placeholder for product information.</p>
+          <p>E.g., Neckline: Crew neck, Pattern: Plain.</p>
+        </mat-expansion-panel>
+
+         <mat-expansion-panel class="details-panel">
+          <mat-expansion-panel-header>
+            <mat-panel-title> Pasform </mat-panel-title> <!-- Fit -->
+          </mat-expansion-panel-header>
+          <p>Placeholder for fit information.</p>
+          <p>E.g., Fit: Regular fit, Length: Normal length, Sleeve length: Short sleeve.</p>
+        </mat-expansion-panel>
+      </mat-accordion>
+
+      <!-- Brand Follow -->
+      <div class="brand-follow">
+         <span>WE Fashion</span>
+         <button mat-stroked-button class="follow-button">
+            <mat-icon>add</mat-icon> Følg
+         </button>
+      </div>
+
+      <!-- Report Link -->
+       <a href="#" class="report-link">
+         <mat-icon>flag_outline</mat-icon> Rapporter et juridisk anliggende
+       </a>
+
+    </aside>
+  </main>
+
+   <!-- No Floating Action Button in this version -->
+
+</div>

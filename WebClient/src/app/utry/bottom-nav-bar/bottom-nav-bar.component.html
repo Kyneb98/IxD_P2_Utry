@@ -1,6 +1,5 @@
 
   
-  
 
 <!-- ======================== -->
 <!-- Dynamic Content Area     -->
@@ -8,30 +7,27 @@
 <div class="content-display-area" [ngSwitch]="activeSectionId">
 
   <div *ngSwitchCase="'size-fit'" class="size-fit-container">
-    <app-image-gallery></app-image-gallery>
     <app-size-and-fit-expansion-panel></app-size-and-fit-expansion-panel>
     
   </div>
 
   <div *ngSwitchCase="'compare'">
     <!-- Content for Compare -->
-    <h2>Compare Products</h2>
-    <p>Tools or information for comparing this item with others.</p>
-    <!-- Add more specific content here -->
+    <h2>Compare works</h2>
+    <!-- Add specific compare content here -->
   </div>
 
   <div *ngSwitchCase="'materials'">
     <!-- Content for Materials -->
-    <h2>Material Details</h2>
+    <h2>Material works</h2>
     <p>Information about fabrics, composition, sourcing, care instructions.</p>
-    <!-- Add more specific content here -->
+    <!-- Add more specific material content here -->
   </div>
 
   <div *ngSwitchCase="'style'">
     <!-- Content for Style -->
-    <h2>Style Information</h2>
-    <p>Styling tips, related items, different looks.</p>
-    <!-- Add more specific content here -->
+    <h2>Style works</h2>
+    <!-- Add more specific style content here -->
   </div>
 
   <div *ngSwitchDefault>
