@@ -86,6 +86,7 @@ body { /* Or the specific scrollable container */
 
 .size-fit-container {
   display: flex;
+  justify-content: left;
   flex-direction: column; /* Stack components vertically */
   justify-content: flex-end; /* Push the expansion panel to the bottom */
   height: 100vh; /* Ensure the container takes full viewport height */
