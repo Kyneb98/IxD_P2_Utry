@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { ModelViewerComponent } from "../model-viewer/model-viewer.component";
+
 
 
 @Component({
   selector: 'app-sign-up',
-  imports: [ModelViewerComponent],
+  imports: [],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.css'
 })

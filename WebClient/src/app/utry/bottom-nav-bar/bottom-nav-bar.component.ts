@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { SizeAndFitExpansionPanelComponent } from '../size-and-fit-expansion-panel/size-and-fit-expansion-panel.component';
 import { ModelViewerComponent } from "../../model-viewer/model-viewer.component";
-
+import { ImageGalleryComponent } from '../../image-gallery/image-gallery.component';
 
 interface NavItem {
   id: string;

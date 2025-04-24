@@ -61,9 +61,34 @@
   color: #ffffff;
 }
 
+/* --- IMPORTANT --- */
+/* Add padding to the body or the main scrollable container
+   to prevent the fixed bottom nav from hiding content */
+body { /* Or the specific scrollable container */
+  padding-bottom: 66px; /* Should be >= nav bar height + some buffer */
+}
+
+.content-display-area {
+  position: relative;
+}
 
 
 
+.size-fit-container {
+  display: flex;
+  justify-content: left;
+  flex-direction: column; /* Stack components vertically */
+  justify-content: flex-end; /* Push the expansion panel to the bottom */
+  height: 100vh; /* Ensure the container takes full viewport height */
+  gap: 10px; /* Space between components */
+}
+
+app-size-and-fit-expansion-panel {
+  align-self: stretch; /* Ensure it spans the full width */
+  padding-bottom: 56px; /* Adjust based on nav bar height */
+  border-radius: 0 !important; /* Remove any rounded corners */
+
+}
 
 
 

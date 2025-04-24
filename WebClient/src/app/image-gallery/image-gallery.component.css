@@ -1,0 +1,131 @@
+:host {
+  display: block;
+  position: relative; /* Ensures the overlay is positioned relative to this component */
+}
+
+/* Container for the entire gallery (arrows + image area) */
+.gallery-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 80px;           /* Adjust the width as needed */
+  height: 280px;
+}
+
+/* The gallery itself which contains the images */
+.gallery {
+  width: 100%;
+  height: 200px;          /* Fixed height for 3 images */
+  box-sizing: border-box;
+  margin: 0 auto;         /* Center the gallery horizontally */
+  /* Adding bottom margin to push the bottom arrow away from the images */
+  margin-bottom: 5px;
+}
+
+/* Flex container for images with adjustable gap */
+.gallery-inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  height: 100%;
+}
+
+/* Each image scales to fill an equal share of the gallery height */
+.gallery-item {
+  width: 80%;
+  height: 30%;
+  object-fit: cover;      /* Use "contain" if you prefer letterboxing */
+  border: 1px solid #ccc; /* Optional border for images */
+  cursor: pointer;        /* Indicate that the image is clickable */
+}
+
+/* Styling for the arrow buttons */
+.arrow {
+  position: relative;
+  z-index: 10;            /* Ensure arrows stay on top */
+  display: flex;          /* Using flex for centering content */
+  width: 30px;            /* Increased width */
+  height: 20px;           /* Increased height */
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  margin: 0 auto;
+  opacity: 0.8;
+  transition: opacity 0.3s;
+  padding: 0;
+  justify-content: center; /* Center the icon horizontally */
+  align-items: center;     /* Center the icon vertically */
+}
+
+.arrow:hover {
+  opacity: 1;
+}
+
+/* Positioning the up and down arrows outside of the gallery container */
+.arrow-up {
+  margin-bottom: 20px;
+  margin-right: 10px;
+  margin-left: 0px;
+}
+
+.arrow-down {
+  margin-top: 5px;
+  margin-right: 23px;
+  margin-left: 20px;
+  margin-bottom: 10px;
+  padding-right: 10px;
+}
+
+/* Material icon styling */
+mat-icon {
+  font-size: 36px;
+  color: #000;
+  overflow: visible;
+}
+
+/* ================================ */
+/* Expanded Image Overlay CSS       */
+/* ================================ */
+
+/* Expanded Image Overlay CSS (same as before, but now we add a close button) */
+.expanded-overlay {
+  position: absolute; /* Relative to the host element */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3); /* Semi-transparent black */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Styling for the expanded image */
+.expanded-image {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 4px;
+  transition: transform 0.3s ease;
+}
+
+/* Close button styling */
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: transparent;
+  border: none;
+  color: #000000;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 1100;
+}
+
+.close-button:hover {
+  color: #646464;
+}
