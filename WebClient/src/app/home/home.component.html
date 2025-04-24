@@ -8,36 +8,31 @@
 
   <!-- Top Bar -->
   <div class="top-bar">
-    <div class="left">
-      <!-- Language selector placeholder -->
-      <span>DA</span>
-      <mat-icon>language</mat-icon>
-    </div>
-    <div class="right">
       <mat-icon>person_outline</mat-icon>
       <mat-icon>favorite_border</mat-icon>
       <mat-icon>shopping_bag_outline</mat-icon>
-    </div>
   </div>
 
   <!-- Main Header -->
   <header class="main-header">
     <div class="tabs-container">
-      <!-- Select 'Herre' by default for this page -->
+      <!-- Select 'Men' by default for this page -->
       <mat-tab-group animationDuration="0ms" [selectedIndex]="1">
-        <mat-tab label="Dame"></mat-tab>
-        <mat-tab label="Herre"></mat-tab>
-        <mat-tab label="Børn"></mat-tab>
+        <mat-tab label="Women"></mat-tab>
+        <mat-tab label="Men"></mat-tab>
+        <mat-tab label="Kids"></mat-tab>
       </mat-tab-group>
     </div>
+
     <div class="logo-container">
       <img src="/zalandoHome/Zalando_Logo_Orange.svg" alt="Zalando Logo" class="zalando-logo">
-      <img src="/zalandoHome/zalando_wordmark_black_RGB.svg" alt="Zalando Logo" class="zalando-logo">
+      <img src="/zalandoHome/zalando_wordmark_black_RGB.svg" alt="Zalando logo" class="zalando-logo">
     </div>
+
     <div class="search-container">
       <mat-form-field appearance="outline" class="search-field">
         <mat-icon matPrefix>search</mat-icon>
-        <input matInput placeholder="Søg">
+        <input matInput placeholder="Search">
       </mat-form-field>
     </div>
   </header>
@@ -45,40 +40,113 @@
   <!-- Secondary Navigation -->
   <nav class="secondary-nav">
     <a href="#">Scandi Style</a>
-    <a href="#">Nyheder</a>
-    <a href="#">Tøj</a>
-    <a href="#">Sko</a>
+    <a href="#">Bestsellers</a>
+    <a href="#">Clothes</a>
+    <a href="#">Shoes</a>
     <a href="#">Accessories</a>
     <a href="#">Streetwear</a>
     <a href="#">Sport</a>
-    <a href="#">Designer</a>
-    <a href="#">Pleje</a> <!-- Changed from Beauty -->
-    <a href="#" class="sale">Udsalg</a>
+    <a href="#" class="sale">Sale</a>
+    <a href="#">Beauty</a>
     <a href="#">Second Hand</a>
-    <a href="#">Utry</a>
+    <a href="sign-up" class="utry">Utry</a>
   </nav>
 
-  <!-- Main Content Area -->
+  <!-- Main Content Area - shows as zalandos homepage-->
   <main class="main-content">
     <!-- Left Column: Images -->
-    <section class="image-gallery">
-      <div class="thumbnails">
-        <img *ngFor="let thumb of thumbnails" [src]="thumb" alt="T-shirt thumbnail" class="thumbnail-img">
-        <!-- No scroll down button in this version -->
+    <!-- === Original Image Gallery Section === -->
+  <section class="image-gallery" *ngIf="!showUtryView"> <!-- Hide if showUtryView is true -->
+    <div class="thumbnails">
+      <img *ngFor="let thumb of thumbnails" [src]="thumb" alt="T-shirt thumbnail" class="thumbnail-img">
+    </div>
+    <div class="main-image-container">
+      <img [src]="mainImageUrl" alt="Product Image" class="main-product-image">
+    </div>
+  </section>
+  <!-- === End Original Image Gallery Section === -->
+
+
+
+
+
+  <!-- === New UTRY Container - replaces the image gallery with UTRY view === -->
+  <section class="utry-container" *ngIf="showUtryView"> <!-- Show if showUtryView is true -->
+
+    <div class="utry-header">
+      <img src="logo.svg" alt="UTRY Logo" class="utry-logo">
+      <div class="utry-header-icons">
+         <button mat-icon-button class="utry-icon-button">
+            <mat-icon>settings</mat-icon>
+         </button>
+          <button mat-icon-button class="utry-icon-button" (click)="deactivateUtryView()"> <!--Add close action-->
+            <mat-icon>close</mat-icon>
+         </button>
       </div>
-      <div class="main-image-container">
-        <img [src]="mainImageUrl" alt="White T-shirt Men" class="main-product-image">
-      </div>
-    </section>
+    </div>
+
+
+
+     <!-- === UTRY Content Area === -->
+  <div class="utry-content-area" [ngSwitch]="activeUtrySectionId"> <!--Moved from  nav bar--> 
+
+    <!-- Specific Content Sections -->
+    <div *ngSwitchCase="'size-fit'">
+         <h2>Size & Fit Content Area</h2>
+         <p>Size and fit details...</p>
+         <app-size-and-fit-expansion-panel></app-size-and-fit-expansion-panel>
+    </div>
+
+    <div *ngSwitchCase="'compare'">
+        <h2>Compare Content Area</h2>
+        <p>Comparison details...</p>
+    </div>
+
+    <div *ngSwitchCase="'materials'">
+       <h2>Materials Content Area</h2>
+       <p>Material info...</p>
+    </div>
+
+    <div *ngSwitchCase="'style'">
+       <h2>Style Content Area</h2>
+       <p>Style details...</p>
+    </div>
+</div>
+<!-- === End UTRY Content Area === -->
+
+
+
+
+    <!-- Bottom Navigation Bar -->
+    <div class="utry-footer">
+      <!-- Pass initial active ID and listen for selection changes -->
+      <app-bottom-nav
+          [activeSectionId]="activeUtrySectionId"
+          (sectionSelected)="onUtrySectionSelected($event)">
+      </app-bottom-nav>
+   </div>
+
+  </section>
+  <!-- === End New UTRY Container === -->
+
+
+
+
+
+
+
+
+
 
     <!-- Right Column: Product Details -->
     <aside class="product-details">
       <h1>WE Fashion</h1> <!-- Updated Brand -->
       <h2>T-shirts basic - white</h2>
-      <p class="price">149,00 kr <span class="vat-info">inkl. moms</span></p> <!-- Updated Price -->
+      <p class="price">149,00 DKK <span class="vat-info">incl. moms</span></p>
 
+      <!-- shows the different color pictures -->
       <div class="color-selector">
-        <p class="color-label">Farve: <strong>white</strong></p>
+        <p class="color-label">Color: <strong>white</strong></p>
         <div class="swatches">
           <button *ngFor="let swatch of colorSwatches" class="swatch" [class.selected]="swatch.selected">
             <img [src]="swatch.img" [alt]="swatch.name">
@@ -86,8 +154,9 @@
         </div>
       </div>
 
+      <!-- Shows the 'select size' -->
       <mat-form-field appearance="outline" class="size-selector">
-        <mat-label>Vælg størrelse</mat-label>
+        <mat-label>Select size</mat-label>
         <mat-select>
           <mat-option value="s">S</mat-option>
           <mat-option value="m">M</mat-option>
@@ -97,47 +166,54 @@
       </mat-form-field>
 
       <div class="action-buttons">
-        <button mat-flat-button color="primary" class="add-to-cart">Læg i indkøbskurv</button>
+        <button mat-flat-button color="primary" class="add-to-cart">Add to cart</button>
         <button mat-stroked-button class="wishlist-button">
           <mat-icon>favorite_border</mat-icon>
         </button>
       </div>
 
-      <div class="info-banner popular-item">
-         <mat-icon>local_fire_department</mat-icon>
-         <span>Det her er en af vores mest populære varer denne måned</span>
-      </div>
+
+    
+      <div class="utry-window-button" (click)="activateUtryView()">
+        <img src="logoWhite.svg" alt="UTRY Logo">
+        <span class="utry-window-text">Let's get you into the fitting room</span>
+     </div>
+
+
 
       <!-- Seller/Delivery/Returns Section -->
       <div class="info-box">
          <div class="info-line seller-info">
-            <span>Solgt af <a href="#">WE Fashion</a>, afsendt af Zalando.</span>
+            <span>Sold by <a href="#">WE Fashion</a>, sent by Zalando.</span>
          </div>
          <div class="info-line delivery-info">
             <mat-icon>local_shipping</mat-icon>
             <div class="delivery-text">
-               <strong>ons 9 apr - tor 10 apr</strong> <!-- Static Date -->
-               <span>Standard levering</span>
-               <a href="#" class="free-shipping">Gratis ved køb for minimum 299 kr*</a>
+               <strong>wed 9 apr - thur 10 apr</strong> <!-- Static Date -->
+               <span>Standard delivery</span>
+               <a href="#" class="free-shipping">Free with purchases from 299 DKK*</a>
             </div>
-            <span class="delivery-cost">49,00 kr.</span>
+            <span class="delivery-cost">49,00 DKK.</span>
          </div>
           <div class="info-line return-info">
             <mat-icon>replay</mat-icon> <!-- Return icon -->
-            <span>30 dages fuld returret</span>
+            <span>30 days free return right</span>
          </div>
          <div class="info-line sellback-info">
             <mat-icon>sell</mat-icon> <!-- Sell icon -->
-            <span>Sælg tilbage</span>
-            <mat-icon class="info-icon" matTooltip="Information om at sælge tilbage">info_outline</mat-icon>
+            <span>Sell back</span>
+            <mat-icon class="info-icon" matTooltip="Information about selling back">info_outline</mat-icon>
          </div>
       </div>
+
+
+
 
       <!-- Expansion Panels for Details -->
       <mat-accordion multi="true">
         <mat-expansion-panel class="details-panel">
           <mat-expansion-panel-header>
-            <mat-panel-title> Materiale og vaskeanvisning </mat-panel-title>
+            <mat-panel-title> Material and washing guides </mat-panel-title>
           </mat-expansion-panel-header>
           <p>Placeholder for material and washing instructions.</p>
           <p>E.g., 100% Cotton, Machine wash at 30°C.</p>
@@ -145,7 +221,7 @@
 
         <mat-expansion-panel class="details-panel">
           <mat-expansion-panel-header>
-            <mat-panel-title> Information om produktet </mat-panel-title>
+            <mat-panel-title> Product information</mat-panel-title>
           </mat-expansion-panel-header>
           <p>Placeholder for product information.</p>
           <p>E.g., Neckline: Crew neck, Pattern: Plain.</p>
@@ -153,29 +229,32 @@
 
          <mat-expansion-panel class="details-panel">
           <mat-expansion-panel-header>
-            <mat-panel-title> Pasform </mat-panel-title> <!-- Fit -->
+            <mat-panel-title> Fit </mat-panel-title> <!-- Fit -->
           </mat-expansion-panel-header>
           <p>Placeholder for fit information.</p>
           <p>E.g., Fit: Regular fit, Length: Normal length, Sleeve length: Short sleeve.</p>
         </mat-expansion-panel>
       </mat-accordion>
 
+
+
       <!-- Brand Follow -->
       <div class="brand-follow">
          <span>WE Fashion</span>
          <button mat-stroked-button class="follow-button">
-            <mat-icon>add</mat-icon> Følg
+            <mat-icon>add</mat-icon> Follow
          </button>
       </div>
 
+
+
+
       <!-- Report Link -->
        <a href="#" class="report-link">
-         <mat-icon>flag_outline</mat-icon> Rapporter et juridisk anliggende
+         <mat-icon>flag_outline</mat-icon> Report a legal matter
        </a>
 
     </aside>
   </main>
-
-   <!-- No Floating Action Button in this version -->
 
 </div>

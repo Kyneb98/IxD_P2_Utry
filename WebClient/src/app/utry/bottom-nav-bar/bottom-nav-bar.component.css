@@ -1,22 +1,13 @@
-/* Styles for the main content area */
-.content-display-area {
-  padding-bottom: 80px; /* Adjust based on nav bar height */
-}
 
 /* Styles for the navigation container */
 .bottom-nav-container {
-  position: fixed;
-  bottom: 0;
-  left: 0;
   width: 100%;
   height: 56px; /* Example height - adjust as needed */
-  background-color: #ffffff; /* Example: White background */
-  /* border-top: 1px solid #e0e0e0; */ /* Optional border */
-  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff; /* White background */
+  border-top: 1px solid #e0e0e0; /* Optional border */
   display: flex;
   justify-content: space-around;
   align-items: stretch; /* Stretch items to fill height */
-  z-index: 1000;
 }
 
 /* Styles for individual navigation items (buttons) */
@@ -62,8 +53,7 @@
   background-color: #0d3080; /* Dark blue background like the example */
   color: #ffffff; /* ACTIVE icon and text color (white) */
   flex-grow: 1.5; /* Optional: Allow active item to grow slightly more */
-  /* Reset padding if needed or adjust specifically */
-  /* padding: 8px 15px; */
+
 }
 
 /* Ensure icon color changes correctly when active */
