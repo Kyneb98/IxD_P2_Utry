@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component , Output, EventEmitter, Input} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
@@ -19,15 +19,15 @@ interface NavItem {
     CommonModule,
     RouterModule,
     MatIconModule,
-    SizeAndFitExpansionPanelComponent,
-    ModelViewerComponent
 ],
   templateUrl: './bottom-nav-bar.component.html',
   styleUrls: ['./bottom-nav-bar.component.css'] 
 })
 export class BottomNavBarComponent {
    // Track the currently active section, default to 'size-fit'
-   activeSectionId: string = 'size-fit';
+    // Use @Input if parent needs to set the initial active section
+  @Input() activeSectionId: string = 'size-fit';
+  @Output() sectionSelected = new EventEmitter<string>(); // Emit selected section ID
 
   navItems: NavItem[] = [
     { id: 'size-fit', label: 'Size & fit', icon: 'straighten' },
@@ -36,9 +36,12 @@ export class BottomNavBarComponent {
     { id: 'style', label: 'Style', icon: 'checkroom' }
   ];
 
-  // Method to change the active section
-  setActiveSection(sectionId: string): void {
-    this.activeSectionId = sectionId;
-    console.log('Active section:', this.activeSectionId);
-  }
+  // Method to EMIT the change, not change internal state directly unless needed for styling
+  selectSection(sectionId: string): void {
+    // Optionally update local state if needed for styling the buttons *within* the bar
+     this.activeSectionId = sectionId;
+     // Emit the selected ID to the parent
+    this.sectionSelected.emit(sectionId);
+}
+
 }

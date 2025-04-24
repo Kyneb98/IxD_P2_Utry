@@ -38,14 +38,6 @@
   padding: 8px 0;
   font-size: 0.8rem;
   color: #555;
-  border-bottom: 1px solid #eee;
-}
-.top-bar .left { /* Removed content from this div */
-    display: none;
-}
-.top-bar .right {
-  display: flex;
-  align-items: center;
   gap: 20px; /* Increased gap */
 }
 .top-bar mat-icon {
@@ -60,7 +52,6 @@
   display: flex;
   align-items: center;
   padding: 10px 0;
-  border-bottom: 1px solid #eee;
 }
 .tabs-container {
   flex-grow: 0;
@@ -69,6 +60,7 @@
 .logo-container {
   flex-grow: 1;
   text-align: center;
+  gap: 20px; 
 }
 .zalando-logo {
   height: 25px;
@@ -104,15 +96,13 @@
 }
 .search-field {
   width: 280px; /* Wider search */
+  height: 30px;
 }
 ::ng-deep .search-field .mdc-notched-outline > *{
     border-radius: 0 !important; /* Sharp corners on search */
     border-color: #000 !important; /* Black border */
 }
-::ng-deep .search-field .mat-mdc-form-field-infix {
-    padding-top: 8px;
-    padding-bottom: 8px; /* Adjust vertical padding */
-}
+
 
 
 /* Secondary Nav */
@@ -136,11 +126,15 @@
 .secondary-nav a.sale {
   color: #ff4500;
 }
+.secondary-nav a.utry {
+  color: #001689;
+}
+
 
 /* Main Content Area */
 .main-content {
   display: flex;
-  gap: 20px; /* Increased gap */
+  gap: 80px; /* Increased gap */
 }
 
 /* Image Gallery (Left Column) */
@@ -168,11 +162,66 @@
   flex-grow: 0.7;
   display: flex;
   justify-content: center;
-  height: 100vh; /* Limit height */
-  width: 10vw;
+  height: 98vh; /* Limit height */
+  
 }
 .main-product-image {
+  object-fit: contain;
 }
+
+/* --- Styles for the NEW UTRY Container --- */
+.utry-container {
+  flex-basis: 65%;   /* <-- Match the flex-basis of image-gallery */
+  display: flex;
+  flex-direction: column; /* Arrange header, avatar, footer vertically */
+  border: 1px solid #dcdcdc;
+  background-color: #fff;
+  box-sizing: border-box;
+  /* Ensure it doesn't shrink if content is small */
+  object-fit: contain;
+  max-height: 98vh;
+  
+
+  flex-grow: 0.7;
+}
+
+.utry-content-area {
+  flex-grow: 1; /* Make content area fill space */
+  padding: 15px; /* Add some padding */
+  position: relative; /* Needed if content inside needs absolute positioning */
+  box-sizing: border-box; /* Include padding in height calculation */
+}
+
+.utry-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+}
+
+.utry-logo {
+  height: 40px; /* Adjust as needed */
+}
+
+.utry-header-icons {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+
+.utry-footer {
+  border-top: 1px solid #dcdcdc; /* Border above the nav bar */
+  /* The height will be determined by bottom-nav-bar component */
+  flex-shrink: 0; /* Prevent footer from shrinking */
+  position: relative;
+  bottom: 0; /* Stick to the bottom */
+
+}
+/* --- End UTRY Container Styles --- */
+
+
+
 
 /* Product Details (Right Column) */
 .product-details {
@@ -184,7 +233,7 @@
 .product-details h1 {
   font-size: 1.1rem; /* Slightly smaller */
   font-weight: bold;
-  margin: 0;
+  margin: 2;
   text-transform: uppercase;
 }
 .product-details h2 {
@@ -239,19 +288,40 @@
   text-transform: uppercase; font-weight: bold; font-size: 0.9rem;
 }
 .wishlist-button {
-  min-width: 48px; width: 48px; height: 48px; border-radius: 0 !important;
-  padding: 0 !important; border: 1px solid #222 !important;
+  min-width: 48px; 
+  width: 48px; 
+  height: 48px; 
+  border-radius: 0 !important;
+  padding: 0 !important; 
+  border: 1px solid #222 !important;
+
+  position: relative; /* For absolute positioning of icon */
 }
-.wishlist-button mat-icon { color: #222; }
+.wishlist-button mat-icon { 
+  color: #222; 
+  position: absolute;
+  top: 30%; left: 45%;
+ 
+}
+
 
 /* Info Banners */
-.info-banner {
-  display: flex; align-items: center; gap: 10px;
-  padding: 10px; /* Reduced padding */
-  background-color: #f5f5f5; font-size: 0.85rem; color: #333;
+.utry-window-button {
+  display: flex; 
+  align-items: center; 
+  gap: 20px;
+  padding: 12px; /* Reduced padding */
+  background-color: #001689; font-size: 1rem; color: #333;
 }
-.info-banner mat-icon { color: #555; }
 
+.utry-window-button .utry-window-text{
+  color: white;
+}
+
+.utry-window-button:hover {
+  background-color: #000acd98;
+  color: white;
+}
 /* Info Box (Seller/Delivery/Return/Sellback) */
 .info-box {
     border: 1px solid #eee;
@@ -286,22 +356,22 @@
 .sellback-info .info-icon { margin-left: auto; cursor: pointer; }
 
 /* Expansion Panels */
-::ng-deep .details-panel {
+.details-panel {
     border-bottom: 1px solid #eee;
     box-shadow: none !important;
     border-radius: 0 !important;
 }
-::ng-deep .details-panel .mat-expansion-panel-header {
-    padding: 15px 0; /* Adjust padding */
+.details-panel .mat-expansion-panel-header {
+    padding: 15px 1; /* Adjust padding */
     font-weight: bold;
     font-size: 0.9rem;
 }
-::ng-deep .details-panel .mat-expansion-panel-body {
-    padding: 0 0 15px 0; /* Adjust padding */
+.details-panel .mat-expansion-panel-body {
+    padding: 0 0 15px 1; /* Adjust padding */
     font-size: 0.85rem;
     color: #444;
 }
-::ng-deep .mat-expansion-indicator::after {
+.mat-expansion-indicator::after {
     color: #000; /* Black indicator */
 }
 
@@ -348,11 +418,12 @@
 }
 
 
-/* Basic Responsive consideration */
+/* Basic Responsive things */
 @media (max-width: 992px) {
     .main-content { flex-direction: column; gap: 20px; }
     .image-gallery, .product-details { flex-basis: auto; width: 100%; }
     .image-gallery { flex-direction: column-reverse; }
+    .utry-container { flex-basis: auto; width: 100%; }
     .thumbnails { flex-direction: row; width: 100%; overflow-x: auto; }
     .thumbnail-img { width: 60px; height: auto; }
 }
