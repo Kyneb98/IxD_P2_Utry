@@ -1,0 +1,39 @@
+<mat-grid-list cols="2" rowHeight="1:1">
+  <!-- Top row spanning both columns -->
+  <mat-grid-tile colspan="2" style="text-align: center; background-color: #f5f5f5;">
+    <h1>Welcome to UTRY</h1>
+  </mat-grid-tile>
+
+  <!-- Left column -->
+  <mat-grid-tile>
+    <img src="/utryDamer.png" style="width: 100%; height: 100%;" />
+  </mat-grid-tile>
+
+  <!-- Right column -->
+  <mat-grid-tile>
+    <div style="height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+      <mat-card appearance="outlined" style="width: 600px; height: 700px; position: relative;">
+        <div [ngSwitch]="currentStep" style="height: 100%; display: flex; flex-direction: column;">
+          <div *ngSwitchCase="1" style="flex: 1;">
+            <p>Step 1</p>
+            <app-customize-one></app-customize-one>
+          </div>
+          <div *ngSwitchCase="2" style="flex: 1;">
+            <p>Step 2</p>
+            <app-bodytype-female></app-bodytype-female>
+          </div>
+          <div *ngSwitchCase="3" style="flex: 1;">
+            <p>Step 3</p>
+            <app-measurements></app-measurements>
+          </div>
+        </div>
+
+        <!-- Button container -->
+        <div style="position: absolute; bottom: 16px; left: 16px; right: 16px; display: flex; align-items: center;">
+          <button mat-raised-button color="warn" *ngIf="currentStep > 1" (click)="prevStep()" style="margin-right: auto;">Back</button>
+          <button mat-raised-button color="primary" *ngIf="currentStep < 3" (click)="nextStep()" style="margin-left: auto;">Next</button>
+        </div>
+      </mat-card>
+    </div>
+  </mat-grid-tile>
+</mat-grid-list>

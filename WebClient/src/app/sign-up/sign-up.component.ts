@@ -9,15 +9,5 @@ import { CommonModule } from '@angular/common';
   styleUrl: './sign-up.component.css'
 })
 export class SignUpComponent {
-  currentStep = 0; // Start at step 0
 
-  incrementStep() {
-    this.currentStep++;
-  }
-
-  decrementStep() {
-    if (this.currentStep > 0) {
-      this.currentStep--;
-    }
-  }
 }

@@ -1,0 +1,21 @@
+.chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+mat-chip-option {
+  cursor: pointer;
+  font-weight: bold;
+  padding: 16px;
+  border-radius: 0%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  outline: none;
+  border: none
+}
