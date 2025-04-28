@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { state, style, animate, transition } from '@angular/animations';
 
 import { BottomNavBarComponent } from '../utry/bottom-nav-bar/bottom-nav-bar.component';
 import { SizeAndFitExpansionPanelComponent } from '../utry/size-and-fit-expansion-panel/size-and-fit-expansion-panel.component';
+import { ZalandoTopBarComponent } from './zalando-top-bar/zalando-top-bar.component';
+import { MaterialExpansionPanelComponent } from '../utry/material-expansion-panel/material-expansion-panel.component';
 
 
 import { MatButtonModule } from '@angular/material/button';
@@ -14,15 +16,17 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
     CommonModule,
-    RouterLink,
     BottomNavBarComponent,
     SizeAndFitExpansionPanelComponent,
+    ZalandoTopBarComponent,
+    MaterialExpansionPanelComponent,
     // Material Modules
     MatTabsModule,
     MatIconModule,
@@ -34,7 +38,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatTooltipModule,
   ],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrl: './home.component.css',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  
 })
 export class HomeComponent {
   // Static data for the page
@@ -76,6 +82,6 @@ export class HomeComponent {
   // Method to handle event from nav bar
   onUtrySectionSelected(sectionId: string): void {
     this.activeUtrySectionId = sectionId;
-
   }
 }
+

@@ -1,56 +1,5 @@
 <div class="page-container">
-  <!-- Very Top Bar -->
-  <div class="promo-bar">
-    <span>ALLE DANMARKS FAVORITMÆRKER</span>
-    <span>Gratis standardlevering ved køb for minimum 299 kr*</span>
-    <span>30 Dages returret</span>
-  </div>
-
-  <!-- Top Bar -->
-  <div class="top-bar">
-      <mat-icon>person_outline</mat-icon>
-      <mat-icon>favorite_border</mat-icon>
-      <mat-icon>shopping_bag_outline</mat-icon>
-  </div>
-
-  <!-- Main Header -->
-  <header class="main-header">
-    <div class="tabs-container">
-      <!-- Select 'Men' by default for this page -->
-      <mat-tab-group animationDuration="0ms" [selectedIndex]="1">
-        <mat-tab label="Women"></mat-tab>
-        <mat-tab label="Men"></mat-tab>
-        <mat-tab label="Kids"></mat-tab>
-      </mat-tab-group>
-    </div>
-
-    <div class="logo-container">
-      <img src="/zalandoHome/Zalando_Logo_Orange.svg" alt="Zalando Logo" class="zalando-logo">
-      <img src="/zalandoHome/zalando_wordmark_black_RGB.svg" alt="Zalando logo" class="zalando-logo">
-    </div>
-
-    <div class="search-container">
-      <mat-form-field appearance="outline" class="search-field">
-        <mat-icon matPrefix>search</mat-icon>
-        <input matInput placeholder="Search">
-      </mat-form-field>
-    </div>
-  </header>
-
-  <!-- Secondary Navigation -->
-  <nav class="secondary-nav">
-    <a href="#">Scandi Style</a>
-    <a href="#">Bestsellers</a>
-    <a href="#">Clothes</a>
-    <a href="#">Shoes</a>
-    <a href="#">Accessories</a>
-    <a href="#">Streetwear</a>
-    <a href="#">Sport</a>
-    <a href="#" class="sale">Sale</a>
-    <a href="#">Beauty</a>
-    <a href="#">Second Hand</a>
-    <a href="sign-up" class="utry">Utry</a>
-  </nav>
+  <app-zalando-top-bar></app-zalando-top-bar>
 
   <!-- Main Content Area - shows as zalandos homepage-->
   <main class="main-content">
@@ -64,7 +13,7 @@
       <img [src]="mainImageUrl" alt="Product Image" class="main-product-image">
     </div>
   </section>
-  <!-- === End Original Image Gallery Section === -->
+  <!-- === End Original Zalando Image Gallery Section === -->
 
 
 
@@ -79,7 +28,7 @@
          <button mat-icon-button class="utry-icon-button">
             <mat-icon>settings</mat-icon>
          </button>
-          <button mat-icon-button class="utry-icon-button" (click)="deactivateUtryView()"> <!--Add close action-->
+          <button mat-icon-button class="utry-icon-button" (click)="deactivateUtryView()"> <!--Close action-->
             <mat-icon>close</mat-icon>
          </button>
       </div>
@@ -88,13 +37,22 @@
 
 
      <!-- === UTRY Content Area === -->
-  <div class="utry-content-area" [ngSwitch]="activeUtrySectionId"> <!--Moved from  nav bar--> 
+  <div class="utry-content-area" [ngSwitch]="activeUtrySectionId"> <!--Moved from nav bar--> 
 
     <!-- Specific Content Sections -->
     <div *ngSwitchCase="'size-fit'">
-         <h2>Size & Fit Content Area</h2>
-         <p>Size and fit details...</p>
-         <app-size-and-fit-expansion-panel></app-size-and-fit-expansion-panel>
+        <model-viewer
+        src="/William.glb" alt="3D model of clothing"
+        camera-controls
+        touch-action="pan-y"             disable-zoom
+        auto-rotate
+        shadow-intensity="1"
+        class="utry-model-viewer">
+         <div class="progress-bar hide" slot="progress-bar">
+              <div class="update-bar"></div>
+          </div>
+    </model-viewer>
+        <app-size-and-fit-expansion-panel></app-size-and-fit-expansion-panel>
     </div>
 
     <div *ngSwitchCase="'compare'">
@@ -105,6 +63,7 @@
     <div *ngSwitchCase="'materials'">
        <h2>Materials Content Area</h2>
        <p>Material info...</p>
+       <app-material-expansion-panel></app-material-expansion-panel>
     </div>
 
     <div *ngSwitchCase="'style'">

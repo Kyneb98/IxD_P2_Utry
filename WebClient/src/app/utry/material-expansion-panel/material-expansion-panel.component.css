@@ -1,86 +1,144 @@
-.custom-expansion-panel {
-    position: relative;
-    transform-origin: top; /* Adjust origin to make it expand upwards */
-    border-top-left-radius: 12px; /* Ensure the header matches the panel's top corners */
-    border-top-right-radius: 12px;
-  }
+:host {
+  display: block; /* Ensure component takes up space */
+  position: absolute; /* Position relative to parent (.utry-content-area) */
+  bottom: 0;          /* Stick to the bottom of the parent */
+  left: 0;
+  right: 0;
+  z-index: 10;        /* Above other static content, below models */
+ 
+}
+
+.material-panel-wrapper {
+  /* This wrapper is what animates */
+  width: 100%;
+  background-color: rgba(240, 240, 240, 0.98); /* Panel background */
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+
+  /* Start below viewport (adjust value based on header height) */
   
-  .custom-expansion-panel-content {
-    position: absolute;
-    top: -100%; /* Shift the content upwards */
-  }
+}
+
+.panel-header {
+  height: 40px; /* Height of the visible collapsed part */
+  display: flex;
+  justify-content: center; /* Center the arrow */
+  align-items: center;
+  cursor: pointer;
   
-  .mat-expansion-panel-header.mat-expanded {
-    height: 35px;
-    border-top-left-radius: 12px; /* Ensure the header matches the panel's top corners */
-    border-top-right-radius: 12px;
-  }
-  
-  .custom-expanded .mat-expansion-indicator {
-    transform: rotate(0deg);
-  }
-  
-  .mat-expansion-panel-header{
-    height: 35px;
-    border-top-left-radius: 12px; /* Ensure the header matches the panel's top corners */
-    border-top-right-radius: 12px;
-  }
-  
-  .mat-expansion-panel .custom-expansion-panel .mat-expansion-panel-animations-enabled{
-    border-top-left-radius: 12px; /* Ensure the header matches the panel's top corners */
-    border-top-right-radius: 12px;
-  }
-  
+  box-sizing: border-box;
+  background-color: inherit; /* Inherit wrapper background */
+  /* Ensure rounded corners match wrapper */
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+
+
+
+.toggle-icon {
+  color: #333; /* Darker icon color */
+}
+
+.panel-content-area {
+  padding: 20px 25px; /* Padding for the content */
+  box-sizing: border-box;
+  /* Separator line now above content if header has no border */
+  border-top: 1px solid #ccc;
+  background-color: inherit;
+}
+
+
+
+
+.expansion-content {
+  display: flex;
+  align-items: flex-start; /* Align items to the top */
+  gap: 30px; /* Space between swatch and details */
+}
+
+/* Left side */
+.contentleft {
+  flex-shrink: 0; /* Prevent image container from shrinking */
+}
+
+.fabric-swatch-container {
+  width: 90px; /* Adjust size as needed */
+  height: 90px;
+  border-radius: 50%; /* Make it circular */
+  overflow: hidden; /* Clip image to circle */
+  border: 2px solid #0d3080; /* Blue border like example */
+  background-color: #fff; /* Background if image is transparent */
+}
+
+.fabric-swatch-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Cover the area */
+}
+
+/* Right side */
+.contentright {
+  flex-grow: 1; /* Take remaining space */
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Space between details and slider */
+}
+
+.fabric-details {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: #333;
+}
+
+.fabric-details p {
+  margin: 0 0 5px 0; /* Adjust spacing between lines */
+}
+
+.fabric-details strong {
+  font-weight: bold;
+}
+
+.scratchiness-container {
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.scratchiness-container p {
+  margin: 0 0 5px 0; /* Space above slider */
+}
+
+.scratchiness-slider {
+  width: 100%; /* Slider takes full width */
+}
+
+/* --- Slider Track/Thumb Overrides --- */
+:host ::ng-deep .scratchiness-slider .mdc-slider__track--inactive {
+  background-color: #aaa !important; /* Darker grey */
+}
+:host ::ng-deep .scratchiness-slider .mdc-slider__track--active .mdc-slider__track--active_fill,
+:host ::ng-deep .scratchiness-slider .mdc-slider__thumb--with-indicator .mdc-slider__thumb-knob {
+  background-color: #0d3080 !important; /* Match nav blue */
+  border-color: #0d3080 !important;
+}
+/* --- End Slider Overrides --- */
+
+
+/* Responsive adjustments if needed */
+@media (max-width: 480px) {
   .expansion-content {
-    display: flex; /* Enables Flexbox */
-    justify-content: space-between; /* Distributes content evenly */
-    align-items: center; /* Aligns items vertically */
+    flex-direction: column;
+    align-items: center; /* Center items when stacked */
+    gap: 20px;
   }
-  
-  .slider-container {
-    display: flex;
-    flex-direction: column; /* Stack everything vertically */
-    align-items: center; /* Center-align content */
-    
+  .contentleft, .contentright {
+    width: 100%; /* Take full width when stacked */
+    flex-basis: auto;
   }
-  
-  .main-label {
-    align-content: left;
-    font-size: 16px;
-    font-weight: bold;
-    text-align: left;
-    margin-bottom: 30px;
+  .fabric-details, .scratchiness-container {
+    text-align: center;
   }
-  
-  .label-container {
-    display: flex;
-    justify-content: space-between; /* Space out "Slim" and "Loose" */
-    width: 100%; /* Match the slider's width */
-    font-size: 14px;
-  }
-  
-  mat-slider {
-    flex-grow: 2;
-    width: 100%;
-  }
-  
-  .material-image{
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    border: 2px solid #000000;
-  }
-
-  .fabric-describtion{
-    font-size: 14px;
-    text-align: left;
-    margin-top: 10px;
-    
-  }
-
-  .fabric-describtion-label{
-    font-size: 16px;
-    text-align: left;
-    margin-top: 10px; /* Space between slider and description */
-    font-weight: bold;
-  }
+}

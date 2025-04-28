@@ -1,71 +1,164 @@
-.custom-expansion-panel {
-  position: relative;
-  transform-origin: top; /* Adjust origin to make it expand upwards */
-  border-top-left-radius: 12px; /* Ensure the header matches the panel's top corners */
+:host {
+  display: block; /* Ensure component takes up space */
+  position: absolute; /* Position relative to parent (.utry-content-area) */
+  bottom: 0;          /* Stick to the bottom of the parent */
+  left: 0;
+  right: 0;
+  z-index: 10;        /* Above other static content, below modals */
+ 
+}
+
+.size-fit-panel-wrapper {
+  /* This wrapper is what animates */
+  width: 100%;
+  background-color: rgba(240, 240, 240, 0.98); /* Panel background */
+  border-top-left-radius: 12px;
   border-top-right-radius: 12px;
-}
+  box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
 
-.custom-expansion-panel-content {
-  position: absolute;
-  top: -100%; /* Shift the content upwards */
-}
-
-.mat-expansion-panel-header.mat-expanded {
-  height: 35px;
-  border-top-left-radius: 12px; /* Ensure the header matches the panel's top corners */
-  border-top-right-radius: 12px;
-}
-
-.custom-expanded .mat-expansion-indicator {
-  transform: rotate(0deg);
-}
-
-.mat-expansion-panel-header{
-  height: 35px;
-  border-top-left-radius: 12px; /* Ensure the header matches the panel's top corners */
-  border-top-right-radius: 12px;
-}
-
-.mat-expansion-panel .custom-expansion-panel .mat-expansion-panel-animations-enabled{
-  border-top-left-radius: 12px; /* Ensure the header matches the panel's top corners */
-  border-top-right-radius: 12px;
-}
-
-.expansion-content {
-  display: flex; /* Enables Flexbox */
-  justify-content: space-between; /* Distributes content evenly */
-  align-items: center; /* Aligns items vertically */
-}
-
-.slider-container {
-  display: flex;
-  flex-direction: column; /* Stack everything vertically */
-  align-items: center; /* Center-align content */
+  /* Start below viewport (adjust value based on header height) */
   
 }
 
-.main-label {
-  align-content: left;
-  font-size: 16px;
-  font-weight: bold;
-  text-align: left;
-  margin-bottom: 30px;
+.panel-header {
+  height: 40px; /* Height of the visible collapsed part */
+  display: flex;
+  justify-content: center; /* Center the arrow */
+  align-items: center;
+  cursor: pointer;
+  
+  box-sizing: border-box;
+  background-color: inherit; /* Inherit wrapper background */
+  /* Ensure rounded corners match wrapper */
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
 }
 
+.toggle-icon {
+  color: #555;
+}
+
+.panel-content-area {
+  padding: 15px 25px; /* Padding for the actual content */
+  box-sizing: border-box;
+  /* Content is only visible when expanded due to parent transform/overflow */
+}
+
+/* Styles for your internal content (copy/adapt from previous) */
+.expansion-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 30px;
+}
+
+.contentleft, .contentright { flex-basis: 48%; }
+
+
+/* Title styling (used in both left and right columns initially) */
+.panel-section-title {
+  display: block;         /* Default to block for left side */
+  font-size: 1rem;        /* 16px */
+  font-weight: 500;       /* Medium weight */
+  margin-bottom: 15px;    /* Space below title */
+  color: #333;
+}
+
+/* Specific styling for the title in the right column (to include icon) */
+.contentright .panel-section-title {
+  display: inline-flex; /* Align icon next to text */
+  align-items: center;
+  gap: 5px;             /* Space between text and icon */
+  margin-bottom: 10px;  /* Adjust spacing if needed */
+}
+
+/* Style for the bold text inside the right title */
+.contentright .panel-section-title strong {
+  font-weight: bold;
+}
+
+/* Style for the info icon in the right title */
+.contentright .info-icon {
+  font-size: 18px;      /* Icon size */
+  width: 18px;
+  height: 18px;
+  color: #666;         /* Icon color */
+  cursor: help;         /* Indicate it provides help/info */
+  vertical-align: middle; /* Align icon better with text */
+}
+
+/* Container for the slider and its labels */
+.slider-container {
+  display: flex;
+  flex-direction: column; /* Stack title, labels, slider vertically */
+  align-items: stretch; /* Stretch items full width */
+}
+
+/* Container specifically for the 'Slim' and 'Loose' labels */
 .label-container {
   display: flex;
-  justify-content: space-between; /* Space out "Slim" and "Loose" */
-  width: 100%; /* Match the slider's width */
-  font-size: 14px;
+  justify-content: space-between; /* Space out the labels */
+  width: 100%;              /* Match the slider's width */
+  font-size: 0.85rem;       /* 14px */
+  color: #555;
+  padding: 0 5px;           /* Align slightly with slider thumbs */
+  box-sizing: border-box;
+  margin-bottom: -5px;      /* Optional: Pull slider slightly closer */
 }
 
-mat-slider {
-  flex-grow: 2;
-  width: 100%;
+/* Styling for the slider element itself */
+.fit-slider {
+  width: 100%; /* Make slider take full width */
 }
 
-.fabric-describtion{
-  font-size: 20px;
-  text-align: left;
-  margin-top: 10px; /* Space between slider and description */
+/* --- Slider Track/Thumb Overrides (using ::ng-deep) --- */
+/* Inactive part of the track */
+:host ::ng-deep .fit-slider .mdc-slider__track--inactive {
+  background-color: #bbb !important; /* Lighter grey */
+}
+
+/* Active part of the track */
+:host ::ng-deep .fit-slider .mdc-slider__track--active .mdc-slider__track--active_fill {
+  background-color: #0d3080 !important; /* Match active nav blue */
+  border-color: #0d3080 !important;
+}
+
+/* Slider thumb (the circle) */
+:host ::ng-deep .fit-slider .mdc-slider__thumb--with-indicator .mdc-slider__thumb-knob {
+  background-color: #0d3080 !important; /* Match active nav blue */
+  border-color: #0d3080 !important;
+}
+/* --- End Slider Overrides --- */
+
+
+/* Styling for the recommendation text */
+.recommend-text {
+  margin-top: 10px;     /* Space above */
+  margin-bottom: 12px;  /* Space below */
+  font-size: 0.9rem;
+  text-align: center;   /* Center the text */
+  color: #333;
+}
+
+/* Styling for the recommendation button */
+.recommend-btn {
+  border-radius: 20px;    /* Pill shape */
+  padding: 6px 25px;      /* Button padding */
+  font-weight: bold;
+  background-color: #0d3080; /* Match active nav blue */
+  color: white;
+  display: block;         /* Make button block */
+  margin: 0 auto;         /* Center button horizontally */
+  width: fit-content;     /* Size button based on its text */
+  border: none;           /* Remove default border */
+  cursor: pointer;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .panel-content-area { padding: 10px 15px; }
+  .expansion-content { flex-direction: column; align-items: stretch; gap: 15px; }
+  .contentleft, .contentright { flex-basis: auto; }
+  /* ... other responsive adjustments ... */
 }
