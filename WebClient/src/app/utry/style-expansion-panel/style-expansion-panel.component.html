@@ -1,5 +1,5 @@
 <!-- Main container with animation trigger -->
-<div class="material-panel-wrapper"
+<div class="style-panel-wrapper"
      [@panelState]="isExpanded ? 'expanded' : 'collapsed'">
 
   <!-- Header/Toggle Area - ALWAYS visible -->
@@ -17,32 +17,15 @@
   <div class="panel-content-area" id="panel-content-area">
     <!-- Your existing content structure -->
     <div class="expansion-content">
-      <!-- Column 1: Image -->
-      <div class="fabric-picture-column">
-        <div class="fabric-picture-container">
-          <img src="whiteFabric.jpg" alt="Fabric picture" class="fabric-img">
-        </div>
-      </div>
 
-      <!-- Column 2: Details -->
-      <div class="fabric-details-column">
-        <p>Fabric description:</p>
-        <p>Materials: <strong>100% Cotton</strong></p>
-        <p>Material details: <strong>Jersey</strong></p>
-      </div>
+      <div class="contentleft">
+        
 
-      <!-- Column 3: Scratchiness -->
-      <div class="scratchiness-column">
-        <p>Scratchiness factor</p>
-        <mat-slider min="0" max="100" step="1" class="scratchiness-slider">
-        </mat-slider>
-        </div>
-      </div>
-      
+      <div class="contentright">
 
-      
+      </div>
 
     </div>
   </div> <!-- End panel-content-area -->
- 
-  
+
+</div> <!-- End size-fit-panel-wrapper -->

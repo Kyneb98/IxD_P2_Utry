@@ -4,7 +4,7 @@
   bottom: 0;          /* Stick to the bottom of the parent */
   left: 0;
   right: 0;
-  z-index: 10;        /* Above other static content, below modals */
+  z-index: 10;        /* Above other static content, below models */
  
 }
 
@@ -18,13 +18,12 @@
   box-sizing: border-box;
 
   /* Start below viewport (adjust value based on header height) */
-  
 }
 
 .panel-header {
   height: 40px; /* Height of the visible collapsed part */
   display: flex;
-  justify-content: center; /* Center the arrow */
+  justify-content: right; /* arrow placed on the right */
   align-items: center;
   cursor: pointer;
   
@@ -37,31 +36,32 @@
 
 .toggle-icon {
   color: #555;
+  margin-right: 15px;
 }
 
 .panel-content-area {
-  padding: 15px 25px; /* Padding for the actual content */
+  padding: 10px 25px; /* Padding for the actual content */
   box-sizing: border-box;
   /* Content is only visible when expanded due to parent transform/overflow */
 }
 
-/* Styles for your internal content (copy/adapt from previous) */
+/* Styles for your internal content */
 .expansion-content {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   gap: 30px;
+  margin-bottom: 5px;
 }
 
-.contentleft, .contentright { flex-basis: 48%; }
-
+.contentleft, .contentright { flex-basis: 40%; }
 
 /* Title styling (used in both left and right columns initially) */
 .panel-section-title {
   display: block;         /* Default to block for left side */
   font-size: 1rem;        /* 16px */
   font-weight: 500;       /* Medium weight */
-  margin-bottom: 15px;    /* Space below title */
+  margin-bottom: 32px;    /* Space below title */
   color: #333;
 }
 
@@ -69,14 +69,10 @@
 .contentright .panel-section-title {
   display: inline-flex; /* Align icon next to text */
   align-items: center;
-  gap: 5px;             /* Space between text and icon */
+  gap: 10px;             /* Space between text and icon */
   margin-bottom: 10px;  /* Adjust spacing if needed */
 }
 
-/* Style for the bold text inside the right title */
-.contentright .panel-section-title strong {
-  font-weight: bold;
-}
 
 /* Style for the info icon in the right title */
 .contentright .info-icon {
@@ -88,12 +84,6 @@
   vertical-align: middle; /* Align icon better with text */
 }
 
-/* Container for the slider and its labels */
-.slider-container {
-  display: flex;
-  flex-direction: column; /* Stack title, labels, slider vertically */
-  align-items: stretch; /* Stretch items full width */
-}
 
 /* Container specifically for the 'Slim' and 'Loose' labels */
 .label-container {
@@ -112,24 +102,7 @@
   width: 100%; /* Make slider take full width */
 }
 
-/* --- Slider Track/Thumb Overrides (using ::ng-deep) --- */
-/* Inactive part of the track */
-:host ::ng-deep .fit-slider .mdc-slider__track--inactive {
-  background-color: #bbb !important; /* Lighter grey */
-}
 
-/* Active part of the track */
-:host ::ng-deep .fit-slider .mdc-slider__track--active .mdc-slider__track--active_fill {
-  background-color: #0d3080 !important; /* Match active nav blue */
-  border-color: #0d3080 !important;
-}
-
-/* Slider thumb (the circle) */
-:host ::ng-deep .fit-slider .mdc-slider__thumb--with-indicator .mdc-slider__thumb-knob {
-  background-color: #0d3080 !important; /* Match active nav blue */
-  border-color: #0d3080 !important;
-}
-/* --- End Slider Overrides --- */
 
 
 /* Styling for the recommendation text */
@@ -137,7 +110,7 @@
   margin-top: 10px;     /* Space above */
   margin-bottom: 12px;  /* Space below */
   font-size: 0.9rem;
-  text-align: center;   /* Center the text */
+  text-align: left;   /* Center the text */
   color: #333;
 }
 
@@ -149,10 +122,10 @@
   background-color: #0d3080; /* Match active nav blue */
   color: white;
   display: block;         /* Make button block */
-  margin: 0 auto;         /* Center button horizontally */
   width: fit-content;     /* Size button based on its text */
   border: none;           /* Remove default border */
   cursor: pointer;
+  align-items: left;
 }
 
 /* Responsive Styles */

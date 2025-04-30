@@ -44,7 +44,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class MaterialExpansionPanelComponent {
   // Control the panel's state, start expanded by default
-isExpanded: boolean = false;
+isExpanded: boolean = true;
 
 // Toggle the expansion state
 togglePanel(): void {

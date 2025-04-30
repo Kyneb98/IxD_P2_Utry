@@ -1,24 +1,21 @@
 import { Component } from '@angular/core';
-
-import {MatSliderModule} from '@angular/material/slider';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import { MatIcon } from '@angular/material/icon';
-import { trigger, state, style, animate, transition } from '@angular/animations';
 import { CommonModule } from '@angular/common';
-
-
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTabsModule } from '@angular/material/tabs';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 
 @Component({
-  selector: 'app-size-and-fit-expansion-panel',
+  selector: 'app-style-expansion-panel',
   imports: [
-    MatSliderModule,
-    MatTooltipModule,
-    MatIcon,
     CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatTabsModule
   ],
-  templateUrl: './size-and-fit-expansion-panel.component.html',
-  styleUrl: './size-and-fit-expansion-panel.component.css',
+  templateUrl: './style-expansion-panel.component.html',
+  styleUrl: './style-expansion-panel.component.css',
   animations: [
     trigger('panelState', [
       // State for when the panel is collapsed (only header/toggle visible)
@@ -37,18 +34,13 @@ import { CommonModule } from '@angular/common';
     ])
   ]
 })
-export class SizeAndFitExpansionPanelComponent {
-// Control the panel's state, start expanded by default
+export class StyleExpansionPanelComponent {
+
+    // Control the panel's state, start expanded by default
 isExpanded: boolean = true;
 
 // Toggle the expansion state
 togglePanel(): void {
   this.isExpanded = !this.isExpanded;
 }
-
-// Placeholder for slider value if needed
-fitValue: number = 50;
- 
-
-  
 }

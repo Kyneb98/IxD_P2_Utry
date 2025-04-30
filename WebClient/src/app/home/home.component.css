@@ -236,6 +236,7 @@ flex-grow: 1; /* Ensure it takes space within the flex column */
   gap: 20px;
   padding: 12px; /* Reduced padding */
   background-color: #001689; font-size: 1rem; color: #333;
+  cursor: pointer;
 }
 
 .utry-window-button .utry-window-text{

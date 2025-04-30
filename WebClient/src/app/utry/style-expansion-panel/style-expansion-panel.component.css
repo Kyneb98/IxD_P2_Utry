@@ -1,0 +1,57 @@
+:host {
+    display: block; /* Ensure component takes up space */
+    position: absolute; /* Position relative to parent (.utry-content-area) */
+    bottom: 0;          /* Stick to the bottom of the parent */
+    left: 0;
+    right: 0;
+    z-index: 10;        /* Above other static content, below models */
+   
+  }
+  
+  .style-panel-wrapper {
+    /* This wrapper is what animates */
+    width: 100%;
+    background-color: rgba(240, 240, 240, 0.98); /* Panel background */
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+  
+    /* Start below viewport (adjust value based on header height) */
+  }
+  
+  .panel-header {
+    height: 40px; /* Height of the visible collapsed part */
+    display: flex;
+    justify-content: right; /* arrow placed on the right */
+    align-items: center;
+    cursor: pointer;
+    
+    box-sizing: border-box;
+    background-color: inherit; /* Inherit wrapper background */
+    /* Ensure rounded corners match wrapper */
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+  }
+  
+  .toggle-icon {
+    color: #555;
+    margin-right: 15px;
+  }
+  
+  .panel-content-area {
+    padding: 10px 25px; /* Padding for the actual content */
+    box-sizing: border-box;
+    /* Content is only visible when expanded due to parent transform/overflow */
+  }
+  
+  /* Styles for your internal content */
+  .expansion-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 30px;
+    margin-bottom: 5px;
+  }
+  
+  .contentleft, .contentright { flex-basis: 40%; }

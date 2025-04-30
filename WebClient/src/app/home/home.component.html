@@ -5,7 +5,8 @@
   <main class="main-content">
     <!-- Left Column: Images -->
     <!-- === Original Image Gallery Section === -->
-  <section class="image-gallery" *ngIf="!showUtryView"> <!-- Hide if showUtryView is true -->
+  @if (!showUtryView) {
+    <section class="image-gallery"> <!-- Hide if showUtryView is true -->
     <div class="thumbnails">
       <img *ngFor="let thumb of thumbnails" [src]="thumb" alt="T-shirt thumbnail" class="thumbnail-img">
     </div>
@@ -13,6 +14,7 @@
       <img [src]="mainImageUrl" alt="Product Image" class="main-product-image">
     </div>
   </section>
+}
   <!-- === End Original Zalando Image Gallery Section === -->
 
 
@@ -20,7 +22,8 @@
 
 
   <!-- === New UTRY Container - replaces the image gallery with UTRY view === -->
-  <section class="utry-container" *ngIf="showUtryView"> <!-- Show if showUtryView is true -->
+  @if(showUtryView){ <!-- Show if showUtryView is true -->
+    <section class="utry-container"> 
 
     <div class="utry-header">
       <img src="logo.svg" alt="UTRY Logo" class="utry-logo">
@@ -33,7 +36,7 @@
          </button>
       </div>
     </div>
-
+  
 
 
      <!-- === UTRY Content Area === -->
@@ -58,6 +61,7 @@
     <div *ngSwitchCase="'compare'">
         <h2>Compare Content Area</h2>
         <p>Comparison details...</p>
+        <app-compare-expansion-panel></app-compare-expansion-panel>
     </div>
 
     <div *ngSwitchCase="'materials'">
@@ -69,6 +73,7 @@
     <div *ngSwitchCase="'style'">
        <h2>Style Content Area</h2>
        <p>Style details...</p>
+       <app-style-expansion-panel></app-style-expansion-panel>
     </div>
 </div>
 <!-- === End UTRY Content Area === -->
@@ -85,7 +90,8 @@
       </app-bottom-nav>
    </div>
 
-  </section>
+  </section> 
+}
   <!-- === End New UTRY Container === -->
 
 

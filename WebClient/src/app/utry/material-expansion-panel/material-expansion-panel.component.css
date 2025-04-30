@@ -18,113 +18,102 @@
   box-sizing: border-box;
 
   /* Start below viewport (adjust value based on header height) */
-  
 }
 
 .panel-header {
   height: 40px; /* Height of the visible collapsed part */
   display: flex;
-  justify-content: center; /* Center the arrow */
+  justify-content: right; /* arrow placed on right side */
+  
   align-items: center;
   cursor: pointer;
-  
-  box-sizing: border-box;
   background-color: inherit; /* Inherit wrapper background */
   /* Ensure rounded corners match wrapper */
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
 }
 
-
-
-
 .toggle-icon {
   color: #333; /* Darker icon color */
+  margin-right: 15px;
 }
 
 .panel-content-area {
-  padding: 20px 25px; /* Padding for the content */
+  padding: 30px 25px; /* Padding for the content */
   box-sizing: border-box;
-  /* Separator line now above content if header has no border */
-  border-top: 1px solid #ccc;
+  
   background-color: inherit;
 }
 
-
-
-
 .expansion-content {
   display: flex;
-  align-items: flex-start; /* Align items to the top */
-  gap: 30px; /* Space between swatch and details */
+  align-items: center; /* Align items to the top */
+  gap: 20px; /* Space between picture and details */
 }
 
-/* Left side */
-.contentleft {
-  flex-shrink: 0; /* Prevent image container from shrinking */
+
+
+
+/* --- Column 1: Image --- */
+.fabric-picture-column {
+  flex-shrink: 0; /* Prevent shrinking */
+  /* Size is controlled by container inside */
 }
 
-.fabric-swatch-container {
-  width: 90px; /* Adjust size as needed */
-  height: 90px;
-  border-radius: 50%; /* Make it circular */
-  overflow: hidden; /* Clip image to circle */
-  border: 2px solid #0d3080; /* Blue border like example */
-  background-color: #fff; /* Background if image is transparent */
+.fabric-picture-container {
+  width: 80px; /* Adjust size */
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid #0d3080; /* Blue border */
+  background-color: #fff;
 }
 
-.fabric-swatch-img {
+.fabric-img {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Cover the area */
+  object-fit: cover;
 }
 
-/* Right side */
-.contentright {
-  flex-grow: 1; /* Take remaining space */
-  display: flex;
-  flex-direction: column;
-  gap: 15px; /* Space between details and slider */
-}
-
-.fabric-details {
+/* --- Column 2: Details --- */
+.fabric-details-column {
+  flex-grow: 1;     /* Allow to take up space */
+  flex-basis: 40%;  /* Suggest initial width */
   font-size: 0.9rem;
-  line-height: 1.4;
+  line-height: 1.5;
   color: #333;
+  text-align: left; /* Align text left */
 }
 
-.fabric-details p {
-  margin: 0 0 5px 0; /* Adjust spacing between lines */
+.fabric-details-column p {
+  margin: 0 0 4px 0; /* Adjust spacing */
 }
 
-.fabric-details strong {
+.fabric-details-column strong {
   font-weight: bold;
 }
 
-.scratchiness-container {
+/* --- Column 3: Scratchiness --- */
+.scratchiness-column {
+  flex-grow: 1;     /* Allow to take up space */
+  flex-basis: 35%;  /* Suggest initial width */
   font-size: 0.9rem;
   color: #333;
+  text-align: left; /* Align label left */
 }
 
-.scratchiness-container p {
+.scratchiness-column p {
   margin: 0 0 5px 0; /* Space above slider */
 }
 
 .scratchiness-slider {
-  width: 100%; /* Slider takes full width */
+  width: 100%;
 }
 
-/* --- Slider Track/Thumb Overrides --- */
-:host ::ng-deep .scratchiness-slider .mdc-slider__track--inactive {
-  background-color: #aaa !important; /* Darker grey */
-}
-:host ::ng-deep .scratchiness-slider .mdc-slider__track--active .mdc-slider__track--active_fill,
-:host ::ng-deep .scratchiness-slider .mdc-slider__thumb--with-indicator .mdc-slider__thumb-knob {
-  background-color: #0d3080 !important; /* Match nav blue */
-  border-color: #0d3080 !important;
-}
-/* --- End Slider Overrides --- */
+
+
+
 
 
 /* Responsive adjustments if needed */

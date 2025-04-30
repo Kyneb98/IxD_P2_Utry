@@ -1,24 +1,27 @@
 import { Component } from '@angular/core';
-
-import {MatSliderModule} from '@angular/material/slider';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import { MatIcon } from '@angular/material/icon';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { FormsModule } from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 
 
 
 @Component({
-  selector: 'app-size-and-fit-expansion-panel',
+  selector: 'app-compare-expansion-panel',
   imports: [
-    MatSliderModule,
-    MatTooltipModule,
-    MatIcon,
     CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    FormsModule,
+    MatSelectModule,
+    MatFormFieldModule,
   ],
-  templateUrl: './size-and-fit-expansion-panel.component.html',
-  styleUrl: './size-and-fit-expansion-panel.component.css',
+  templateUrl: './compare-expansion-panel.component.html',
+  styleUrl: './compare-expansion-panel.component.css',
   animations: [
     trigger('panelState', [
       // State for when the panel is collapsed (only header/toggle visible)
@@ -37,8 +40,10 @@ import { CommonModule } from '@angular/common';
     ])
   ]
 })
-export class SizeAndFitExpansionPanelComponent {
-// Control the panel's state, start expanded by default
+export class CompareExpansionPanelComponent {
+
+
+  // Control the panel's state, start expanded by default
 isExpanded: boolean = true;
 
 // Toggle the expansion state
@@ -46,9 +51,7 @@ togglePanel(): void {
   this.isExpanded = !this.isExpanded;
 }
 
-// Placeholder for slider value if needed
-fitValue: number = 50;
- 
 
-  
+selected1: string = 'Choose size to compare';
+selected2: string = 'Choose size to compare';
 }

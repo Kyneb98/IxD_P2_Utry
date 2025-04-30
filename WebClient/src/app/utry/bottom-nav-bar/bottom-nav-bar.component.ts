@@ -1,4 +1,4 @@
-import { Component , Output, EventEmitter, Input} from '@angular/core';
+import { Component , Output, EventEmitter, Input, SimpleChanges} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
@@ -36,10 +36,13 @@ export class BottomNavBarComponent {
     { id: 'style', label: 'Style', icon: 'checkroom' }
   ];
 
+
+
   // Method to EMIT the change, not change internal state directly unless needed for styling
   selectSection(sectionId: string): void {
     // Optionally update local state if needed for styling the buttons *within* the bar
-     this.activeSectionId = sectionId;
+     //this.activeSectionId = sectionId;
+
      // Emit the selected ID to the parent
     this.sectionSelected.emit(sectionId);
 }
