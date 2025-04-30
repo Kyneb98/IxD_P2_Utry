@@ -55,3 +55,14 @@
   }
   
   .contentleft, .contentright { flex-basis: 40%; }
+
+  /* Title styling (used in both left and right columns initially) */
+.panel-section-title {
+    display: block;         /* Default to block for left side */
+    font-size: 1rem;        /* 16px */
+    font-weight: 500;       /* Medium weight */
+    margin-bottom: 32px;    /* Space below title */
+    color: #333;
+  }
+  
+  
