@@ -10,15 +10,5 @@ import { SignUpFormComponent } from './sign-up-form/sign-up-form.component';
   styleUrl: './sign-up.component.css'
 })
 export class SignUpComponent {
-  currentStep = 0; // Start at step 0
 
-  incrementStep() {
-    this.currentStep++;
-  }
-
-  decrementStep() {
-    if (this.currentStep > 0) {
-      this.currentStep--;
-    }
-  }
 }

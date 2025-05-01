@@ -1,0 +1,12 @@
+<h3>Select your body type</h3>
+<p>Choose the body type that best describes you.</p>
+
+<mat-radio-group [(ngModel)]="selectedShape" class="body-type-radio-group">
+  <div *ngFor="let shape of bodyShapes" class="body-type-option">
+    <mat-radio-button [value]="shape.id" class="body-type-radio">
+      <img [src]="shape.image" alt="{{ shape.name }}" class="body-type-image" />
+    </mat-radio-button>
+  </div>
+</mat-radio-group>
+
+<p *ngIf="selectedShape">You selected: {{ selectedShapeName }}</p>

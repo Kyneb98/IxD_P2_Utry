@@ -1,48 +1,89 @@
- <mat-card appearance="outlined" style="width: 400px; height: 500px;">
-  <mat-tab-group>
-    <mat-tab label="Sign Up" active="true">
-      <mat-card-header>
-        <mat-card-title style="padding-bottom: 16px; padding-top: 16px;">Get started with UTRY</mat-card-title>
-      </mat-card-header>
+<mat-card class="signup-card">
+  <mat-card-header>
+    <mat-card-title>Sign Up</mat-card-title>
+  </mat-card-header>
 
-      <mat-card-content>
-        <div style="display: flex; flex-direction: column; gap: 8px;">
-          <app-input-field></app-input-field>
-          <app-password></app-password>
-          <app-password></app-password>
-        </div>
-      </mat-card-content>
-      <mat-card-actions align="end">
-        <button mat-flat-button>{{buttonText}}</button>
-      </mat-card-actions>
-      <!--<mat-card-actions>
-        <button mat-fab color="primary">
-          <mat-icon>google</mat-icon>
-        </button>
-        <button mat-fab color="primary">
-          <mat-icon>apple</mat-icon>
-        </button>
-        <button mat-fab color="primary">
-          <mat-icon>facebook</mat-icon>
-        </button>
-      </mat-card-actions>-->
-    </mat-tab>
-    <mat-tab label="Sign In">
-      <mat-card-header>
-        <mat-card-title style="padding-bottom: 16px; padding-top: 16px;">Welcome back to UTRY!</mat-card-title>
-      </mat-card-header>
+  <!-- Loading Indicator -->
+  <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
 
-      <mat-card-content>
-        <app-input-field></app-input-field>
-        <app-password></app-password>
-      </mat-card-content>
-      <mat-card-actions align="end">
-        <button mat-flat-button>{{buttonText2}}</button>
-      </mat-card-actions>
+  <mat-card-content>
+    <!-- Success Message -->
+    <div *ngIf="successMessage && !isLoading" class="message message-success">
+      {{ successMessage }}
+    </div>
 
-    </mat-tab>
-  </mat-tab-group>
+    <!-- Error Message -->
+    <div *ngIf="errorMessage && !isLoading" class="message message-error">
+      {{ errorMessage }}
+    </div>
+
+    <!-- Signup Form -->
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" novalidate class="signup-form-fields">
+      <!-- Username Field -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Username</mat-label>
+        <input matInput
+               formControlName="username"
+               placeholder="Choose a username"
+               required
+               autocomplete="username">
+<!-- Validation errors -->
+
+        <mat-error *ngIf="usernameControl?.hasError('required')">
+          Username is required
+        </mat-error>
+        <mat-error *ngIf="usernameControl?.hasError('minlength')">
+          Must be at least 3 characters
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Email Field -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Email</mat-label>
+        <input matInput
+               type="email"
+               formControlName="email"
+               placeholder="your.email@example.com"
+               required
+               autocomplete="email">
+        <mat-error *ngIf="emailControl?.hasError('required')">
+          Email is required
+        </mat-error>
+        <mat-error *ngIf="emailControl?.hasError('email')">
+          Please enter a valid email address
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Password Field -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Password</mat-label>
+        <input matInput
+               type="password"
+               formControlName="password"
+               placeholder="Choose a secure password"
+               required
+               autocomplete="new-password">
+<!-- Validation errors -->
+        <mat-error *ngIf="passwordControl?.hasError('required')">
+          Password is required
+        </mat-error>
+        <mat-error *ngIf="passwordControl?.hasError('minlength')">
+          Must be at least 6 characters
+        </mat-error>
+      </mat-form-field>
+    </form>
+  </mat-card-content>
+
+  <mat-card-actions align="end">
+    <!-- Submit Button -->
+    <button mat-raised-button
+            routerLink="/onboarding"
+            color="primary"
+            type="submit"
+            [disabled]="signupForm.invalid || isLoading"
+            (click)="onSubmit()">
+      <span *ngIf="!isLoading">Sign Up</span>
+      <span *ngIf="isLoading">Signing Up...</span>
+    </button>
+  </mat-card-actions>
 </mat-card>
-
-
-

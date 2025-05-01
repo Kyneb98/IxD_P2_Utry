@@ -1,0 +1,89 @@
+<mat-grid-list cols="2" rowHeight="1:1">
+  <!-- Top row spanning both columns -->
+  <mat-grid-tile colspan="2" style="text-align: center; background-color: #f5f5f5;">
+    <h1>Welcome to UTRY</h1>
+  </mat-grid-tile>
+
+  <!-- Left column -->
+  <mat-grid-tile>
+    <img src="/utryDamer.png" style="width: 100%; height: 100%;" />
+  </mat-grid-tile>
+
+  <!-- Right column -->
+  <mat-grid-tile>
+    <div style="height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+      <mat-card appearance="outlined" style="width: 600px; height: 700px; position: relative;">
+        <div [ngSwitch]="currentStep" style="height: 100%; display: flex; flex-direction: column;">
+          <!-- Step 1 -->
+          <div *ngSwitchCase="1" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <h3>Step 1: Measure Your Waist</h3>
+            <img src="/Measure-waist.gif" alt="Measure Waist" style="max-width: 100%; border-radius: 8px;" />
+            <mat-form-field appearance="outline" style="width: 50%; margin-top: 16px;">
+              <mat-label>Enter your measurement</mat-label>
+              <input matInput type="number" placeholder="e.g., 32 inches" />
+              <span matTextSuffix>in</span>
+            </mat-form-field>
+
+            <button mat-button color="primary" routerLink="/onboarding" [queryParams]="{ step: 3 }" style="position: absolute; bottom: 16px; left: 16px;">
+              Back to setup
+            </button>
+          </div>
+
+          <!-- Step 2 -->
+          <div *ngSwitchCase="2" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <h3>Step 2: Measure Your Chest</h3>
+            <img src="/Measure-waist.gif" alt="Measure Waist" style="max-width: 100%; border-radius: 8px;" />
+            <mat-form-field appearance="outline" style="width: 50%; margin-top: 16px;">
+              <mat-label>Enter your measurement</mat-label>
+              <input matInput type="number" placeholder="e.g., 32 inches" />
+              <span matTextSuffix>in</span>
+            </mat-form-field>
+          </div>
+
+          <!-- Step 3 -->
+          <div *ngSwitchCase="3" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <h3>Step 3: Measure Your Arms</h3>
+            <img src="/Measure-waist.gif" alt="Measure Waist" style="max-width: 100%; border-radius: 8px;" />
+            <mat-form-field appearance="outline" style="width: 50%; margin-top: 16px;">
+              <mat-label>Enter your measurement</mat-label>
+              <input matInput type="number" placeholder="e.g., 32 inches" />
+              <span matTextSuffix>in</span>
+            </mat-form-field>
+          </div>
+
+          <!-- Step 4 -->
+          <div *ngSwitchCase="4" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <h3>Step 4: Measure Your Shoulders</h3>
+            <img src="/Measure-waist.gif" alt="Measure Waist" style="max-width: 100%; border-radius: 8px;" />
+            <mat-form-field appearance="outline" style="width: 50%; margin-top: 16px;">
+              <mat-label>Enter your measurement</mat-label>
+              <input matInput type="number" placeholder="e.g., 32 inches" />
+              <span matTextSuffix>in</span>
+            </mat-form-field>
+          </div>
+
+          <!-- Step 5 -->
+          <div *ngSwitchCase="5" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <h3>Step 5: Measure Your Front Bodice</h3>
+            <img src="/Measure-waist.gif" alt="Measure Waist" style="max-width: 100%; border-radius: 8px;" />
+            <mat-form-field appearance="outline" style="width: 50%; margin-top: 16px;">
+              <mat-label>Enter your measurement</mat-label>
+              <input matInput type="number" placeholder="e.g., 32 inches" />
+              <span matTextSuffix>in</span>
+            </mat-form-field>
+            <button mat-raised-button color="primary" routerLink="" style="position: absolute; bottom: 16px; right: 16px;">
+              Finish!
+            </button>
+          </div>
+
+        </div>
+
+        <!-- Button container -->
+        <div style="position: absolute; bottom: 16px; left: 16px; right: 16px; display: flex; align-items: center;">
+          <button mat-raised-button color="warn" *ngIf="currentStep > 1" (click)="prevStep()" style="margin-right: auto;">Back</button>
+          <button mat-raised-button color="primary" *ngIf="currentStep < 5" (click)="nextStep()" style="margin-left: auto;">Next</button>
+        </div>
+      </mat-card>
+    </div>
+  </mat-grid-tile>
+</mat-grid-list>
