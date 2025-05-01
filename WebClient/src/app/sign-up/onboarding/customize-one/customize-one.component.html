@@ -1,0 +1,80 @@
+
+    <!--Formfield for choosing sex-->
+    <mat-form-field appearance="outline" style="width: 50%;">
+      <mat-label>Sex</mat-label>
+      <mat-select>
+        <mat-option value="option1">Female</mat-option>
+        <mat-option value="option2">Male</mat-option>
+        <mat-option value="option3">Other</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div *ngIf="successMessage && !isLoading" class="message message-success">
+      {{ successMessage }}
+    </div>
+    <div *ngIf="errorMessage && !isLoading" class="message message-error">
+      {{ errorMessage }}
+    </div>
+
+    <!-- Form -->
+    <form [formGroup]="measurementForm" (ngSubmit)="onSubmit()" novalidate class="measurement-fields">
+
+      <!-- Weight Section -->
+      <div class="measurement-group">
+        <h4 class="group-title">Weight</h4>
+        <mat-form-field appearance="outline" class="value-field">
+          <mat-label>Value</mat-label>
+          <input matInput type="number" formControlName="weightValue" placeholder="e.g., 75.5" required>
+          <mat-error *ngIf="weightValueControl?.hasError('required')">Value is required</mat-error>
+          <mat-error *ngIf="weightValueControl?.hasError('pattern')">Must be a valid number</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="unit-field">
+          <mat-label>Unit</mat-label>
+          <!-- Example using input, could be mat-select -->
+          <input matInput formControlName="weightUnit" placeholder="e.g., kg, lbs">
+          <!-- Or use mat-select:
+          <mat-select formControlName="weightUnit">
+            <mat-option value="kg">kg</mat-option>
+            <mat-option value="lbs">lbs</mat-option>
+          </mat-select>
+          -->
+        </mat-form-field>
+      </div>
+
+      <!-- Height Section -->
+      <div class="measurement-group">
+        <h4 class="group-title">Height</h4>
+        <mat-form-field appearance="outline" class="value-field">
+          <mat-label>Value</mat-label>
+          <input matInput type="number" formControlName="heightValue" placeholder="e.g., 180" required>
+          <mat-error *ngIf="heightValueControl?.hasError('required')">Value is required</mat-error>
+          <mat-error *ngIf="heightValueControl?.hasError('pattern')">Must be a valid number</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="unit-field">
+          <mat-label>Unit</mat-label>
+           <!-- Example using input, could be mat-select -->
+           <input matInput formControlName="heightUnit" placeholder="e.g., cm, inches, ft">
+          <!-- Or use mat-select:
+          <mat-select formControlName="heightUnit">
+            <mat-option value="cm">cm</mat-option>
+            <mat-option value="inches">inches</mat-option>
+            <mat-option value="m">m</mat-option>
+          </mat-select>
+          -->
+        </mat-form-field>
+      </div>
+
+    </form> <!-- End form tag -->
+
+    <!--Skin color picker-->
+    <h2>Pick you skin color</h2>
+    <mat-chip-listbox class="chip-list" [(ngModel)]="selectedColor">
+      <mat-chip-option
+      *ngFor="let color of colorSet"
+      [value]="color"
+      [ngStyle]="{'background-color': color}">
+      </mat-chip-option>
+    </mat-chip-listbox>
+

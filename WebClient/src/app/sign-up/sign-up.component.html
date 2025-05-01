@@ -1,0 +1,23 @@
+
+<mat-grid-list cols="2" rowHeight="1:1">
+  <!-- Top row spanning both columns -->
+  <mat-grid-tile colspan="2" style="text-align: center; background-color: #f5f5f5;">
+    <h1>Welcome to UTRY</h1>
+  </mat-grid-tile>
+
+  <!-- Left column -->
+  <mat-grid-tile>
+    <img src="/utryDamer.png" style="width: 100%; height: 100%;" />
+  </mat-grid-tile>
+
+  <!-- Right column -->
+  <mat-grid-tile>
+    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
+      <h1>
+        <img src="/logo.svg" />
+      </h1>
+      <app-sign-up-form></app-sign-up-form>
+    </div>
+  </mat-grid-tile>
+</mat-grid-list>
+

@@ -1,0 +1,5 @@
+# .gitignore
+node_modules/
+.env
+db/database.db
+db/database.db-journal # SQLite temporary file

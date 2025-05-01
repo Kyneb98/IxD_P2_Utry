@@ -1,0 +1,28 @@
+.signup-form-fields {
+  display: flex;
+  flex-direction: column; /* Arrange fields vertically */
+  gap: 16px; /* Add spacing between fields */
+}
+
+.full-width {
+  width: 100%; /* Ensure fields take up the full width */
+}
+
+.message {
+  margin-bottom: 16px;
+}
+
+.message-success {
+  color: green;
+}
+
+.message-error {
+  color: red;
+}
+
+.signup-card {
+  width: 400px;
+  height: 500px;
+  margin: auto; /* Center the card horizontally */
+  padding: 16px; /* Add padding inside the card */
+}
