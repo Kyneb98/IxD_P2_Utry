@@ -58,49 +58,60 @@ buttonText2: string = "Sign In";
   get passwordControl(): AbstractControl | null { return this.signupForm.get('password'); }
   // --- End Getters ---
 
-  /**
-   * Handles the form submission.
-   */
   onSubmit(): void {
-    this.errorMessage = null; // Clear previous messages
+    this.errorMessage = null;
     this.successMessage = null;
-
-    // Mark all fields as touched to show validation errors immediately
     this.signupForm.markAllAsTouched();
 
-    // If form is invalid, don't proceed
     if (this.signupForm.invalid) {
       this.errorMessage = "Please correct the errors in the form.";
-      console.log("Form Invalid:", this.signupForm.errors); // Log specific errors
       return;
     }
 
-    // --- Form is valid, proceed with API call ---
     this.isLoading = true;
-    const signupData: UserSignupData = this.signupForm.value; // Get data from form
+    const signupData = this.signupForm.value as UserSignupData; // Use type assertion
 
-    console.log('Submitting signup form data:', signupData);
-
-    // Call the service method
     this.userService.signupUser(signupData).subscribe({
-      // --- Success Case ---
+      // ========================================================
+      // == SUCCESS CALLBACK (next) - CODE TO ADD/MODIFY HERE ==
+      // ========================================================
       next: (response: SignupResponse) => {
-        console.log('Signup successful!', response);
         this.isLoading = false;
         this.successMessage = `${response.message} Welcome, ${this.usernameControl?.value}! (Your User ID: ${response.userId})`;
-        this.signupForm.reset(); // Reset form fields
-        // Optionally navigate to another page (e.g., login)
-        // import { Router } from '@angular/router'; needed then inject Router
-        // this.router.navigate(['/login']);
+        console.log('Signup successful! Response:', response);
+
+        // --- START: Code to save userId in localStorage ---
+        if (response && typeof response.userId === 'number') {
+          try {
+            // Log intention and value
+            console.log(`Attempting to store userId: ${response.userId} in localStorage.`);
+
+            // Store the userId. IMPORTANT: localStorage values MUST be strings.
+            localStorage.setItem('currentUserId', response.userId.toString());
+
+            // Log confirmation
+            console.log(`Successfully stored 'currentUserId'=${response.userId} in localStorage.`);
+
+          } catch (error) {
+            // Handle potential errors (e.g., storage full, security restrictions)
+            console.error("Error saving userId to localStorage:", error);
+            // Optionally inform the user
+            this.errorMessage = "Signup successful, but could not save session information. Measurements might not be saved correctly. Please ensure localStorage is enabled.";
+          }
+        } else {
+          console.error("Signup response did not contain a valid userId:", response);
+          this.errorMessage = "Signup seemed successful, but user ID was missing in the response. Cannot save session.";
+        }
+
+        // Reset the form after attempting to save the ID
+        this.signupForm.reset();
+        // Optionally navigate to another page here
       },
-      // --- Error Case ---
       error: (error: Error) => {
-        console.error('Signup failed:', error);
         this.isLoading = false;
-        this.errorMessage = error.message; // Use the error message from the service
-      },
-      // --- Completion (Optional) ---
-      // complete: () => console.log('Signup observable completed.')
+        this.errorMessage = error.message;
+        console.error('Signup failed:', error);
+      }
     });
   }
 }
