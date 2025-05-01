@@ -52,7 +52,7 @@ export class HomeComponent {
     '/zalandoHome/shirt2.png',
     '/zalandoHome/shirt3.png',
     '/zalandoHome/shirt4.png',
-    '/zalandoHome/whiteT.png',
+    '/zalandoHome/blackT.png',
   ];
 
   colorSwatches = [

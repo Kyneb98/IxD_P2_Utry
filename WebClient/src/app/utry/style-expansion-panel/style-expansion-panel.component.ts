@@ -4,6 +4,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 
 @Component({
@@ -12,7 +14,9 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
     CommonModule,
     MatButtonModule,
     MatIconModule,
-    MatTabsModule
+    MatTabsModule,
+    FormsModule,
+    MatFormFieldModule,
   ],
   templateUrl: './style-expansion-panel.component.html',
   styleUrl: './style-expansion-panel.component.css',
@@ -38,6 +42,8 @@ export class StyleExpansionPanelComponent {
 
     // Control the panel's state, start expanded by default
 isExpanded: boolean = true;
+
+
 
 // Toggle the expansion state
 togglePanel(): void {

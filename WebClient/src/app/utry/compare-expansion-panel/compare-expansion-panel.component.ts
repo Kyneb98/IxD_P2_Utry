@@ -52,6 +52,6 @@ togglePanel(): void {
 }
 
 
-selected1: string = 'Choose size to compare';
-selected2: string = 'Choose size to compare';
+selected1: string = 'Choose a size to compare';
+selected2: string = 'Choose a size to compare';
 }
