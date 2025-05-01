@@ -1,0 +1,48 @@
+ <mat-card appearance="outlined" style="width: 400px; height: 500px;">
+  <mat-tab-group>
+    <mat-tab label="Sign Up" active="true">
+      <mat-card-header>
+        <mat-card-title style="padding-bottom: 16px; padding-top: 16px;">Get started with UTRY</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <app-input-field></app-input-field>
+          <app-password></app-password>
+          <app-password></app-password>
+        </div>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button mat-flat-button>{{buttonText}}</button>
+      </mat-card-actions>
+      <!--<mat-card-actions>
+        <button mat-fab color="primary">
+          <mat-icon>google</mat-icon>
+        </button>
+        <button mat-fab color="primary">
+          <mat-icon>apple</mat-icon>
+        </button>
+        <button mat-fab color="primary">
+          <mat-icon>facebook</mat-icon>
+        </button>
+      </mat-card-actions>-->
+    </mat-tab>
+    <mat-tab label="Sign In">
+      <mat-card-header>
+        <mat-card-title style="padding-bottom: 16px; padding-top: 16px;">Welcome back to UTRY!</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+        <app-input-field></app-input-field>
+        <app-password></app-password>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button mat-flat-button>{{buttonText2}}</button>
+      </mat-card-actions>
+
+    </mat-tab>
+  </mat-tab-group>
+</mat-card>
+
+
+
