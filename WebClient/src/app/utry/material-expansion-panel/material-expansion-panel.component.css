@@ -39,7 +39,8 @@
 }
 
 .panel-content-area {
-  padding: 30px 25px; /* Padding for the content */
+  padding: 15px 25px; /* Padding for the content */
+  padding-top: 0; /* No top padding to align with header */
   box-sizing: border-box;
   
   background-color: inherit;

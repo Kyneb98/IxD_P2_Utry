@@ -40,6 +40,7 @@
   
   .panel-content-area {
     padding: 10px 25px; /* Padding for the actual content */
+    padding-top: 0; /* No top padding to align with header */
     box-sizing: border-box;
     /* Content is only visible when expanded due to parent transform/overflow */
   }
@@ -51,6 +52,14 @@
     align-items: flex-start;
     gap: 30px;
     margin-bottom: 5px;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  mat-form-field {
+    height: 70px;;
   }
   
   .contentleft, .contentright { flex-basis: 40%; }

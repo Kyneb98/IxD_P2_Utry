@@ -41,6 +41,8 @@
 
 .panel-content-area {
   padding: 10px 25px; /* Padding for the actual content */
+  padding-top: 0;
+  padding-bottom: 0;
   box-sizing: border-box;
   /* Content is only visible when expanded due to parent transform/overflow */
 }
@@ -60,17 +62,21 @@
 .panel-section-title {
   display: block;         /* Default to block for left side */
   font-size: 1rem;        /* 16px */
-  font-weight: 500;       /* Medium weight */
-  margin-bottom: 32px;    /* Space below title */
+  font-weight: 500;       /* Medium weight */   /* Space below title */
   color: #333;
 }
+
+.contentleft .panel-section-title {
+  margin-bottom: 25px;    /* Space below title */
+  text-align: left;       /* Align left for left column *        /* Match active nav blue */
+};
 
 /* Specific styling for the title in the right column (to include icon) */
 .contentright .panel-section-title {
   display: inline-flex; /* Align icon next to text */
   align-items: center;
   gap: 10px;             /* Space between text and icon */
-  margin-bottom: 10px;  /* Adjust spacing if needed */
+  margin-bottom: 20px;  /* Adjust spacing if needed */
 }
 
 

@@ -99,6 +99,23 @@
  align-self: flex-start; /* Keep at top left */
 }
 
+.compare-section {
+  display: flex;
+  flex-direction: row; /* Items laid out in a row */
+  justify-content: space-between; /* Space between items, adjust as needed */
+  align-items: center; /* Vertically center the items */
+  flex-wrap: wrap; /* Wrap items if the viewport is too narrow */
+  margin: 20px auto; /* Optional: center container or add spacing */
+}
+
+.compare-section model-viewer {
+  flex: 1; /* Allow each model-viewer to take equal width */
+  margin: 0 10px; /* Optional: add horizontal space between the elements */
+  min-width: 300px; /* Optional: enforce a minimum width to keep layout intact on smaller screens */
+}
+
+
+
 /* --- Style the model-viewer element --- */
 .utry-model-viewer {
   position: relative;

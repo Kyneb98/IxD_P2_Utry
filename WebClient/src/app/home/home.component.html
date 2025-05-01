@@ -44,35 +44,91 @@
 
     <!-- Specific Content Sections -->
     <div *ngSwitchCase="'size-fit'">
-        <model-viewer
-        src="/William.glb" alt="3D model of clothing"
-        camera-controls
-        touch-action="pan-y"             disable-zoom
-        auto-rotate
-        shadow-intensity="1"
-        class="utry-model-viewer">
-         <div class="progress-bar hide" slot="progress-bar">
-              <div class="update-bar"></div>
-          </div>
-    </model-viewer>
+      <model-viewer
+      src="/models/William.glb" alt="3D model of clothing"
+      camera-controls
+      touch-action="pan-y"            
+      
+
+      camera-orbit="140deg 80deg auto"
+      shadow-intensity="1"
+      class="utry-model-viewer">
+       <div class="progress-bar hide" slot="progress-bar">
+            <div class="update-bar"></div>
+        </div>
+  </model-viewer>
         <app-size-and-fit-expansion-panel></app-size-and-fit-expansion-panel>
     </div>
 
-    <div *ngSwitchCase="'compare'">
-        <h2>Compare Content Area</h2>
-        <p>Comparison details...</p>
+    <div *ngSwitchCase="'compare'" class="compare-section">
+      <model-viewer
+      src="/models/William.glb" alt="3D model of clothing"
+      camera-controls
+      touch-action="pan-y"            
+      camera-target="0m 1.4m 0m"
+      field-of-view="100deg"
+      min-camera-orbit="auto auto 1m"
+      max-camera-orbit="auto auto 2m"
+
+      camera-orbit="140deg 80deg auto"
+      shadow-intensity="1"
+      class="utry-model-viewer">
+       <div class="progress-bar hide" slot="progress-bar">
+            <div class="update-bar"></div>
+        </div>
+  </model-viewer>
+
+  <model-viewer
+      src="/models/William.glb" alt="3D model of clothing"
+      camera-controls
+      touch-action="pan-y"            
+      camera-target="0m 1.4m 0m"
+      field-of-view="100deg"
+      min-camera-orbit="auto auto 1m"
+      max-camera-orbit="auto auto 2m"
+
+      camera-orbit="140deg 80deg auto"
+      shadow-intensity="1"
+      class="utry-model-viewer">
+       <div class="progress-bar hide" slot="progress-bar">
+            <div class="update-bar"></div>
+        </div>
+  </model-viewer>
+
+  
+  
         <app-compare-expansion-panel></app-compare-expansion-panel>
     </div>
 
     <div *ngSwitchCase="'materials'">
-       <h2>Materials Content Area</h2>
-       <p>Material info...</p>
+      <model-viewer
+      src="/models/William.glb" alt="3D model of clothing"
+      camera-controls
+      touch-action="pan-y"            
+
+      camera-orbit="140deg 80deg auto"
+      shadow-intensity="1"
+      class="utry-model-viewer">
+       <div class="progress-bar hide" slot="progress-bar">
+            <div class="update-bar"></div>
+        </div>
+  </model-viewer>
        <app-material-expansion-panel></app-material-expansion-panel>
     </div>
 
     <div *ngSwitchCase="'style'">
-       <h2>Style Content Area</h2>
-       <p>Style details...</p>
+      <model-viewer
+      src="/models/William.glb" alt="3D model of clothing"
+      camera-controls
+      touch-action="pan-y"            
+      
+      camera-orbit="140deg 80deg auto"
+      shadow-intensity="1"
+      class="utry-model-viewer">
+       <div class="progress-bar hide" slot="progress-bar">
+            <div class="update-bar"></div>
+        </div>
+  </model-viewer>
        <app-style-expansion-panel></app-style-expansion-panel>
     </div>
 </div>
@@ -111,7 +167,7 @@
 
       <!-- shows the different color pictures -->
       <div class="color-selector">
-        <p class="color-label">Color: <strong>white</strong></p>
+        <p class="color-label">Color: <strong>Black</strong></p>
         <div class="swatches">
           <button *ngFor="let swatch of colorSwatches" class="swatch" [class.selected]="swatch.selected">
             <img [src]="swatch.img" [alt]="swatch.name">

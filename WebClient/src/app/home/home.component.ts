@@ -56,8 +56,8 @@ export class HomeComponent {
   ];
 
   colorSwatches = [
-    { name: 'white', img: '/zalandoHome/whiteT.png', selected: true },
-    { name: 'black', img: '/zalandoHome/blackT.png' },
+    { name: 'black', img: '/zalandoHome/blackT.png' , selected: true },
+    { name: 'white', img: '/zalandoHome/whiteT.png'},
     { name: 'navy', img: '/zalandoHome/blueT.jpg' },
     { name: 'brown', img: '/zalandoHome/greyT.jpg' },
     { name: 'lightgrey', img: '/zalandoHome/lightGreyT.jpg' },
