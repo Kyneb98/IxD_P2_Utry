@@ -1,0 +1,118 @@
+
+/* Promo Bar */
+.promo-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    font-size: 0.75rem; /* 12px */
+    color: #555;
+    background-color: #f5f5f5; /* Light grey background */
+    text-align: center; /* Center text within spans if they wrap */
+    margin: 0 -15px; /* Extend to edge of padding */
+    padding: 6px 15px; /* Add padding back */
+}
+.promo-bar span {
+    flex: 1; /* Distribute space - adjust if needed */
+}
+
+
+/* Top Bar */
+.top-bar {
+  display: flex;
+  justify-content: flex-end; /* Align icons to the right */
+  align-items: center;
+  padding: 8px 0;
+  font-size: 0.8rem;
+  color: #555;
+  gap: 20px; /* Increased gap */
+}
+.top-bar mat-icon {
+  font-size: 24px; /* Slightly larger icons */
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+/* Main Header */
+.main-header {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+}
+.tabs-container {
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+.logo-container {
+  flex-grow: 1;
+  text-align: center;
+  gap: 20px; 
+}
+.zalando-logo {
+  height: 25px;
+}
+.search-container {
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+/* Style for active header tab */
+::ng-deep .main-header .mat-mdc-tab.mdc-tab--active {
+    background-color: #000;
+    color: #fff;
+    border-radius: 0; /* Sharp corners */
+}
+::ng-deep .main-header .mat-mdc-tab.mdc-tab--active .mdc-tab__text-label {
+    color: #fff; /* Ensure text is white */
+}
+::ng-deep .main-header .mat-mdc-tab-header {
+  border-bottom: none;
+}
+::ng-deep .main-header .mat-mdc-tab {
+  min-width: 80px;
+  padding: 0 16px;
+  height: 36px; /* Slightly shorter tabs */
+  font-weight: bold;
+  opacity: 1 !important; /* Ensure non-active are fully visible */
+}
+::ng-deep .main-header .mdc-tab-indicator {
+  display: none; /* Hide the underline indicator */
+}
+::ng-deep .main-header .mat-mdc-tab-body-wrapper {
+  display: none;
+}
+.search-field {
+  width: 280px; /* Wider search */
+  height: 30px;
+}
+::ng-deep .search-field .mdc-notched-outline > *{
+    border-radius: 0 !important; /* Sharp corners on search */
+    border-color: #000 !important; /* Black border */
+}
+
+
+
+/* Secondary Nav */
+.secondary-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  padding: 15px 0;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 30px;
+}
+.secondary-nav a {
+  text-decoration: none;
+  color: #222;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.secondary-nav a:hover {
+  text-decoration: underline;
+}
+.secondary-nav a.sale {
+  color: #ff4500;
+}
+.secondary-nav a.utry {
+  color: #001689;
+}

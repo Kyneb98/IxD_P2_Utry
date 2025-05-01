@@ -1,0 +1,95 @@
+
+/* Styles for the navigation container */
+.bottom-nav-container {
+  width: 100%;
+  height: 56px; /* Example height - adjust as needed */
+  background-color: #ffffff; /* White background */
+  border-top: 1px solid #e0e0e0; /* Optional border */
+  display: flex;
+  justify-content: space-around;
+  align-items: stretch; /* Stretch items to fill height */
+}
+
+/* Styles for individual navigation items (buttons) */
+.nav-item {
+  display: inline-flex; /* Use inline-flex to align icon and text */
+  justify-content: center; /* Center content horizontally */
+  align-items: center; /* Center content vertically */
+  flex-grow: 1; /* Allow items to grow and fill space */
+  padding: 8px 12px; /* Adjust padding */
+  background-color: transparent;
+  border: none;
+  border-radius: 8px; /* Default rounded corners */
+  cursor: pointer;
+  color: #888888; /* Default INACTIVE icon color (grey) */
+  text-align: center;
+  transition: background-color 0.2s ease, color 0.2s ease, flex-grow 0.2s ease; /* Smooth transition */
+  -webkit-tap-highlight-color: transparent;
+  overflow: hidden; /* Hide overflow */
+  white-space: nowrap; /* Prevent label from wrapping */
+  margin: 4px 2px; /* Add small margin between items */
+  flex-basis: 0; /* Start with equal basis before growing */
+}
+
+.nav-item:focus {
+  outline: none;
+}
+
+/* Style for the icon inside the button */
+.nav-item mat-icon {
+  font-size: 24px; /* Ensure consistent icon size */
+  /* No extra margin needed if label is hidden */
+}
+
+/* Style for the label (only visible when active) */
+.nav-label {
+  font-size: 0.9rem; /* Adjust font size */
+  font-weight: 500; /* Slightly bolder */
+  margin-left: 8px; /* Space between icon and label WHEN VISIBLE */
+}
+
+/* Style for the ACTIVE navigation item */
+.nav-item.active-link {
+  background-color: #0d3080; /* Dark blue background like the example */
+  color: #ffffff; /* ACTIVE icon and text color (white) */
+  flex-grow: 1.5; /* Optional: Allow active item to grow slightly more */
+
+}
+
+/* Ensure icon color changes correctly when active */
+.nav-item.active-link mat-icon {
+  color: #ffffff;
+}
+
+/* --- IMPORTANT --- */
+/* Add padding to the body or the main scrollable container
+   to prevent the fixed bottom nav from hiding content */
+body { /* Or the specific scrollable container */
+  padding-bottom: 66px; /* Should be >= nav bar height + some buffer */
+}
+
+.content-display-area {
+  position: relative;
+}
+
+
+
+.size-fit-container {
+  display: flex;
+  justify-content: left;
+  flex-direction: column; /* Stack components vertically */
+  justify-content: flex-end; /* Push the expansion panel to the bottom */
+  height: 100vh; /* Ensure the container takes full viewport height */
+  gap: 10px; /* Space between components */
+}
+
+app-size-and-fit-expansion-panel {
+  align-self: stretch; /* Ensure it spans the full width */
+  padding-bottom: 56px; /* Adjust based on nav bar height */
+  border-radius: 0 !important; /* Remove any rounded corners */
+
+}
+
+
+
+

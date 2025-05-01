@@ -1,0 +1,37 @@
+<div class="gallery-container">
+    <!-- Up Arrow Button using Material Icon -->
+    <button
+      class="arrow arrow-up"
+      (click)="scrollUp()"
+      [disabled]="currentIndex === 0">
+      <mat-icon>keyboard_arrow_up</mat-icon>
+    </button>
+  
+    <!-- Gallery displayed in a fixed area with 3 scaled images -->
+    <div class="gallery">
+      <div class="gallery-inner" [ngStyle]="{'--gallery-gap': spacing}">
+        <img
+          *ngFor="let img of visibleImages"
+          [src]="img"
+          class="gallery-item"
+          alt="Gallery image"
+          (click)="expandImage(img)" />
+      </div>
+    </div>
+  
+    <!-- Down Arrow Button using Material Icon -->
+    <button
+      class="arrow arrow-down"
+      (click)="scrollDown()"
+      [disabled]="currentIndex + 3 >= images.length">
+      <mat-icon>keyboard_arrow_down</mat-icon>
+    </button>
+  </div>
+  
+  <!-- Expanded image overlay -->
+<div class="expanded-overlay" *ngIf="expandedImage" (click)="closeImage()">
+    <!-- Close button -->
+    <button class="close-button" (click)="closeImage(); $event.stopPropagation()">X</button>
+    <img [src]="expandedImage" class="expanded-image" alt="Expanded image">
+  </div>
+  
