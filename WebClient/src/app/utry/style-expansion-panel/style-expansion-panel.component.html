@@ -1,32 +1,53 @@
-<!-- Main container with animation trigger -->
+<!-- src/app/utry/style-panel/style-panel.component.html -->
+
 <div class="style-panel-wrapper"
      [@panelState]="isExpanded ? 'expanded' : 'collapsed'">
 
-  <!-- Header/Toggle Area - ALWAYS visible -->
+  <!-- Header/Toggle Area -->
   <div class="panel-header" (click)="togglePanel()"
        [attr.aria-expanded]="isExpanded"
        aria-controls="panel-content-area"
        role="button"
        tabindex="0">
-    <!-- You can add a subtle background/border here if needed -->
-    <!-- The arrow icon is the primary visual indicator -->
     <mat-icon class="toggle-icon">{{ isExpanded ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</mat-icon>
   </div>
 
-
-  <!-- Content Area - This part slides up/down -->
+  <!-- Content Area -->
   <div class="panel-content-area" id="panel-content-area">
-    <!-- Your existing content structure -->
-    <div class="expansion-content">
+    <div class="expansion-content"> <!-- This is still flex-direction: column -->
 
-      <div class="contentleft">
-        <span class="panel-section-title">Match with items in your wardrobe</span>
-      </div> 
+      <h2 class="panel-section-title">Match with items in your wardrobe</h2>
 
-      <div class="contentright">
+      <div class="wardrobe-search-container">
+        <mat-form-field appearance="outline" class="wardrobe-search-field">
+          <mat-icon matPrefix>search</mat-icon>
+          <input matInput placeholder="Search in wardrobe">
+        </mat-form-field>
       </div>
 
-    </div>
+      <!-- *** New Wrapper Div for Gallery and Link *** -->
+      <div class="gallery-link-row">
+
+        <!-- Scrollable Item Gallery -->
+        <div class="wardrobe-items-container">
+          <button *ngFor="let item of wardrobeItems"
+                  class="wardrobe-item"
+                  [class.selected]="item.selected"
+                  (click)="selectItem(item)">
+            <img [src]="item.img" [alt]="item.name">
+          </button>
+        </div>
+
+        <!-- Go to Wardrobe Link -->
+        <a href="#" class="go-to-wardrobe">
+          Go to wardrobe
+          <mat-icon>arrow_forward</mat-icon>
+        </a>
+
+      </div>
+       <!-- *** End New Wrapper Div *** -->
+
+    </div> <!-- End expansion-content -->
   </div> <!-- End panel-content-area -->
 
 </div> <!-- End style-panel-wrapper -->

@@ -40,22 +40,137 @@
   }
   
   .panel-content-area {
-    padding: 10px 25px; /* Padding for the actual content */
+    padding: 0px 25px;
     box-sizing: border-box;
-    /* Content is only visible when expanded due to parent transform/overflow */
+    background-color: inherit;
+    margin-top: 0px;
   }
   
-  /* Styles for your internal content */
   .expansion-content {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 30px;
-    margin-bottom: 5px;
+    flex-direction: column; /* Stack title, search, items, link */
+    gap: 10px;
   }
   
-  .contentleft, .contentright { flex-basis: 40%; }
+  .panel-section-title {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 1px;
+  }
+
+ 
+  /* Container for scrollable items */
+  .wardrobe-items-container {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 5px 2px;
+    margin: 0 -2px;
+    box-sizing: border-box;
+    flex-grow: 1;          /* *** Allow gallery to take available horizontal space *** */
+    /* Remove max-width if previously set */
+    width: 0;              /* Allow flex-grow to work correctly */
+  
+    /* Hide scrollbar styles (keep these) */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  } 
+  
+  .gallery-link-row {
+    display: flex;          /* Arrange gallery and link horizontally */
+    align-items: flex-end;    /* Vertically align the gallery and link */
+    gap: 20px;             /* Space between gallery and link */
+    width: 100%;
+    margin-top: 5px;
+  }
+
+  .wardrobe-item {
+    width: 80px;         /* Item width */
+    height: 80px;        /* Item height */
+    border: 2px solid #ccc; /* Default border */
+    background-color: #e8e8e8;
+    flex-shrink: 0;     /* Prevent shrinking */
+    padding: 0;         /* Remove button padding */
+    cursor: pointer;
+    position: relative;
+    transition: border-color 0.2s ease; /* Smooth border transition */
+    box-sizing: border-box;
+  }
+  
+  .wardrobe-item img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Or contain, depending on images */
+  }
+  
+  /* Style for the selected item */
+  .wardrobe-item.selected {
+    border-color: #000; /* Black border when selected */
+    border-width: 2px;  /* Make border thicker */
+  }
+  
+
+  /* Link style */
+  .go-to-wardrobe {
+    display: inline-flex;
+    align-items: bottom;
+    gap: 5px;
+    text-decoration: underline;
+    color: #333;
+    font-size: 0.9rem;
+    font-weight: 500;
+    flex-shrink: 0;     /* *** Prevent link from shrinking *** */
+    white-space: nowrap; /* Prevent link text from wrapping */
+    cursor: pointer;
+    padding-bottom: 2px; /* Align with the bottom of the wardrobe items */
+  }
+  .go-to-wardrobe mat-icon { font-size: 18px; width: 18px; height: 18px; }
 
 
+  .wardrobe-search-container {
+    width: 100%;
+    max-width: 300px;
+  }
   
+  /* --- Adjust Search Field Height & Styling --- */
+  .wardrobe-search-field {
+    width: 100%;
+    height: 36px; /* <-- Reduce height */
+  }
   
+  :host ::ng-deep .wardrobe-search-field .mat-mdc-form-field-flex {
+    height: 36px !important; /* <-- Match height */
+    align-items: center;
+   
+    border-radius: 6px !important; /* <-- Change from pill shape */
+    padding: 0 12px !important; /* Adjust padding */
+  }
+
+  :host ::ng-deep .wardrobe-search-field .mat-mdc-form-field-infix {
+    padding-top: 0;
+    padding-bottom: 0;
+    top: 0; /* Reset vertical position adjustment */
+    display: flex;
+    align-items: center;
+  }
+  :host ::ng-deep .wardrobe-search-field input {
+    font-size: 0.9rem;
+  }
+  :host ::ng-deep .wardrobe-search-field mat-icon[matPrefix] {
+    margin-right: 8px;
+    color: #555; /* Slightly darker icon */
+    font-size: 20px; /* Adjust icon size */
+    height: 20px;
+    width: 20px;
+  }
+  
+
+  /* Responsive */
+  @media (max-width: 480px) {
+    .panel-content-area { padding: 15px; }
+    .wardrobe-item { width: 70px; height: 70px; }
+    .go-to-wardrobe { align-self: center; }
+  }

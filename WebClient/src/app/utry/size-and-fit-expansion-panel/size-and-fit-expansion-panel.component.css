@@ -53,7 +53,7 @@
   justify-content: space-between;
   align-items: flex-start;
   gap: 30px;
-  margin-bottom: 5px;
+ 
 }
 
 .contentleft, .contentright { flex-basis: 40%; }
