@@ -6,24 +6,187 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { RouterLink } from '@angular/router';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { MeasurementService } from '../../../services/measurement.service';
+import { AbstractControl } from '@angular/forms'; // Import AbstractControl for form control access
+import { MeasurementInputData, AddMeasurementResponse } from '../../../services/measurement.model'; // Import your model
+import { AuthService } from '../../../services/auth.service'; // Import AuthService for authentication
+import { finalize, catchError } from 'rxjs/operators'; // Import finalize operator
+import { Subscription } from 'rxjs'; // Import Subscription for userId subscription
 
 @Component({
   selector: 'app-measuring-guide',
   imports: [MatGridListModule, MatCardModule, CommonModule, MatButtonModule, MatFormFieldModule,
-    MatInput, RouterLink],
+    MatInput, ReactiveFormsModule],
   templateUrl: './measuring-guide.component.html',
   styleUrl: './measuring-guide.component.css'
 })
 export class MeasuringGuideComponent {
-  currentStep: number = 1; // Start with step 1
+  measurementForm: FormGroup; // Single form for the input field
+  currentStep = 1; // Tracks the current step (1-based)
+  totalSteps = 5; // Total number of measurement steps
+  isLoading = false; // Tracks API call progress
+  errorMessage: string | null = null; // Stores error messages for display
+  successMessage: string | null = null; // Stores success messages for display
+  currentUserId: number | null = null; // Stores the logged-in user's ID
+  private userIdSubscription: Subscription | null = null; // To hold the AuthService subscription
 
-  nextStep(): void {
-    this.currentStep++;
+  constructor(
+    private fb: FormBuilder, // Inject FormBuilder
+    private measurementService: MeasurementService, // Inject your service
+    private authService: AuthService // Inject AuthService to get user ID
+  ) {
+    // Initialize the form group for the *shared* input field
+    this.measurementForm = this.fb.group({
+      // Control for the value input shown in each step
+      value: ['', [Validators.required, Validators.pattern(/^[0-9]+(\.[0-9]*)?$/)]],
+      // We don't strictly need the hidden 'measurementType' control if we determine it from currentStep
+    });
   }
 
-  prevStep(): void {
-    if (this.currentStep > 1) {
-      this.currentStep--;
+  ngOnInit(): void {
+    // Subscribe to AuthService to get the user ID
+    this.userIdSubscription = this.authService.currentUserId$.subscribe(userId => {
+      this.currentUserId = userId;
+      if (!this.currentUserId) {
+        this.handleNoUserId();
+      } else {
+        // If form was disabled, re-enable it when user ID is available
+        if (this.measurementForm?.disabled) {
+             this.measurementForm.enable();
+        }
+         this.errorMessage = null; // Clear any previous error
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    // Unsubscribe to prevent memory leaks
+    this.userIdSubscription?.unsubscribe();
+  }
+
+  /** Handles the scenario where a valid userId cannot be obtained */
+  private handleNoUserId(message = "User not identified. Please log in.") {
+    this.errorMessage = message;
+    if (this.measurementForm && !this.measurementForm.disabled) {
+         this.measurementForm.disable();
     }
   }
-}
+
+  // --- Convenience Getter ---
+  get valueControl(): AbstractControl | null { return this.measurementForm.get('value'); }
+
+  /**
+   * Determines the measurement type and unit based on the current step.
+   * @returns An object containing { type: string, unit: string } or null if step is invalid.
+   */
+  private getMeasurementDetailsForStep(step: number): { type: string; unit: string } | null {
+    switch (step) {
+      case 1: return { type: 'Waist', unit: 'cm' }; // Corresponds to your HTML step 1
+      case 2: return { type: 'Chest', unit: 'cm' }; // Corresponds to your HTML step 2
+      case 3: return { type: 'Arms', unit: 'cm' };  // Corresponds to your HTML step 3
+      case 4: return { type: 'Shoulders', unit: 'cm' }; // Corresponds to your HTML step 4
+      case 5: return { type: 'Front Bodice', unit: 'cm' }; // Corresponds to your HTML step 5
+      default: return null; // Invalid step
+    }
+  }
+
+  /**
+   * Triggered when the user attempts to save the current step's measurement
+   * (e.g., clicks "Next" or "Finish").
+   */
+  onSubmit(): void {
+    this.errorMessage = null;
+    this.successMessage = null;
+    this.measurementForm.markAllAsTouched();
+
+    if (!this.currentUserId) {
+      this.errorMessage = "Cannot save measurement: User not identified.";
+      return;
+    }
+    if (this.measurementForm.invalid) {
+      this.errorMessage = "Please enter a valid measurement value.";
+      return;
+    }
+
+    const stepDetails = this.getMeasurementDetailsForStep(this.currentStep);
+    if (!stepDetails) {
+      this.errorMessage = `Internal error: Invalid step number (${this.currentStep}).`;
+      return;
+    }
+
+    this.isLoading = true;
+    const formData = this.measurementForm.value;
+    const measurementData: MeasurementInputData = {
+      measurementType: stepDetails.type,
+      value: parseFloat(formData.value),
+      unit: stepDetails.unit
+    };
+
+    console.log(`Attempting to save: Step ${this.currentStep}, Type: ${measurementData.measurementType}, User: ${this.currentUserId}`);
+
+    this.measurementService.addMeasurement(measurementData, this.currentUserId)
+      .pipe(
+        finalize(() => this.isLoading = false) // Reset loading state regardless of outcome
+      )
+      .subscribe({
+        next: (response: AddMeasurementResponse) => {
+          console.log(`Step ${this.currentStep} (${measurementData.measurementType}) saved successfully:`, response);
+          // Don't show success message here yet, let nextStep handle UI transition
+          // this.successMessage = `${measurementData.measurementType} measurement saved!`;
+          this.valueControl?.reset(); // Clear input field
+
+          // --- TRIGGER NEXT STEP LOGIC ON SUCCESS ---
+          if (this.currentStep < this.totalSteps) {
+            // Call the simplified nextStep function to advance
+            this.goToNextStep();
+          } else {
+            // This was the *last* step (Finish button)
+            console.log("All measurements finished.");
+            this.successMessage = "All measurements saved successfully!";
+            this.measurementForm.disable(); // Optionally disable form
+            // Handle final completion (e.g., navigate to dashboard)
+            // this.router.navigate(['/dashboard']);
+          }
+          // --- END TRIGGER ---
+
+        },
+        error: (error: Error) => {
+          console.error(`Error saving Step ${this.currentStep} (${measurementData.measurementType}):`, error);
+          this.errorMessage = `Error saving ${measurementData.measurementType}: ${error.message}`;
+          // IMPORTANT: Do NOT proceed to the next step if there was an error
+        }
+      });
+  } // End onSubmit
+
+  /**
+   * Advances the step number and updates the UI.
+   * This is now called internally AFTER a successful save.
+   */
+  private goToNextStep(): void {
+     if (this.currentStep < this.totalSteps) {
+         this.currentStep++;
+         console.log(`Moved to step ${this.currentStep}`);
+         // Reset messages for the new step
+         this.successMessage = null; // Clear success from previous step
+         this.errorMessage = null;
+         // Optionally call updateStepUI if you had separate logic there
+         // this.updateStepUI(this.currentStep);
+     }
+  }
+
+
+  /** Moves to the previous step */
+  prevStep(): void {
+    if (this.currentStep > 1) {
+      this.isLoading = false; // Ensure loading is stopped
+      this.currentStep--;
+      this.valueControl?.reset();
+      this.errorMessage = null;
+      this.successMessage = null;
+      if (this.measurementForm?.disabled) {
+        this.measurementForm.enable();
+      }
+    }
+  }
+} // End Component Class

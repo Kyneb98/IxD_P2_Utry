@@ -18,6 +18,7 @@ import { FormBuilder, FormGroup, Validators, AbstractControl, ReactiveFormsModul
 import { UserService } from '../../services/user.service'; // Import your user service
 import { UserSignupData, SignupResponse } from '../../services/user.model'; // Import data models
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { AuthService } from '../../services/auth.service'; // Import AuthService for authentication
 
 
 @Component({
@@ -29,8 +30,6 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
   styleUrl: './sign-up-form.component.css'
 })
 export class SignUpFormComponent {
-buttonText: string = "Sign Up";
-buttonText2: string = "Sign In";
 
   signupForm: FormGroup; // The reactive form group
   isLoading = false; // Flag for loading indicator
@@ -41,7 +40,8 @@ buttonText2: string = "Sign In";
   constructor(
     private router: Router, // Inject Router to navigate between routes
     private fb: FormBuilder, // Inject FormBuilder to create forms easily
-    private userService: UserService // Inject the UserService
+    private userService: UserService, // Inject the UserService
+    private authService: AuthService // Inject the AuthService for authentication
   ) {
      // Initialize the form
      this.signupForm = this.fb.group({
@@ -82,29 +82,14 @@ buttonText2: string = "Sign In";
 
         // --- START: Code to save userId in localStorage ---
         if (response && typeof response.userId === 'number') {
-          try {
-            // Log intention and value
-            console.log(`Attempting to store userId: ${response.userId} in localStorage.`);
-
-            // Store the userId. IMPORTANT: localStorage values MUST be strings.
-            localStorage.setItem('currentUserId', response.userId.toString());
-
-            // Log confirmation
-            console.log(`Successfully stored 'currentUserId'=${response.userId} in localStorage.`);
-
-          } catch (error) {
-            // Handle potential errors (e.g., storage full, security restrictions)
-            console.error("Error saving userId to localStorage:", error);
-            // Optionally inform the user
-            this.errorMessage = "Signup successful, but could not save session information. Measurements might not be saved correctly. Please ensure localStorage is enabled.";
-          }
+          // --- Use AuthService to update state ---
+          this.authService.loginUser(response.userId); // <-- CALL SERVICE
+          // --- End AuthService usage ---
         } else {
-          console.error("Signup response did not contain a valid userId:", response);
-          this.errorMessage = "Signup seemed successful, but user ID was missing in the response. Cannot save session.";
+          console.error("Signup response missing valid userId:", response);
+          this.errorMessage = "Signup OK, but user ID was missing.";
         }
-
-        // Reset the form after attempting to save the ID
-        this.signupForm.reset();
+        this.signupForm.reset(); // Reset the form after successful signup
         // Optionally navigate to another page here
       },
       error: (error: Error) => {

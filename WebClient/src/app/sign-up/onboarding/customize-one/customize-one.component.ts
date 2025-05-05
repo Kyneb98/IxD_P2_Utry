@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -7,13 +7,12 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatChipsModule } from '@angular/material/chips';
 import { CommonModule } from '@angular/common';
-import { forkJoin, Observable, of } from 'rxjs'; // Import forkJoin for parallel requests
-import { catchError, map } from 'rxjs/operators'; // Import operators
+import { forkJoin, Observable, of, Subscription } from 'rxjs'; // Import forkJoin for parallel requests
+import { catchError, map, finalize } from 'rxjs/operators'; // Import operators
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { MeasurementService } from '../../../services/measurement.service';
-import { AddMeasurementResponse, MeasurementInputData } from '../../../services/measurement.model'; // Import your model
-
-
+import { AddMeasurementResponse, MeasurementInputData, FailedSaveResult, MeasurementSaveAttemptResult } from '../../../services/measurement.model'; // Import model
+import { AuthService } from '../../../services/auth.service'; // Import AuthService for authentication
 
 @Component({
   selector: 'app-customize-one',
@@ -24,6 +23,8 @@ import { AddMeasurementResponse, MeasurementInputData } from '../../../services/
   styleUrl: './customize-one.component.css'
 })
 export class CustomizeOneComponent {
+
+
 
   colorSet: string[] = [
     '#f5c6a5', // Light skin tone
@@ -39,14 +40,16 @@ export class CustomizeOneComponent {
   isLoading = false;
   errorMessage: string | null = null;
   successMessage: string | null = null;
-
-  // --- PLACEHOLDER for authenticated user ID (Get from localStorage) ---
   currentUserId: number | null = null;
+  private userIdSubscription: Subscription | null = null; // Subscription to userId observable
+
 
   constructor(
     private fb: FormBuilder,
-    private measurementService: MeasurementService
+    private measurementService: MeasurementService,
+    private authService: AuthService // Inject AuthService for authentication
   ) {
+
     // Initialize form with controls for both measurements
     this.measurementForm = this.fb.group({
       // Use different control names
@@ -58,42 +61,59 @@ export class CustomizeOneComponent {
   }
 
   ngOnInit(): void {
-    // Retrieve user ID from localStorage
-    try {
-      const storedUserId = localStorage.getItem('currentUserId');
-      if (storedUserId) {
-        this.currentUserId = parseInt(storedUserId, 10);
+    console.log('Component ngOnInit: Subscribing to AuthService for userId.');
+    // --- Subscribe to the AuthService to get the userId reactively ---
+    this.userIdSubscription = this.authService.currentUserId$.subscribe(userId => {
+      console.log(`AuthService emitted userId: ${userId}`);
+      this.currentUserId = userId; // Update the component's property
+
+      // Handle state based on whether we have a user ID
+      if (this.currentUserId === null) {
+        // No user logged in (or logged out)
+        this.handleNoUserId(); // Display error, disable form
       } else {
-        this.handleNoUserId();
+        // User ID is available
+        this.errorMessage = null; // Clear any previous "no user" error
+        if (this.measurementForm?.disabled) {
+          this.measurementForm.enable(); // Ensure form is enabled
+        }
       }
-    } catch (e) {
-      console.error("Error reading userId from localStorage", e);
-      this.handleNoUserId("Could not read user session. Please ensure localStorage is enabled.");
+    });
+    // --- End Subscription ---
+  }
+
+  ngOnDestroy(): void {
+    // --- IMPORTANT: Unsubscribe to prevent memory leaks ---
+    this.userIdSubscription?.unsubscribe();
+    console.log('Component ngOnDestroy: Unsubscribed from userId.');
+  }
+
+  /** Handles the scenario where no valid user ID is available */
+  private handleNoUserId(message = "User not identified. Please sign up or log in.") {
+    this.errorMessage = message;
+    // Disable form only if it exists and isn't already disabled
+    if (this.measurementForm && !this.measurementForm.disabled) {
+         this.measurementForm.disable();
     }
   }
 
-  private handleNoUserId(message = "User not identified. Please sign up or log in.") {
-    console.warn("No userId available.");
-    this.errorMessage = message;
-    this.measurementForm.disable();
-  }
-
-  // --- Getters for easier template access ---
+  /** Convenience getters for form controls */
   get weightValueControl(): AbstractControl | null { return this.measurementForm.get('weightValue'); }
-  get weightUnitControl(): AbstractControl | null { return this.measurementForm.get('weightUnit'); }
   get heightValueControl(): AbstractControl | null { return this.measurementForm.get('heightValue'); }
-  get heightUnitControl(): AbstractControl | null { return this.measurementForm.get('heightUnit'); }
-  // --- End Getters ---
 
+  /** Triggered on form submission */
   onSubmit(): void {
     this.errorMessage = null;
     this.successMessage = null;
     this.measurementForm.markAllAsTouched();
 
+    // --- Use the userId obtained from the AuthService subscription ---
     if (!this.currentUserId) {
       this.errorMessage = "Cannot save measurements: User not identified.";
+      console.error("Submit aborted: No currentUserId available from AuthService.");
       return;
     }
+    // --- End userId Check ---
 
     if (this.measurementForm.invalid) {
       this.errorMessage = "Please fill in all required fields correctly.";
@@ -103,80 +123,57 @@ export class CustomizeOneComponent {
     this.isLoading = true;
     const formData = this.measurementForm.value;
 
-    // --- Prepare data objects for each measurement ---
+    // --- Prepare Data for both measurements ---
     const weightData: MeasurementInputData = {
-      measurementType: 'Weight', // Consider making this configurable if needed
+      measurementType: 'Weight',
       value: parseFloat(formData.weightValue),
-      unit: formData.weightUnit || undefined
+      unit: 'kg'
     };
-
     const heightData: MeasurementInputData = {
-      measurementType: 'Height', // Consider making this configurable
+      measurementType: 'Height',
       value: parseFloat(formData.heightValue),
-      unit: formData.heightUnit || undefined
+      unit: 'cm'
     };
 
-    // --- Create an array of Observables for the API calls ---
-    const saveObservables: Observable<AddMeasurementResponse | { error: true, message: string, type: string }>[] = [];
+    // --- Create Observables using this.currentUserId ---
+    const saveWeight$ = this.measurementService.addMeasurement(weightData, this.currentUserId).pipe( // <-- Use component property
+      catchError(error => of({ error: true as const, type: 'Weight', message: error.message }))
+    );
+    const saveHeight$ = this.measurementService.addMeasurement(heightData, this.currentUserId).pipe( // <-- Use component property
+      catchError(error => of({ error: true as const, type: 'Height', message: error.message }))
+    );
 
-    // Add weight observable if value is present (or always if required)
-    if (weightData.value) { // Or remove check if always required
-        saveObservables.push(
-            this.measurementService.addMeasurement(weightData, this.currentUserId)
-                .pipe(
-                    // Use catchError within each observable to handle individual errors
-                    catchError(err => of({ error: true as const, message: err.message, type: 'Weight' }))
-                )
-        );
-    }
-     // Add height observable if value is present (or always if required)
-    if (heightData.value) { // Or remove check if always required
-        saveObservables.push(
-            this.measurementService.addMeasurement(heightData, this.currentUserId)
-                .pipe(
-                    catchError(err => of({ error: true as const, message: err.message, type: 'Height' }))
-                )
-        );
-    }
+    // --- Execute calls using forkJoin ---
+    forkJoin([saveWeight$, saveHeight$])
+      .pipe(
+        finalize(() => this.isLoading = false) // Reset loading state
+      )
+      .subscribe({
+        next: (results: MeasurementSaveAttemptResult[]) => { // <-- Use imported type
 
-    if (saveObservables.length === 0) {
-        this.errorMessage = "No measurement data entered.";
-        this.isLoading = false;
-        return;
-    }
+          const failedSaves = results.filter(
+              (res): res is FailedSaveResult => 'error' in res && res.error === true // <-- Use imported type in guard
+          );
+          const successfulSaves = results.filter(
+              (res): res is AddMeasurementResponse => !('error' in res) // <-- Use imported type in guard
+          );
 
-    // --- Use forkJoin to run calls in parallel and wait for all to complete ---
-    forkJoin(saveObservables).subscribe({
-      next: (results) => {
-        this.isLoading = false;
-        const successfulSaves = results.filter(res => !('error' in res));
-        const failedSaves = results.filter((res): res is { error: true, message: string, type: string } => 'error' in res); // Type guard
-
-        if (failedSaves.length === 0) {
-          // All succeeded
-          this.successMessage = `Successfully saved ${successfulSaves.length} measurement(s).`;
-          this.measurementForm.reset({ weightUnit: 'kg', heightUnit: 'cm' }); // Reset form, maybe keep units
-        } else if (successfulSaves.length > 0) {
-          // Partial success
-          const errorDetails = failedSaves.map(f => `${f.type}: ${f.message}`).join('; ');
-          this.errorMessage = `Saved ${successfulSaves.length} measurement(s), but failed for: ${errorDetails}`;
-           // Decide if you want to reset the form on partial success
-           // this.measurementForm.reset({ weightUnit: 'kg', heightUnit: 'cm' });
-        } else {
-          // All failed
-          const errorDetails = failedSaves.map(f => `${f.type}: ${f.message}`).join('; ');
-          this.errorMessage = `Failed to save measurements. Errors: ${errorDetails}`;
+           if (failedSaves.length === 0) {
+              this.successMessage = `Successfully saved ${successfulSaves.length} measurement(s).`;
+              this.measurementForm.reset(/* { defaults if needed } */);
+           } else {
+              const errorDetails = failedSaves.map(f => `${f.type}: ${f.message}`).join('; ');
+              if (successfulSaves.length > 0) {
+                 this.errorMessage = `Saved ${successfulSaves.length}, but failed for: ${errorDetails}`;
+              } else {
+                 this.errorMessage = `Failed to save measurements. Errors: ${errorDetails}`;
+              }
+           }
+        },
+        error: (err) => { // Catch unexpected forkJoin errors
+            console.error("Unexpected error during forkJoin:", err);
+            this.errorMessage = `An unexpected error occurred while saving: ${err.message || 'Unknown error'}`;
         }
-      },
-      // Note: forkJoin's main error callback won't typically be hit here
-      // because we used catchError inside each individual observable.
-      // If any observable errors *before* catchError, it would trigger this.
-      error: (err) => {
-         this.isLoading = false;
-         this.errorMessage = `An unexpected error occurred during batch save: ${err.message}`;
-         console.error("Unexpected forkJoin error:", err);
-      }
-    });
+      });
   }
-
 }
