@@ -1,54 +1,378 @@
-/* Container for the image and the button */
-.background-image-container {
-    position: relative; 
-  }
+/* Basic Reset & Page Container */
+:host {
+  display: block;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: #222;
+  font-size: 14px; /* Slightly smaller base font */
+}
 
-  .background-image-tag {
-    width: 100%;
-    height: auto;
-    min-height: 100vh;
-  }
+.page-container {
+  max-width: 1280px; /* Slightly narrower max width */
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+
+/* Main Content Area */
+.main-content {
+  display: flex;
+  gap: 80px; /* Increased gap */
+}
+
+/* Image Gallery (Left Column) */
+.image-gallery {
+  display: flex;
+  gap: 10px;
+  flex-basis: 65%; /* More space for images */
+}
+.thumbnails {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 90px; 
+}
+.thumbnail-img {
+  width: 100%;
+  height: auto;
+  border: 1px solid #eee;
+  cursor: pointer;
+}
+.thumbnail-img:first-child {
+    border: 2px solid black; /* Indicate selected */
+}
+.main-image-container {
+  flex-grow: 0.7;
+  display: flex;
+  justify-content: center;
+  height: 98vh; /* Limit height */
   
-  /* Styling and positioning for the buttons */
-  .signin-button {
-    position: absolute;
-    top: 12.7%;           
-    left: 63.4%;          
-    z-index: 10;
-    font-size: 14px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: 580;
-  }
+}
+.main-product-image {
+  object-fit: contain;
+}
 
-  .signin-button:hover{
-    text-decoration: underline;
-  }
+/* --- Styles for the NEW UTRY Container --- */
+.utry-container {
+  flex-basis: 65%;   /* <-- Match the flex-basis of image-gallery */
+  display: flex;
+  flex-direction: column; /* Arrange header, avatar, footer vertically */
+  border: 1px solid #dcdcdc;
+  background-color: #fff;
+  box-sizing: border-box;
+  object-fit: contain;
+  max-height: 98vh;
+  
+  flex-grow: 0.7;
+}
 
-.utry-button {
-    position: absolute;
-    padding: 10px 40px;
-    font-size: 1rem;
-    display: inline-flex; /* Helps align items */
+
+.utry-content-area {
+  flex-grow: 1;        /* Takes available vertical space */
+  position: relative;    /* Context for absolute children */
+  overflow: hidden;    /* *** ESSENTIAL: Clip anything going outside bounds *** */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  padding: 0;          /* Remove padding, apply to children if needed */
+  min-height: 0;       /* Allow shrinking in flex layout */
+}
+
+
+.utry-avatar-view {
+  flex-grow: 1; /* Allow avatar view to fill space in content area */
+  display: flex;
+  flex-direction: column; /* Stack size info and model */
+  align-items: stretch; /* Stretch children (model viewer) full width */
+  justify-content: flex-start; /* Align content to top */
+  position: relative; /* For size info positioning if needed */
+  overflow: hidden; /* Prevent model overflow */
+  padding: 0; /* Remove padding if model should touch edges */
+  z-index: 1;
+}
+
+.utry-size-info {
+ padding: 10px 15px; /* Add padding */
+ font-size: 0.9rem;
+ font-weight: 500;
+ background-color: rgba(255,255,255, 0.7); /* Semi-transparent bg if overlapping model */
+ z-index: 5; /* Ensure it's above model viewer */
+ align-self: flex-start; /* Keep at top left */
+}
+
+.compare-section {
+  display: flex;
+  flex-direction: row; /* Items laid out in a row */
+  justify-content: space-between; /* Space between items, adjust as needed */
+  align-items: center; /* Vertically center the items */
+  flex-wrap: wrap; /* Wrap items if the viewport is too narrow */
+  margin: 20px auto; /* Optional: center container or add spacing */
+}
+
+.compare-section model-viewer {
+  flex: 1; /* Allow each model-viewer to take equal width */
+  margin: 0 10px; /* Optional: add horizontal space between the elements */
+  min-width: 300px; /* Optional: enforce a minimum width to keep layout intact on smaller screens */
+}
+
+
+
+/* --- Style the model-viewer element --- */
+.utry-model-viewer {
+  position: relative;
+width: 100%;  /* Take full width of its container */
+height: 100%; /* Take full height of its container (.utry-avatar-view) */
+min-height: 470px; /* Ensure a minimum reasonable height */
+
+flex-grow: 1; /* Ensure it takes space within the flex column */
+}
+/* --- End model-viewer styles --- */
+
+
+
+.utry-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+}
+
+.utry-logo {
+  height: 40px; /* Adjust as needed */
+}
+
+.utry-header-icons {
+    display: flex;
     align-items: center;
-    justify-content: center;
-    background-color: rgb(0, 10, 200);
-    color: white;
-     bottom: 75px;
-     right: 5px;
-     transform: translateX(-50%);
-     z-index: 10;
-     font-family: Arial, Helvetica, sans-serif;
-     
-  }
-  
-  .utry-button .utry-logo {
-    /* Control the logo size */
-    height: 24px;
-    width: auto; /* Let width scale automatically */
-    margin-left: 60px; /* Add space between text and logo */
-  
-  }
+    gap: 4px;
+}
 
-  .utry-button:hover{
-    background-color: rgb(77, 86, 219);
+
+.utry-footer {
+  border-top: 1px solid #dcdcdc; /* Border above the nav bar */
+  /* The height will be determined by bottom-nav-bar component */
+  flex-shrink: 0; /* Prevent footer from shrinking */
+  position: relative;
+  bottom: 0; /* Stick to the bottom */
+
+}
+/* --- End UTRY Container Styles --- */
+
+
+
+
+
+
+
+
+/* Product Details (Right Column) */
+.product-details {
+  flex-basis: 45%; /* Less space for details */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.product-details h1 {
+  font-size: 1.1rem; /* Slightly smaller */
+  font-weight: bold;
+  margin: 2;
+  text-transform: uppercase;
+}
+.product-details h2 {
+  font-size: 1.1rem; /* Same size as brand */
+  font-weight: normal;
+  margin: 0;
+}
+.price {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 0;
+}
+.vat-info {
+  font-size: 0.8rem;
+  color: #666;
+  font-weight: normal;
+  margin-left: 5px;
+}
+
+/* Color Selector */
+.color-selector .color-label {
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+}
+.swatches {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.swatch {
+  width: 60px; /* Smaller swatches */
+  height: 85px;
+  border: 1px solid #ccc;
+  padding: 2px;
+  background: none;
+  cursor: pointer;
+}
+.swatch img { display: block; width: 100%; height: 100%; object-fit: contain;}
+.swatch.selected { border: 2px solid black; padding: 1px;}
+
+/* Size Selector */
+.size-selector { width: 100%; }
+::ng-deep .size-selector .mdc-notched-outline > *{
+    border-radius: 0 !important; /* Sharp corners */
+}
+
+/* Action Buttons */
+.action-buttons { display: flex; gap: 10px; }
+.add-to-cart {
+  flex-grow: 1; height: 48px; border-radius: 0 !important;
+  background-color: black !important; color: white !important;
+  text-transform: uppercase; font-weight: bold; font-size: 0.9rem;
+}
+.wishlist-button {
+  min-width: 48px; 
+  width: 48px; 
+  height: 48px; 
+  border-radius: 0 !important;
+  padding: 0 !important; 
+  border: 1px solid #222 !important;
+
+  position: relative; /* For absolute positioning of icon */
+}
+.wishlist-button mat-icon { 
+  color: #222; 
+  position: absolute;
+  top: 30%; left: 45%;
+ 
+}
+
+
+/* Info Banners */
+.utry-window-button {
+  display: flex; 
+  align-items: center; 
+  gap: 20px;
+  padding: 12px; /* Reduced padding */
+  background-color: #001689; font-size: 1rem; color: #333;
+  cursor: pointer;
+}
+
+.utry-window-button .utry-window-text{
+  color: white;
+}
+
+.utry-window-button:hover {
+  background-color: #000acd98;
+  color: white;
+}
+/* Info Box (Seller/Delivery/Return/Sellback) */
+.info-box {
+    border: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
+}
+.info-line {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 12px 15px;
+    font-size: 0.85rem;
+    border-bottom: 1px solid #eee;
+}
+.info-line:last-child {
+    border-bottom: none;
+}
+.info-line mat-icon {
+    color: #555;
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+}
+.info-line a { color: #000; text-decoration: none; }
+.info-line .seller-info a { font-weight: bold; }
+.delivery-info { align-items: flex-start; }
+.delivery-text { flex-grow: 1; display: flex; flex-direction: column; gap: 2px; }
+.delivery-text strong { font-weight: bold; }
+.delivery-text span { color: #555; font-size: 0.8rem; }
+.delivery-text .free-shipping { font-size: 0.8rem; color: purple; font-weight: bold; }
+.delivery-cost { font-weight: bold; margin-left: auto; }
+.sellback-info .info-icon { margin-left: auto; cursor: pointer; }
+
+/* Expansion Panels */
+.details-panel {
+    border-bottom: 1px solid #eee;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+}
+.details-panel .mat-expansion-panel-header {
+    padding: 15px 1; /* Adjust padding */
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+.details-panel .mat-expansion-panel-body {
+    padding: 0 0 15px 1; /* Adjust padding */
+    font-size: 0.85rem;
+    color: #444;
+}
+.mat-expansion-indicator::after {
+    color: #000; /* Black indicator */
+}
+
+/* Brand Follow */
+.brand-follow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+.follow-button {
+    border-radius: 0 !important;
+    height: 36px;
+    line-height: 34px; /* Adjust for border */
+    padding: 0 15px;
+    font-weight: bold;
+    font-size: 0.85rem;
+}
+.follow-button mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    margin-right: 5px;
+}
+
+/* Report Link */
+.report-link {
+    display: inline-flex; /* Use inline-flex */
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: purple; /* Example color */
+    font-size: 0.8rem;
+    margin-top: 10px;
+}
+.report-link mat-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+}
+
+
+/* Basic Responsive things */
+@media (max-width: 992px) {
+    .main-content { flex-direction: column; gap: 20px; }
+    .image-gallery, .product-details { flex-basis: auto; width: 100%; }
+    .image-gallery { flex-direction: column-reverse; }
+    .utry-container { flex-basis: auto; width: 100%; }
+    .thumbnails { flex-direction: row; width: 100%; overflow-x: auto; }
+    .thumbnail-img { width: 60px; height: auto; }
+}
+@media (max-width: 768px) {
+    .main-header { flex-direction: column; align-items: stretch; gap: 10px; }
+    .tabs-container, .search-container { width: 100%; }
+    .search-field { width: 100%; }
+    .secondary-nav { gap: 15px; font-size: 0.8rem; }
+    .promo-bar { flex-direction: column; gap: 5px; text-align: center; }
 }

@@ -1,0 +1,49 @@
+<!-- Main container with animation trigger -->
+<div class="size-fit-panel-wrapper"
+     [@panelState]="isExpanded ? 'expanded' : 'collapsed'">
+
+  <!-- Header/Toggle Area - ALWAYS visible -->
+  <div class="panel-header" (click)="togglePanel()"
+       [attr.aria-expanded]="isExpanded"
+       aria-controls="panel-content-area"
+       role="button"
+       tabindex="0">
+    <!-- You can add a subtle background/border here if needed -->
+    <!-- The arrow icon is the primary visual indicator -->
+    <mat-icon class="toggle-icon">{{ isExpanded ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</mat-icon>
+  </div>
+
+  <!-- Content Area - This part slides up/down -->
+  <div class="panel-content-area" id="panel-content-area">
+    <!-- Your existing content structure -->
+    <div class="expansion-content">
+
+      <div class="contentleft">
+        <span class="panel-section-title">Adjust Your Fit</span>
+        <div class="slider-container">
+          <div class="label-container">
+            <span class="label-left">Slim</span>
+            <span class="label-right">Loose</span>
+          </div>
+          <mat-slider min="0" max="100" step="1" class="fit-slider">
+            <input matSliderThumb>
+          </mat-slider>
+        </div>
+      </div>
+
+      <div class="contentright">
+        <span class="panel-section-title">
+          Confidence score: <strong>35%</strong>
+          <mat-icon class="info-icon"
+                    matTooltip="Your confidence score is calculated based on our feedback on previous purchased items with UTRY and others, with similar body measurements to you, feedback"
+                    matTooltipPosition="above"
+                    aria-label="info icon">info_outline</mat-icon>
+        </span>
+        <p class="recommend-text">Recommended best fit for you:</p>
+        <button mat-flat-button color="primary" class="recommend-btn">Size M</button>
+      </div>
+
+    </div>
+  </div> <!-- End panel-content-area -->
+
+</div> <!-- End size-fit-panel-wrapper -->

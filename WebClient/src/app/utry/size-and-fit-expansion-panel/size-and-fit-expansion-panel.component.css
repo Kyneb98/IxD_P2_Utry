@@ -1,0 +1,143 @@
+:host {
+  display: block; /* Ensure component takes up space */
+  position: absolute; /* Position relative to parent (.utry-content-area) */
+  bottom: 0;          /* Stick to the bottom of the parent */
+  left: 0;
+  right: 0;
+  z-index: 10;        /* Above other static content, below models */
+ 
+}
+
+.size-fit-panel-wrapper {
+  /* This wrapper is what animates */
+  width: 100%;
+  background-color: rgba(240, 240, 240, 0.98); /* Panel background */
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+
+  /* Start below viewport (adjust value based on header height) */
+}
+
+.panel-header {
+  height: 40px; /* Height of the visible collapsed part */
+  display: flex;
+  justify-content: right; /* arrow placed on the right */
+  align-items: center;
+  cursor: pointer;
+  
+  box-sizing: border-box;
+  background-color: inherit; /* Inherit wrapper background */
+  /* Ensure rounded corners match wrapper */
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.toggle-icon {
+  color: #555;
+  margin-right: 15px;
+}
+
+.panel-content-area {
+  padding: 10px 25px; /* Padding for the actual content */
+  padding-top: 0;
+  padding-bottom: 0;
+  box-sizing: border-box;
+  /* Content is only visible when expanded due to parent transform/overflow */
+}
+
+/* Styles for your internal content */
+.expansion-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 30px;
+  margin-bottom: 5px;
+}
+
+.contentleft, .contentright { flex-basis: 40%; }
+
+/* Title styling (used in both left and right columns initially) */
+.panel-section-title {
+  display: block;         /* Default to block for left side */
+  font-size: 1rem;        /* 16px */
+  font-weight: 500;       /* Medium weight */   /* Space below title */
+  color: #333;
+}
+
+.contentleft .panel-section-title {
+  margin-bottom: 25px;    /* Space below title */
+  text-align: left;       /* Align left for left column *        /* Match active nav blue */
+};
+
+/* Specific styling for the title in the right column (to include icon) */
+.contentright .panel-section-title {
+  display: inline-flex; /* Align icon next to text */
+  align-items: center;
+  gap: 10px;             /* Space between text and icon */
+  margin-bottom: 20px;  /* Adjust spacing if needed */
+}
+
+
+/* Style for the info icon in the right title */
+.contentright .info-icon {
+  font-size: 18px;      /* Icon size */
+  width: 18px;
+  height: 18px;
+  color: #666;         /* Icon color */
+  cursor: help;         /* Indicate it provides help/info */
+  vertical-align: middle; /* Align icon better with text */
+}
+
+
+/* Container specifically for the 'Slim' and 'Loose' labels */
+.label-container {
+  display: flex;
+  justify-content: space-between; /* Space out the labels */
+  width: 100%;              /* Match the slider's width */
+  font-size: 0.85rem;       /* 14px */
+  color: #555;
+  padding: 0 5px;           /* Align slightly with slider thumbs */
+  box-sizing: border-box;
+  margin-bottom: -5px;      /* Optional: Pull slider slightly closer */
+}
+
+/* Styling for the slider element itself */
+.fit-slider {
+  width: 100%; /* Make slider take full width */
+}
+
+
+
+
+/* Styling for the recommendation text */
+.recommend-text {
+  margin-top: 10px;     /* Space above */
+  margin-bottom: 12px;  /* Space below */
+  font-size: 0.9rem;
+  text-align: left;   /* Center the text */
+  color: #333;
+}
+
+/* Styling for the recommendation button */
+.recommend-btn {
+  border-radius: 20px;    /* Pill shape */
+  padding: 6px 25px;      /* Button padding */
+  font-weight: bold;
+  background-color: #0d3080; /* Match active nav blue */
+  color: white;
+  display: block;         /* Make button block */
+  width: fit-content;     /* Size button based on its text */
+  border: none;           /* Remove default border */
+  cursor: pointer;
+  align-items: left;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .panel-content-area { padding: 10px 15px; }
+  .expansion-content { flex-direction: column; align-items: stretch; gap: 15px; }
+  .contentleft, .contentright { flex-basis: auto; }
+  /* ... other responsive adjustments ... */
+}

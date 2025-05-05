@@ -1,0 +1,69 @@
+/* Container for the image and the button */
+.background-image-container {
+    position: relative; 
+  }
+  
+  .background-image-tag {
+    width: 100%; /* Make the image cover the full width */
+    height: 100%; /* Make the image cover the full height */
+    object-fit: cover; /* Ensure the image scales correctly without distortion */
+  }
+  
+  /* Styling and positioning for the buttons */
+  .signin-button {
+    position: absolute;
+    top: 12.7%;           
+    left: 63.4%;          
+    z-index: 10;
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 580;
+  }
+
+  .signin-button:hover{
+    text-decoration: underline;
+  }
+
+.utry-button {
+    position: absolute;
+    padding: 10px 40px;
+    font-size: 1rem;
+    display: inline-flex; /* Helps align items */
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(0, 10, 200);
+    color: white;
+     bottom: 75px;
+     right: 5px;
+     transform: translateX(-50%);
+     z-index: 10;
+     font-family: Arial, Helvetica, sans-serif;
+     
+  }
+  
+  .utry-button .utry-logo {
+    /* Control the logo size */
+    height: 24px;
+    width: auto; /* Let width scale automatically */
+    margin-left: 60px; /* Add space between text and logo */
+  
+  }
+
+  .utry-button:hover{
+    background-color: rgb(77, 86, 219);
+}
+
+.utry-window-container {
+    position: absolute; /* Position relative to the start-page container */
+  top: 72.6%; /* Center vertically */
+  left: 33.7%; /* Center horizontally */
+  height: 695px;
+  transform: translate(-50%, -50%); /* Adjust positioning for precise centering */
+  width: 485px; /* Set container width as needed */
+  background: rgba(255, 255, 255); /* Add a semi-transparent background */
+  
+  
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25); /* Optional: shadow for a modern look */
+
+}
+
