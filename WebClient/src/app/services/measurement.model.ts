@@ -42,3 +42,11 @@ export interface ApiErrorResponse {
         value?: any;
     }[];
 }
+export interface FailedSaveResult {
+  error: true; // Literal type 'true' to distinguish it
+  type: string; // Which measurement type failed (e.g., 'Weight')
+  message: string; // The error message
+}
+
+/** Union type: A result from a save attempt is either success or a structured failure */
+export type MeasurementSaveAttemptResult = AddMeasurementResponse | FailedSaveResult;

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -24,6 +24,8 @@ import { ActivatedRoute } from '@angular/router';
 export class OnboardingComponent implements OnInit {
   currentStep: number = 1; // Start with step 1
 
+  @ViewChild(CustomizeOneComponent) customizeOneComponent!: CustomizeOneComponent; // Reference to CustomizeOneComponent
+
   constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
@@ -37,7 +39,13 @@ export class OnboardingComponent implements OnInit {
   }
 
   nextStep(): void {
-    this.currentStep++;
+    if (this.currentStep === 1 && this.customizeOneComponent) {
+      this.customizeOneComponent.onSubmit(); // Call the submitForm method of CustomizeOneComponent to save data
+    }
+
+    if(this.currentStep < 3) {
+      this.currentStep++;
+    }
   }
 
   prevStep(): void {

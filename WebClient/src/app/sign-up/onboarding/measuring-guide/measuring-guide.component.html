@@ -13,75 +13,99 @@
   <mat-grid-tile>
     <div style="height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
       <mat-card appearance="outlined" style="width: 600px; height: 700px; position: relative;">
+
+      <form [formGroup]="measurementForm" (ngSubmit)="onSubmit()" novalidate class="measurement-input-area" >
         <div [ngSwitch]="currentStep" style="height: 100%; display: flex; flex-direction: column;">
           <!-- Step 1 -->
-          <div *ngSwitchCase="1" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+          <div *ngSwitchCase="1" style="flex: 1;">
             <h3>Step 1: Measure Your Waist</h3>
-            <img src="/Measure-waist.gif" alt="Measure Waist" style="max-width: 100%; border-radius: 8px;" />
             <mat-form-field appearance="outline" style="width: 50%; margin-top: 16px;">
               <mat-label>Enter your measurement</mat-label>
-              <input matInput type="number" placeholder="e.g., 32 inches" />
-              <span matTextSuffix>in</span>
+              <input matInput type="number"
+               formControlName="value"
+                placeholder="e.g., 80 cm"
+                required />
+              <span matTextSuffix>cm</span>
+              <mat-error *ngIf="valueControl?.hasError('required') && valueControl?.touched">Value is required</mat-error>
+              <mat-error *ngIf="valueControl?.hasError('pattern') && valueControl?.touched">Must be a valid number</mat-error>
             </mat-form-field>
-
-            <button mat-button color="primary" routerLink="/onboarding" [queryParams]="{ step: 3 }" style="position: absolute; bottom: 16px; left: 16px;">
-              Back to setup
-            </button>
           </div>
 
           <!-- Step 2 -->
-          <div *ngSwitchCase="2" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+          <div *ngSwitchCase="2" style="flex: 1;">
             <h3>Step 2: Measure Your Chest</h3>
-            <img src="/Measure-waist.gif" alt="Measure Waist" style="max-width: 100%; border-radius: 8px;" />
             <mat-form-field appearance="outline" style="width: 50%; margin-top: 16px;">
               <mat-label>Enter your measurement</mat-label>
-              <input matInput type="number" placeholder="e.g., 32 inches" />
-              <span matTextSuffix>in</span>
+              <input matInput
+               formControlName="value"
+                placeholder="e.g., 90 cm"
+                required />
+              <span matTextSuffix>cm</span>
+              <mat-error *ngIf="valueControl?.hasError('required') && valueControl?.touched">Value is required</mat-error>
+              <mat-error *ngIf="valueControl?.hasError('pattern') && valueControl?.touched">Must be a valid number</mat-error>
             </mat-form-field>
           </div>
 
           <!-- Step 3 -->
-          <div *ngSwitchCase="3" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+          <div *ngSwitchCase="3" style="flex: 1;">
             <h3>Step 3: Measure Your Arms</h3>
-            <img src="/Measure-waist.gif" alt="Measure Waist" style="max-width: 100%; border-radius: 8px;" />
             <mat-form-field appearance="outline" style="width: 50%; margin-top: 16px;">
               <mat-label>Enter your measurement</mat-label>
-              <input matInput type="number" placeholder="e.g., 32 inches" />
-              <span matTextSuffix>in</span>
+              <input matInput
+               formControlName="value"
+                placeholder="e.g., 50 cm"
+                required />
+              <span matTextSuffix>cm</span>
+              <mat-error *ngIf="valueControl?.hasError('required') && valueControl?.touched">Value is required</mat-error>
+              <mat-error *ngIf="valueControl?.hasError('pattern') && valueControl?.touched">Must be a valid number</mat-error>
             </mat-form-field>
           </div>
 
           <!-- Step 4 -->
-          <div *ngSwitchCase="4" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+          <div *ngSwitchCase="4" style="flex: 1;">
             <h3>Step 4: Measure Your Shoulders</h3>
-            <img src="/Measure-waist.gif" alt="Measure Waist" style="max-width: 100%; border-radius: 8px;" />
             <mat-form-field appearance="outline" style="width: 50%; margin-top: 16px;">
               <mat-label>Enter your measurement</mat-label>
-              <input matInput type="number" placeholder="e.g., 32 inches" />
-              <span matTextSuffix>in</span>
+              <input matInput
+               formControlName="value"
+                placeholder="e.g., 40 cm"
+                required />
+              <span matTextSuffix>cm</span>
+              <mat-error *ngIf="valueControl?.hasError('required') && valueControl?.touched">Value is required</mat-error>
+              <mat-error *ngIf="valueControl?.hasError('pattern') && valueControl?.touched">Must be a valid number</mat-error>
             </mat-form-field>
           </div>
 
           <!-- Step 5 -->
-          <div *ngSwitchCase="5" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+          <div *ngSwitchCase="5" style="flex: 1;">
             <h3>Step 5: Measure Your Front Bodice</h3>
-            <img src="/Measure-waist.gif" alt="Measure Waist" style="max-width: 100%; border-radius: 8px;" />
             <mat-form-field appearance="outline" style="width: 50%; margin-top: 16px;">
               <mat-label>Enter your measurement</mat-label>
-              <input matInput type="number" placeholder="e.g., 32 inches" />
-              <span matTextSuffix>in</span>
+              <input matInput
+               formControlName="value"
+                placeholder="e.g., 60 cm"
+                required />
+              <span matTextSuffix>cm</span>
+              <mat-error *ngIf="valueControl?.hasError('required') && valueControl?.touched">Value is required</mat-error>
+              <mat-error *ngIf="valueControl?.hasError('pattern') && valueControl?.touched">Must be a valid number</mat-error>
             </mat-form-field>
-            <button mat-raised-button color="primary" routerLink="" style="position: absolute; bottom: 16px; right: 16px;">
-              Finish!
-            </button>
           </div>
-
         </div>
+      </form>
 
         <!-- Button container -->
         <div style="position: absolute; bottom: 16px; left: 16px; right: 16px; display: flex; align-items: center;">
           <button mat-raised-button color="warn" *ngIf="currentStep > 1" (click)="prevStep()" style="margin-right: auto;">Back</button>
-          <button mat-raised-button color="primary" *ngIf="currentStep < 5" (click)="nextStep()" style="margin-left: auto;">Next</button>
+          <!-- ONLY call onSubmit on click -->
+          <button mat-raised-button color="primary" *ngIf="currentStep < totalSteps" (click)="onSubmit()" style="margin-left: auto;" [disabled]="isLoading || measurementForm.invalid || !currentUserId">
+               <span *ngIf="!isLoading">Save & Next</span>
+               <span *ngIf="isLoading">Saving...</span>
+          </button>
+          <!-- Finish button still only calls onSubmit -->
+          <button mat-raised-button color="primary" *ngIf="currentStep === totalSteps" (click)="onSubmit()" style="margin-left: auto;" [disabled]="isLoading || measurementForm.invalid || !currentUserId">
+              <span *ngIf="!isLoading">Finish</span>
+              <span *ngIf="isLoading">Saving...</span>
+          </button>
         </div>
       </mat-card>
     </div>
