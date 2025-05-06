@@ -1,61 +1,191 @@
 :host {
-    display: block; /* Ensure component takes up space */
-    position: absolute; /* Position relative to parent (.utry-content-area) */
-    bottom: 0;          /* Stick to the bottom of the parent */
-    left: 0;
-    right: 0;
-    z-index: 10;        /* Above other static content, below models */
-   
-  }
+  display: block;
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  z-index: 10;
+}
+
+.style-panel-wrapper {
+  width: 100%;
+  background-color: rgba(230, 232, 233, 0.98); /* Light grey */
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+.panel-header {
+  height: 40px;
+  display: flex;
+  justify-content: flex-end; /* Arrow on right */
+  align-items: center;
+  cursor: pointer;
+  padding: 0 15px;
+  box-sizing: border-box;
+  background-color: inherit;
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+}
+
+.toggle-icon {
+  color: #333;
+}
+
+.panel-content-area {
+  padding: 10px 20px; /* Adjust padding */
+  box-sizing: border-box;
+  background-color: inherit;
+  /* Add some minimum height if needed */
+  min-height: 150px; /* Example, adjust */
+}
+
+.expansion-content {
+  display: flex;
+  flex-direction: row;
+  gap: 15px; /* Tighten spacing */
+  align-items: flex-start;
+}
+
+/* --- Left Column --- */
+.left-column {
+  display: flex;
+  flex-direction: column; /* Stack title, search, link */
+  gap: 8px;             /* Space between elements in left column */
+  flex-basis: 40%;      /* Adjust width allocation */
+  flex-shrink: 0;       /* Prevent shrinking */
+  justify-content: space-between; /* Distribute space vertically */
+}
+
+.panel-section-title {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #333;
+  margin: 0; /* Remove default margins */
+}
+
+.wardrobe-search-container {
+  width: 95%; /* Takes width of left column */
   
-  .style-panel-wrapper {
-    /* This wrapper is what animates */
-    width: 100%;
-    background-color: rgba(240, 240, 240, 0.98); /* Panel background */
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
-    box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.1);
-    box-sizing: border-box;
-  
-    /* Start below viewport (adjust value based on header height) */
-  }
-  
-  .panel-header {
-    height: 40px; /* Height of the visible collapsed part */
-    display: flex;
-    justify-content: right; /* arrow placed on the right */
-    align-items: center;
-    cursor: pointer;
-    
-    box-sizing: border-box;
-    background-color: inherit; /* Inherit wrapper background */
-    /* Ensure rounded corners match wrapper */
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
-  }
-  
-  .toggle-icon {
-    color: #555;
-    margin-right: 15px;
-  }
-  
-  .panel-content-area {
-    padding: 10px 25px; /* Padding for the actual content */
-    box-sizing: border-box;
-    /* Content is only visible when expanded due to parent transform/overflow */
-  }
-  
-  /* Styles for your internal content */
+}
+
+
+/* Style the mat-form-field wrapper */
+.wardrobe-search-field {
+  width: 100%;
+  /* No explicit height here */
+}
+
+/* Adjust padding within the main input area (infix) to reduce height */
+:host ::ng-deep .wardrobe-search-field .mat-mdc-form-field-infix {
+  padding-top: 2px !important;    /* <-- height */
+  padding-bottom: 2px !important;   /* <-- height */
+  min-height: auto !important;     /* Allow shrinking */
+  display: flex;
+  align-items: center;
+  gap: 2px; /* Space between icon and input */
+}
+
+
+/* Link style */
+.go-to-wardrobe {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  text-decoration: none;
+  border-bottom: 1px solid #333;
+
+  color: #333;
+  font-size: 0.7rem;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  align-self: flex-start; /* Align link to the left */
+
+  bottom: 0;
+
+  margin-top: 20px; /* Space from search */
+
+}
+.go-to-wardrobe mat-icon {
+    font-size: 18px; width: 18px; height: 18px;
+}
+
+
+
+
+
+/* --- Right Column --- */
+.right-column {
+  flex-grow: 1;   /* Takes remaining horizontal space */
+  flex-basis: 60%; /* Suggest initial width */
+  min-width: 0;   /* Allow shrinking in flex context */
+  /* Match height of left column potentially, or allow natural height */
+}
+
+/* Container for scrollable items */
+.wardrobe-items-container {
+  display: flex;
+  gap: 10px;        /* Space between items */
+  overflow-x: auto; /* Enable horizontal scroll */
+  overflow-y: hidden;
+  padding: 2px 0px; /* Add vertical padding if needed */
+  box-sizing: border-box;
+  width: 100%;      /* Use full width of right column */
+
+  /* Hide scrollbar */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.wardrobe-items-container::-webkit-scrollbar { display: none; }
+
+
+/* Wardrobe Item Button */
+.wardrobe-item {
+  width: 100px;  /* Adjust width */
+  height: 120px; /* Adjust height */
+  border: 1px solid #dcdcdc;
+  background-color: #f0f0f0;
+  flex-shrink: 0;
+  padding: 5px;
+  cursor: pointer;
+  position: relative;
+  transition: border-color 0.2s ease, border-width 0.2s ease;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px; /* Increased rounding */
+  overflow: hidden;
+}
+
+.wardrobe-item img {
+  display: block;
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+}
+
+.wardrobe-item.selected {
+  border-color: #000;
+  border-width: 2px;
+}
+
+
+
+
+
+/* --- Keep Responsive Styles (adjust as needed) --- */
+@media (max-width: 600px) { /* Example breakpoint */
   .expansion-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 30px;
-    margin-bottom: 5px;
+    flex-direction: column; /* Stack columns */
+    align-items: stretch; /* Stretch columns full width */
   }
-  
-  .contentleft, .contentright { flex-basis: 40%; }
-
-
-  
-  
+  .left-column, .right-column {
+    flex-basis: auto; /* Reset basis */
+    width: 100%;
+  }
+  .go-to-wardrobe {
+    align-self: flex-end; /* Put link back to right when stacked */
+    margin-top: 10px;
+  }
+}
