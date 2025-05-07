@@ -11,18 +11,20 @@ import { MatButtonModule } from '@angular/material/button';
 import { BodytypeFemaleComponent } from "./bodytype-female/bodytype-female.component";
 import { MeasurementsComponent } from './measurements/measurements.component';
 import { ActivatedRoute } from '@angular/router';
+import { ZalandoTopBarComponent } from '../../home/zalando-top-bar/zalando-top-bar.component';
 
 @Component({
   selector: 'app-onboarding',
   imports: [MatGridListModule, MatCardModule, FormsModule, ReactiveFormsModule,
     MatFormFieldModule, MatSelectModule, MatInputModule, CustomizeOneComponent,
     CommonModule, MatButtonModule, BodytypeFemaleComponent, MeasurementsComponent,
-  ],
+  ZalandoTopBarComponent],
   templateUrl: './onboarding.component.html',
   styleUrl: './onboarding.component.css'
 })
 export class OnboardingComponent implements OnInit {
-  currentStep: number = 1; // Start with step 1
+  currentStep: number = 1; // Tracks the current step (1-based)
+  totalSteps: number = 3; // Total number of steps in the onboarding process
 
   @ViewChild(CustomizeOneComponent) customizeOneComponent!: CustomizeOneComponent; // Reference to CustomizeOneComponent
 

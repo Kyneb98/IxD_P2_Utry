@@ -69,11 +69,4 @@ router.post(
     }
 );
 
-// --- Login Route (Basic Example - Not fully implemented with sessions/tokens) ---
-// You would typically add a login route here that:
-// 1. Finds the user by email/username.
-// 2. Compares the provided password with the stored hash using bcrypt.compare().
-// 3. If valid, creates a session or JWT token for authentication in subsequent requests.
-// router.post('/login', ...)
-
 module.exports = router;

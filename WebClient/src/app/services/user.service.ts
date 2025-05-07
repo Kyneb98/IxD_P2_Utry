@@ -3,16 +3,14 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-// Import your models
 import { UserSignupData, SignupResponse, ApiErrorResponse } from './user.model';
 
 @Injectable({
-  providedIn: 'root' // Default, makes it a singleton available app-wide
+  providedIn: 'root'
 })
 export class UserService {
 
-  // Your backend API endpoint for authentication
-  // TODO: Move to environment configuration for production builds
+  // Backend API endpoint for authentication
   private apiUrl = 'http://localhost:3000/api/auth';
 
   private httpOptions = {
@@ -39,7 +37,7 @@ export class UserService {
   }
 
   /**
-   * Private method to handle HTTP errors gracefully.
+   * Private method to handle HTTP errors.
    */
   private handleError(error: HttpErrorResponse): Observable<never> {
     let errorMessage = 'An unknown error occurred during signup!';
@@ -53,7 +51,7 @@ export class UserService {
       console.error(
         `Backend returned code ${error.status}, body was: `, error.error);
 
-      // Try to parse a meaningful message from the backend response
+      // Try to parse a message from backend response
       const backendError = error.error as ApiErrorResponse;
       if (backendError?.message) {
           errorMessage = backendError.message; // Use specific message if available
@@ -69,6 +67,4 @@ export class UserService {
     // Return an observable that emits the processed error message.
     return throwError(() => new Error(errorMessage));
   }
-
-  // Add other user-related methods here later (login, profile, etc.)
 }

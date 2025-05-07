@@ -11,10 +11,12 @@ import { FormsModule } from '@angular/forms';
 export class BodytypeFemaleComponent {
 
   bodyShapes = [
-    { id: 'shape1', name: 'Slim', image: '/assets/body-shapes/slim.png' },
-    { id: 'shape2', name: 'Athletic', image: '/assets/body-shapes/athletic.png' },
-    { id: 'shape3', name: 'Curvy', image: '/assets/body-shapes/curvy.png' },
-    { id: 'shape4', name: 'Plus Size', image: '/assets/body-shapes/plus-size.png' }
+    { id: 'shape1', name: 'Oval', image: '/bodyTypes/MandOval.png' },
+    { id: 'shape2', name: 'Rectangle', image: '/bodyTypes/MandRektangel.png' },
+    { id: 'shape3', name: 'Triangle', image: '/bodyTypes/MandTrekant.png' },
+    { id: 'shape4', name: 'Diamond', image: '/bodyTypes/MandDiamant.png' },
+    { id: 'shape5', name: 'Trapezoid', image: '/bodyTypes/MandTrapez.png' },
+    { id: 'shape6', name: 'Inverted triangle', image: '/bodyTypes/MandReversedTrekant.png' },
   ];
   selectedShape: string = ''; // Stores the selected body shape
 

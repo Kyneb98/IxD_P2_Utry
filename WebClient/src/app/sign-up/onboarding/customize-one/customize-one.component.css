@@ -19,3 +19,15 @@ mat-chip-option {
   outline: none;
   border: none
 }
+
+.page-container {
+  padding: 12px;
+}
+
+.measurement-group {
+  padding-left: 16px;
+}
+
+.select-field {
+  padding-left: 16px;
+}

@@ -7,6 +7,7 @@ import {
   ApiErrorResponse,
   MeasurementInputData,
   TemporaryMeasurementInputData,
+  UserProfileMeasurements,
 } from './measurement.model';
 
 @Injectable({
@@ -14,12 +15,9 @@ import {
 })
 export class MeasurementService {
 
-
-  // TODO: Move to Angular environment files (env.ts)
   private measurementApiUrl = 'http://localhost:3000/api/measurements';
 
   // Standard HTTP headers for sending JSON data
-  // Later, an HttpInterceptor would likely add the Authorization header here
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
@@ -30,20 +28,33 @@ export class MeasurementService {
 
   addMeasurement(data: MeasurementInputData, userId: number): Observable<AddMeasurementResponse> {
 
-    // Create the payload required by the backend,
+    // Create payload required by backend,
     // including the userId passed explicitly from the component.
     const temporaryPayload: TemporaryMeasurementInputData = {
-        ...data, // Spread the core measurement data
+        ...data, // Spread core measurement data
         userId: userId // Add the userId
     };
     console.log('Temporary Payload:', temporaryPayload); // Debugging log
 
 
-    // Make the POST request to the backend endpoint
-
+    //POST request to the backend endpoint
     return this.http.post<AddMeasurementResponse>(this.measurementApiUrl, temporaryPayload, this.httpOptions)
       .pipe(
         // Apply error handling using the private helper method
+        catchError(this.handleError)
+      );
+  }
+
+  getProfileMeasurements(userId: number): Observable<UserProfileMeasurements> {
+
+    // Construct the URL for fetching user profile measurements.
+    const profileUrl = `${this.measurementApiUrl}/user/${userId}/profile`;
+
+    console.log(`Service fetching profile measurements from: ${profileUrl}`);
+
+    // The GET request.
+    return this.http.get<UserProfileMeasurements>(profileUrl, this.httpOptions)
+      .pipe(
         catchError(this.handleError)
       );
   }
@@ -56,12 +67,11 @@ export class MeasurementService {
     let errorMessage = 'An unknown error occurred while saving the measurement.'; // Default error message
 
     if (error.error instanceof ErrorEvent) {
-      // A client-side or network error occurred.
+      // A client-side or network error.
       errorMessage = `Network error: ${error.error.message}`;
       console.error('Client/Network Error:', error.error.message);
     } else {
       // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong.
       console.error(
         `Backend returned code ${error.status}, ` +
         `body was: `, error.error);
@@ -78,18 +88,13 @@ export class MeasurementService {
           // Use the raw error string if it's simple text
           errorMessage = error.error;
       } else {
-          // Fallback generic server error message
+          // Fallback server error message
           errorMessage = `Server error saving measurement (Status: ${error.status})`;
       }
     }
 
-    // Return an observable that emits the processed error. Components can catch this.
+    // Return an observable that emits the processed error.
     return throwError(() => new Error(errorMessage));
   }
 
-  // --- Other potential methods ---
-  // You would add methods here later to GET, UPDATE, or DELETE measurements.
-  // For example:
-  // getMyMeasurements(): Observable<Measurement[]> { /* ... logic using token ... */ }
-  // deleteMeasurement(measurementId: number): Observable<any> { /* ... logic ... */ }
 }
