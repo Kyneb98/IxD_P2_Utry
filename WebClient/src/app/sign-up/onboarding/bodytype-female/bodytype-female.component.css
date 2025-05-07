@@ -6,7 +6,7 @@
   justify-content: center;
 }
 
-/* Radio button */
+/* Radio button container */
 .body-type-radio {
   display: flex;
   align-items: center;
@@ -16,17 +16,18 @@
   padding: 8px;
   cursor: pointer;
   transition: border-color 0.3s ease, transform 0.3s ease;
+  position: relative; /* Ensure proper positioning for hiding the input */
+}
+
+/* Hide the actual radio button input */
+.body-type-radio.mat-radio-button .mat-radio-container {
+  display: none !important; /* Completely hide the radio button container */
 }
 
 /* Highlight selected radio button */
-.body-type-radio.mat-radio-checked {
-  border-color: #3f51b5; /* Highlight color */
+.body-type-radio.mat-radio-checked .body-type-image {
+  border: 2px solid #3f51b5; /* Highlight color */
   transform: scale(1.1); /* Slight zoom effect */
-}
-
-/* Remove default radio button appearance */
-.body-type-radio .mat-radio-container {
-  display: none;
 }
 
 /* Image */
@@ -35,10 +36,22 @@
   height: auto;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, border-color 0.3s ease;
 }
 
 /* Hover effect */
 .body-type-radio:hover .body-type-image {
   transform: scale(1.05);
+}
+
+.header {
+  padding-left: 16px;
+  padding-top: 16px;
+  font-size: 24px;
+}
+
+.paragraph {
+  padding-left: 16px;
+  padding-bottom: 12px;
+  font-size: 16px;
 }

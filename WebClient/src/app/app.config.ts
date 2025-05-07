@@ -13,5 +13,4 @@ export const appConfig: ApplicationConfig = {
      provideRouter(routes),
      provideAnimationsAsync(), // Provide Material animations
      provideHttpClient(withInterceptorsFromDi())
-    ]
-  }
+    ]}

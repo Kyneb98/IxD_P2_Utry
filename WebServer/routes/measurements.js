@@ -21,10 +21,7 @@ router.post(
             return res.status(400).json({ errors: errors.array() });
         }
 
-        // --- SECURITY WARNING ---
-        // In a real application, NEVER trust the userId sent from the client body directly like this.
-        // You should identify the logged-in user via a token (JWT) or session,
-        // and use THAT user's ID. This example is simplified.
+        
         const { userId, measurementType, value, unit } = req.body;
 
         try {
@@ -58,39 +55,88 @@ router.post(
 );
 
 // --- Get all measurements for a specific user ---
-// NOTE: Similar security warning applies here. Authenticate the user and ensure
-// they are only allowed to request their OWN measurements.
 router.get(
-    '/user/:userId',
-    [
+    
+    '/user/:userId/profile',
+    [ // Validation for the URL parameter
         param('userId', 'User ID must be an integer').isInt()
     ],
     (req, res) => {
+        // Validate input parameter
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
         }
+        const userId = parseInt(req.params.userId, 10);
+        console.log(`Backend: Received request for profile measurements for user ID: ${userId}`);
 
-        // --- SECURITY WARNING ---
-        // Again, ensure the requesting user is authorized to view this userId's data.
-        const userId = req.params.userId;
+        // Define the specific measurement types for profile object
+        const profileMeasurementTypes = [
+            'Weight',
+            'Height',
+            'Waist',
+            'Chest',
+            'Arms',
+            'Shoulders',
+            'Front Bodice' // Match the exact strings used when saving!
+        ];
+
+        // Initialize the response object with nulls for all expected properties
+        const profileData = {
+            weight: null,
+            height: null,
+            waist: null,
+            chest: null,
+            arms: null,
+            shoulders: null,
+            front_bodice: null,
+        };
 
         try {
-            const selectStmt = db.prepare(
-                'SELECT id, measurement_type, value, unit, measured_at FROM measurements WHERE user_id = ? ORDER BY measured_at DESC'
-            );
-            const measurements = selectStmt.all(userId);
+            // --- Query Database for Each Type ---
+            // Prepare a statement to fetch the latest measurement for each type
 
-            if (!measurements || measurements.length === 0) {
-                // It's okay if a user has no measurements yet, return an empty array
-                return res.status(200).json([]);
+            const stmt = db.prepare(`
+                SELECT value, unit, measured_at, id
+                FROM measurements
+                WHERE user_id = ? AND measurement_type = ?
+                ORDER BY measured_at DESC
+                LIMIT 1
+            `);
+
+            for (const type of profileMeasurementTypes) {
+                const measurementRecord = stmt.get(userId, type); // Get latest for this type
+
+                // Convert the 'Measurement Type' string into the object key
+                // (e.g., 'Front Bodice' becomes 'front_bodice')
+                const objectKey = type.toLowerCase().replace(/\s+/g, '_');
+
+                // Check if the key exists on profileData object before assigning
+                if (profileData.hasOwnProperty(objectKey)) {
+                    if (measurementRecord) {
+                        // If a record was found, structure it for frontend
+                        profileData[objectKey] = {
+                            value: measurementRecord.value,
+                            unit: measurementRecord.unit,
+                            measured_at: measurementRecord.measured_at,
+                            id: measurementRecord.id
+                        };
+                    } else {
+                        // If no record found, set to null
+                        profileData[objectKey] = null;
+                    }
+                } else {
+                    console.warn(`Backend: Mismatch - Measurement type "${type}" does not have a corresponding key "${objectKey}" in profileData object.`);
+                }
             }
 
-            res.status(200).json(measurements);
+            // --- Send the Structured Object Response ---
+            console.log(`Backend: Sending structured profile data for user ${userId}:`, profileData);
+            res.status(200).json(profileData); // Send the object, not an array
 
-        } catch (error) {
-            console.error(`Database error fetching measurements for user ${userId}:`, error);
-            res.status(500).json({ message: 'Database error fetching measurements' });
+        } catch (err) {
+            console.error(`Backend: Database error fetching profile for user ${userId}:`, err);
+            res.status(500).json({ message: 'Database error fetching profile measurements.', error: err.message });
         }
     }
 );

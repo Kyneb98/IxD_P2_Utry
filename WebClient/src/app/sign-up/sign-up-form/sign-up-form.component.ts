@@ -56,7 +56,7 @@ export class SignUpFormComponent {
   get usernameControl(): AbstractControl | null { return this.signupForm.get('username'); }
   get emailControl(): AbstractControl | null { return this.signupForm.get('email'); }
   get passwordControl(): AbstractControl | null { return this.signupForm.get('password'); }
-  // --- End Getters ---
+
 
   onSubmit(): void {
     this.errorMessage = null;
@@ -72,25 +72,23 @@ export class SignUpFormComponent {
     const signupData = this.signupForm.value as UserSignupData; // Use type assertion
 
     this.userService.signupUser(signupData).subscribe({
-      // ========================================================
-      // == SUCCESS CALLBACK (next) - CODE TO ADD/MODIFY HERE ==
-      // ========================================================
+      // Handle the response from the signup API
       next: (response: SignupResponse) => {
         this.isLoading = false;
         this.successMessage = `${response.message} Welcome, ${this.usernameControl?.value}! (Your User ID: ${response.userId})`;
         console.log('Signup successful! Response:', response);
 
-        // --- START: Code to save userId in localStorage ---
+        // --- Code to save userId in localStorage ---
         if (response && typeof response.userId === 'number') {
           // --- Use AuthService to update state ---
           this.authService.loginUser(response.userId); // <-- CALL SERVICE
-          // --- End AuthService usage ---
+
         } else {
           console.error("Signup response missing valid userId:", response);
           this.errorMessage = "Signup OK, but user ID was missing.";
         }
         this.signupForm.reset(); // Reset the form after successful signup
-        // Optionally navigate to another page here
+
       },
       error: (error: Error) => {
         this.isLoading = false;

@@ -5,8 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  // Use BehaviorSubject to hold the current userId and allow components to subscribe
-  // Initialize with null or attempt to read from localStorage on startup
+  // Use BehaviorSubject to hold the current userId and allow components to subscribe.
   private currentUserIdSubject = new BehaviorSubject<number | null>(this.getInitialUserId());
   public currentUserId$: Observable<number | null> = this.currentUserIdSubject.asObservable();
 
