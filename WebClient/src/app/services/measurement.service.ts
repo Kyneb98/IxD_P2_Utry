@@ -30,12 +30,13 @@ export class MeasurementService {
 
   addMeasurement(data: MeasurementInputData, userId: number): Observable<AddMeasurementResponse> {
 
-    // Create the payload required by the current *insecure* backend,
+    // Create the payload required by the backend,
     // including the userId passed explicitly from the component.
     const temporaryPayload: TemporaryMeasurementInputData = {
         ...data, // Spread the core measurement data
         userId: userId // Add the userId
     };
+    console.log('Temporary Payload:', temporaryPayload); // Debugging log
 
 
     // Make the POST request to the backend endpoint
