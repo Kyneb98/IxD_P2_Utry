@@ -1,1 +1,58 @@
+<div class="page-container">
+
+<app-zalando-top-bar></app-zalando-top-bar>
+<main class="main-content">
+
+    <div class="left-content">
+     <model-viewer
+      src="/models/William.glb" alt="3D model of clothing"
+      camera-controls
+      touch-action="pan-y"            
+      camera-orbit="140deg 80deg auto"
+      shadow-intensity="1"
+      class="utry-model-viewer">
+       <div class="progress-bar hide" slot="progress-bar">
+            <div class="update-bar"></div>
+        </div>
+    </model-viewer>
+    </div>
+
+    <div class="right-content">
+        <!-- ============================= -->
+<!-- Profile Content Area          -->
+<!-- ============================= -->
+<div class="profile-content-area" [ngSwitch]="activeProfileSectionId">
+    <!-- Empty content sections; fill in as desired -->
+    <div *ngSwitchCase="'items'">
+        <app-profile-gallery></app-profile-gallery>
+      <!-- Profile Overview Section (empty) -->
+    </div>
+    <div *ngSwitchCase="'outfits'">
+      <!-- Profile Posts Section (empty) -->
+    </div>
+    <div *ngSwitchCase="'measurements'">
+      <!-- Profile Media Section (empty) -->
+    </div>
+    <div *ngSwitchCase="'account'">
+      <!-- Profile Settings Section (empty) -->
+    </div>
+  </div>
+  
+  <!-- ============================= -->
+  <!-- Profile Bottom Navigation Bar -->
+  <!-- ============================= -->
+  <div class="profile-footer">
+    <app-profile-bottom-nav 
+      [activeSectionId]="activeProfileSectionId"
+      (sectionSelected)="onProfileSectionSelected($event)">
+    </app-profile-bottom-nav>
+  </div>
+  
+    </div>
+        
+
+
+
+
+</main>
 

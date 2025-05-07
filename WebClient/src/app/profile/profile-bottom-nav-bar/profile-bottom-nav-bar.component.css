@@ -1,0 +1,64 @@
+/* Navigation container styling */
+.bottom-nav-container {
+    width: 100%;
+    height: 56px; /* Adjust height as needed */
+    background-color: #ffffff;
+    border-top: 1px solid #e0e0e0;
+    display: flex;
+    justify-content: space-around;
+    align-items: stretch;
+  }
+  
+  /* Styling for individual nav buttons */
+  .nav-item {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    padding: 8px 12px;
+    background-color: transparent;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #888888;
+    text-align: center;
+    transition: background-color 0.2s ease, color 0.2s ease, flex-grow 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+    overflow: hidden;
+    white-space: nowrap;
+    margin: 4px 2px;
+    flex-basis: 0;
+  }
+  
+  .nav-item:focus {
+    outline: none;
+  }
+  
+  /* Icon styling */
+  .nav-item mat-icon {
+    font-size: 24px;
+  }
+  
+  /* Label styling (visible only for the active nav item) */
+  .nav-label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-left: 8px;
+  }
+  
+  /* Active state styling */
+  .nav-item.active-link {
+    background-color: #0d3080;
+    color: #ffffff;
+    flex-grow: 1.5;
+  }
+  
+  .nav-item.active-link mat-icon {
+    color: #ffffff;
+  }
+  
+  /* Prevent content underlap when fixed at the bottom (if used globally) */
+  body {
+    padding-bottom: 66px; /* Should be >= nav bar height + extra space */
+  }
+  
