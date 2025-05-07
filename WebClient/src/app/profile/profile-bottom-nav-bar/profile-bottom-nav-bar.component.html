@@ -1,0 +1,21 @@
+<!-- ======================== -->
+<!-- Profile Bottom Navigation Bar -->
+<!-- ======================== -->
+<nav class="bottom-nav-container">
+    <button 
+      *ngFor="let item of navItems"
+      type="button"
+      class="nav-item"
+      [class.active-link]="item.id === activeSectionId" 
+      (click)="selectSection(item.id)"            
+      [title]="item.label">
+        
+      <mat-icon aria-hidden="true">{{ item.icon }}</mat-icon>
+    
+      <span class="nav-label" *ngIf="item.id === activeSectionId">
+        {{ item.label }}
+      </span>
+    
+    </button>
+  </nav>
+  
