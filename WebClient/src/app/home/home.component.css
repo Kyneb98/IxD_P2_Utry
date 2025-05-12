@@ -87,7 +87,7 @@
   position: relative; /* For size info positioning if needed */
   overflow: hidden; /* Prevent model overflow */
   padding: 0; /* Remove padding if model should touch edges */
-  z-index: 1;
+  
 }
 
 .utry-size-info {
