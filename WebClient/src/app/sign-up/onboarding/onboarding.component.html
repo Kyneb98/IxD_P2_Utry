@@ -9,18 +9,18 @@
   <!-- Right column -->
   <mat-grid-tile>
     <div class="right-side-tile">
+      <h2 class="header-title">Customize your avatar</h2>
+      <mat-progress-bar class="progress-bar" mode="determinate" [value]="currentStep * 33.33"></mat-progress-bar>
       <mat-card appearance="outlined" class="right-card">
         <div [ngSwitch]="currentStep" class="switch-case-container">
           <div *ngSwitchCase="1" style="flex: 1;">
-            <p>Step 1</p>
             <app-customize-one></app-customize-one>
           </div>
           <div *ngSwitchCase="2" style="flex: 1;">
-            <p>Step 2</p>
             <app-bodytype-female></app-bodytype-female>
           </div>
           <div *ngSwitchCase="3" style="flex: 1;">
-            <p>Step 3</p>
+
             <app-measurements></app-measurements>
           </div>
         </div>
@@ -29,7 +29,9 @@
         <div class="button-container">
           <button mat-raised-button color="warn" *ngIf="currentStep > 1" (click)="prevStep()" style="margin-right: auto;">Back</button>
           <button mat-raised-button color="primary" *ngIf="currentStep < 3" (click)="nextStep()" style="margin-left: auto;">Next</button>
-        </div>
+          <button mat-raised-button color="primary" *ngIf="currentStep === 3" routerLink="/onboarding" style="margin-left: auto;">Finish</button>
+        </div>                                                                           <!-- ^^^^^^^^^^ -->
+                                                                      <!-- button should navigate to the utry profile-page -->
       </mat-card>
     </div>
   </mat-grid-tile>

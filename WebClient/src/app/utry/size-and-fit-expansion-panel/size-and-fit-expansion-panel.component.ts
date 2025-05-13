@@ -5,6 +5,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import { MatIcon } from '@angular/material/icon';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import { UserProfileMeasurements, ProfileMeasurementValue } from '../../services/measurement.model';
 import { MeasurementService } from '../../services/measurement.service';
@@ -39,6 +40,7 @@ export const TSHIRT_SIZE_CHART: SizeRule[] = [
     MatTooltipModule,
     MatIcon,
     CommonModule,
+    FormsModule,
   ],
   templateUrl: './size-and-fit-expansion-panel.component.html',
   styleUrl: './size-and-fit-expansion-panel.component.css',
@@ -80,6 +82,7 @@ isLoading = false;
   profileMeasurements: UserProfileMeasurements | null = null;
   currentUserId: number | null = null;
   recommendedSize: string | null = null;
+  fitPreferenceCm: number = 0; // <-- Property for slider value (cm adjustment)
   private userIdSubscription: Subscription | null = null;
   private measurementSubscription: Subscription | null = null;
 
@@ -90,10 +93,7 @@ isLoading = false;
 
   ngOnInit(): void {
     this.isLoading = true;
-    console.log('ngOnInit - Subscribing to userId');
-
     this.userIdSubscription = this.authService.currentUserId$.subscribe(userId => {
-      console.log(`Received userId - ${userId}`);
       this.currentUserId = userId;
       if (this.currentUserId !== null) {
         this.fetchMeasurements(this.currentUserId);
@@ -104,46 +104,56 @@ isLoading = false;
   }
 
   ngOnDestroy(): void {
-    console.log('ngOnDestroy - Unsubscribing');
     this.userIdSubscription?.unsubscribe();
     this.measurementSubscription?.unsubscribe();
   }
 
   fetchMeasurements(userId: number): void {
-    console.log(`Fetching measurements for userId ${userId}`);
     this.isLoading = true;
     this.errorMessage = null;
     this.profileMeasurements = null;
     this.recommendedSize = null;
-
     this.measurementSubscription?.unsubscribe();
 
     this.measurementSubscription = this.measurementService.getProfileMeasurements(userId)
-      .pipe(
-        finalize(() => {
-            console.log('Measurement fetch finalized.');
-            this.isLoading = false;
-         })
-      )
+      .pipe(finalize(() => this.isLoading = false ))
       .subscribe({
-        next: (data: UserProfileMeasurements) => {
-          console.log("SizeAndFitExpansionPanelComponent: Received profile measurements:", data);
+        next: (data) => {
           this.profileMeasurements = data;
-          // --- CALL RECOMMENDATION LOGIC ---
-          this.recommendedSize = this.recommendTShirtSize(this.profileMeasurements);
-          console.log("Recommended Size property is now:", this.recommendedSize);
-          // --- END CALL ---
+          this.recalculateRecommendation(); // Call common method
         },
-        error: (err: Error) => {
-          console.error("SizeAndFitExpansionPanelComponent: Error fetching profile measurements:", err);
+        error: (err) => {
           this.errorMessage = err.message;
           this.profileMeasurements = null;
-          this.recommendedSize = null; // Clear recommendation on error
+          this.recommendedSize = null;
         }
       });
   }
 
-  private recommendTShirtSize(measurements: UserProfileMeasurements | null): string | null {
+  /**
+   * Recalculates the recommendation based on current measurements and fit preference.
+   */
+  recalculateRecommendation(): void {
+     if (!this.profileMeasurements) {
+         return;
+     }
+     console.log("Recalculating size recommendation with fit preference:", this.fitPreferenceCm);
+     this.recommendedSize = this.recommendTShirtSize(this.profileMeasurements, this.fitPreferenceCm);
+     console.log("New Recommended Size:", this.recommendedSize);
+  }
+
+  // --- Method triggered when the slider value changes via ngModelChange. ---
+  onFitPreferenceChange(): void {
+      this.recalculateRecommendation();
+  }
+
+  /**
+   * Recommends a T-shirt size based on measurements and fit preference adjustment.
+   * @param measurements The UserProfileMeasurements object.
+   * @param fitPreferenceCm Adjustment in cm (-2, -1, 0, 1, 2 from slider).
+   * @returns The recommended size string or null.
+   */
+  private recommendTShirtSize(measurements: UserProfileMeasurements | null, fitPreferenceCm: number): string | null {
     console.log('--- recommendTShirtSize START ---');
     if (!measurements) {
       console.log('recommendTShirtSize: Exiting - measurements object is null.');
@@ -152,53 +162,66 @@ isLoading = false;
 
     const chestMeasurement = measurements.chest;
     const waistMeasurement = measurements.waist;
-    console.log('recommendTShirtSize: Chest Data:', JSON.stringify(chestMeasurement));
-    console.log('recommendTShirtSize: Waist Data:', JSON.stringify(waistMeasurement));
+    const originalChestValue = chestMeasurement?.value; // Get original values
+    const originalWaistValue = waistMeasurement?.value;
 
-    const chestValue = chestMeasurement?.value;
-    const waistValue = waistMeasurement?.value;
-
-    if (chestValue === null || chestValue === undefined) {
-      console.log("recommendTShirtSize: Exiting - Chest value is missing.");
-      return null;
+    // --- Basic Validation ---
+    if (originalChestValue === null || originalChestValue === undefined) {
+      console.log("recommendTShirtSize:Original Chest value is missing.");
+      return null; // Need at least chest
     }
 
-    console.log(`recommendTShirtSize: Using Chest: ${chestValue}, Waist: ${waistValue}`);
-    console.log('recommendTShirtSize: Comparing against size chart:', TSHIRT_SIZE_CHART);
+    // --- Apply Fit Preference Adjustment to BOTH (if waist exists) ---
+    const adjustedChestValue = originalChestValue + fitPreferenceCm;
+    // Only adjust waist if it exists, otherwise keep it undefined/null for later checks
+    const adjustedWaistValue = (originalWaistValue !== null && originalWaistValue !== undefined)
+                                ? originalWaistValue + fitPreferenceCm
+                                : originalWaistValue; // Keep as original (null/undefined) if original was so
 
+    console.log(
+        `recommendTShirtSize: Original Chest: ${originalChestValue} cm, Original Waist: ${originalWaistValue} cm, ` +
+        `Pref Adjust: ${fitPreferenceCm} cm -> ` +
+        `Adjusted Chest: ${adjustedChestValue} cm, Adjusted Waist: ${adjustedWaistValue} cm`
+    );
+    // --- End Adjustment ---
+
+
+    // --- Iterate through the size chart using adjusted values ---
+    console.log('recommendTShirtSize: Comparing against size chart:', TSHIRT_SIZE_CHART);
     for (const rule of TSHIRT_SIZE_CHART) {
       let chestMatch = false;
-      let waistMatch = true;
-      console.log(`recommendTShirtSize: Checking Rule: ${rule.size} (Chest: ${rule.chestCmMin}-${rule.chestCmMax}, Waist: ${rule.waistCmMin}-${rule.waistCmMax})`);
+      let waistMatch = true; // Default to true (handles cases where waist isn't checked/available)
 
-      if (chestValue >= rule.chestCmMin && chestValue <= rule.chestCmMax) {
+      // Log for current rule
+      console.log(`  Checking Rule: ${rule.size} (Chest: ${rule.chestCmMin}-${rule.chestCmMax}, Waist: ${rule.waistCmMin}-${rule.waistCmMax})`);
+
+      // Check primary measurement (Chest)
+      if (adjustedChestValue >= rule.chestCmMin && adjustedChestValue <= rule.chestCmMax) {
         chestMatch = true;
-        console.log(`-> Chest Matches Rule ${rule.size}`);
-      } else {
-         console.log(`-> Chest DOES NOT Match Rule ${rule.size}`);
+        console.log(`    -> Adjusted Chest (${adjustedChestValue}) MATCHES Rule ${rule.size}`);
       }
 
-      if (chestMatch && rule.waistCmMin !== undefined && rule.waistCmMax !== undefined && waistValue !== null && waistValue !== undefined) {
-         console.log(` -> Checking waist value ${waistValue} against rule ${rule.waistCmMin}-${rule.waistCmMax}`);
-        if (!(waistValue >= rule.waistCmMin && waistValue <= rule.waistCmMax)) {
-          waistMatch = false;
-          console.log(` -> Waist DOES NOT Match Rule ${rule.size}`);
+      // Check adjusted secondary measurement (Waist)
+      if (chestMatch && rule.waistCmMin !== undefined && rule.waistCmMax !== undefined) {
+        if (adjustedWaistValue !== null && adjustedWaistValue !== undefined) {
+            if (!(adjustedWaistValue >= rule.waistCmMin && adjustedWaistValue <= rule.waistCmMax)) {
+                waistMatch = false; // Adjusted waist doesn't fit this rule
+                console.log(`    -> Adjusted Waist (${adjustedWaistValue}) MATCHES Rule ${rule.size}`);
+            }
         } else {
-            console.log(` -> Waist Matches Rule ${rule.size}`);
+                console.log(`    -> Waist check SKIPPED for Rule ${rule.size} (user has no waist data).`);
         }
-      } else if (chestMatch && rule.waistCmMin !== undefined) {
-           console.log(` -> Waist check skipped for Rule ${rule.size} (rule needs waist, but user data missing or not defined in rule)`);
       }
 
+      // If checks passed -> return size
       if (chestMatch && waistMatch) {
         console.log(`recommendTShirtSize: FINAL MATCH! Returning size ${rule.size}`);
-        console.log('--- recommendTShirtSize END (Match Found) ---');
         return rule.size;
       }
-    }
+    } // End for loop
 
-    console.log("recommendTShirtSize: No matching size found after checking all rules.");
-    console.log('--- recommendTShirtSize END (No Match) ---');
+    // --- No Match Found ---
+    console.log("recommendTShirtSize: No matching size found for the adjusted measurements.");
     return null;
   }
 

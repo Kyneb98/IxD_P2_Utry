@@ -12,13 +12,15 @@ import { BodytypeFemaleComponent } from "./bodytype-female/bodytype-female.compo
 import { MeasurementsComponent } from './measurements/measurements.component';
 import { ActivatedRoute } from '@angular/router';
 import { ZalandoTopBarComponent } from '../../home/zalando-top-bar/zalando-top-bar.component';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-onboarding',
   imports: [MatGridListModule, MatCardModule, FormsModule, ReactiveFormsModule,
     MatFormFieldModule, MatSelectModule, MatInputModule, CustomizeOneComponent,
     CommonModule, MatButtonModule, BodytypeFemaleComponent, MeasurementsComponent,
-  ZalandoTopBarComponent],
+  ZalandoTopBarComponent, MatProgressBarModule, RouterLink],
   templateUrl: './onboarding.component.html',
   styleUrl: './onboarding.component.css'
 })
@@ -29,6 +31,7 @@ export class OnboardingComponent implements OnInit {
   @ViewChild(CustomizeOneComponent) customizeOneComponent!: CustomizeOneComponent; // Reference to CustomizeOneComponent
 
   constructor(private route: ActivatedRoute) {}
+
 
   ngOnInit(): void {
     // Sets the current step according to the 'step' parameter
