@@ -24,10 +24,28 @@ mat-chip-option {
   padding: 12px;
 }
 
-.measurement-group {
-  padding-left: 16px;
+/* Align Weight and Height fields side by side */
+.measurement-row {
+  display: flex;
+  gap: 16px; /* Add spacing between the fields */
+  justify-content: space-between; /* Distribute space evenly */
+  align-items: flex-start; /* Align fields at the top */
 }
 
-.select-field {
-  padding-left: 16px;
+/* Ensure each measurement group takes up equal space */
+.measurement-group {
+  flex: 1; /* Allow fields to grow equally */
+  min-width: 0; /* Prevent overflow */
 }
+
+/* Add spacing between the title and the field */
+.group-title {
+  margin-bottom: 8px;
+}
+
+/* Ensure form fields take up full width */
+.value-field {
+  width: 100%;
+}
+
+

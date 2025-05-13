@@ -22,7 +22,29 @@
 
 .signup-card {
   width: 400px;
-  height: 500px;
+  height: 600px;
   margin: auto; /* Center the card horizontally */
   padding: 16px; /* Add padding inside the card */
+  box-shadow: none;
+}
+
+.signup-card-header {
+  margin-bottom: 16px; /* Add spacing below the header */
+}
+
+.signup-card-footer {
+  margin-top: 16px; /* Add spacing above the footer */
+  padding-left: 16px; /* Add padding to the left of the footer */
+}
+.signup-card-footer a {
+  text-decoration: none; /* Remove underline from link */
+  color: blue; /* Change link color */
+}
+
+.logo {
+  width: 100px; /* Set a fixed width for the logo */
+  height: auto; /* Maintain aspect ratio */
+  display: block; /* Ensure logo is a block element */
+  margin-left: auto; /* Center the logo horizontally */
+  margin-right: auto; /* Center the logo horizontally */
 }

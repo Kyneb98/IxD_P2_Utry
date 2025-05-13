@@ -25,8 +25,8 @@
             <span class="label-left">Slim</span>
             <span class="label-right">Loose</span>
           </div>
-          <mat-slider min="0" max="100" step="1" class="fit-slider">
-            <input matSliderThumb>
+          <mat-slider min="-3" max="3" step="1" discrete="true" showTickMarks="true" class="fit-slider">
+            <input matSliderThumb [(ngModel)]="fitPreferenceCm" (ngModelChange)="onFitPreferenceChange()">
           </mat-slider>
         </div>
       </div>

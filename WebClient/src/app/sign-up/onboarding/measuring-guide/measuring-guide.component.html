@@ -15,9 +15,10 @@
       <form [formGroup]="measurementForm" (ngSubmit)="onSubmit()" novalidate class="measurement-input-area" >
         <div [ngSwitch]="currentStep" style="height: 100%; display: flex; flex-direction: column;">
           <!-- Step 1 -->
-          <div *ngSwitchCase="1" style="flex: 1;">
+          <div *ngSwitchCase="1" class="switch-container">
             <h3>Step 1: Measure Your Waist</h3>
-            <mat-form-field appearance="outline" style="width: 50%; margin-top: 16px;">
+            <div class="black-box">Video</div>
+            <mat-form-field appearance="outline" class="centered-input">
               <mat-label>Enter your measurement</mat-label>
               <input matInput type="number"
                formControlName="value"
@@ -30,9 +31,10 @@
           </div>
 
           <!-- Step 2 -->
-          <div *ngSwitchCase="2" style="flex: 1;">
+          <div *ngSwitchCase="2" class="switch-container">
             <h3>Step 2: Measure Your Chest</h3>
-            <mat-form-field appearance="outline" style="width: 50%; margin-top: 16px;">
+            <div class="black-box">Video</div>
+            <mat-form-field appearance="outline" class="centered-input">
               <mat-label>Enter your measurement</mat-label>
               <input matInput
                formControlName="value"
@@ -45,9 +47,10 @@
           </div>
 
           <!-- Step 3 -->
-          <div *ngSwitchCase="3" style="flex: 1;">
+          <div *ngSwitchCase="3" class="switch-container">
             <h3>Step 3: Measure Your Arms</h3>
-            <mat-form-field appearance="outline" style="width: 50%; margin-top: 16px;">
+            <div class="black-box">Video</div>
+            <mat-form-field appearance="outline" class="centered-input">
               <mat-label>Enter your measurement</mat-label>
               <input matInput
                formControlName="value"
@@ -60,9 +63,10 @@
           </div>
 
           <!-- Step 4 -->
-          <div *ngSwitchCase="4" style="flex: 1;">
+          <div *ngSwitchCase="4" class="switch-container">
             <h3>Step 4: Measure Your Shoulders</h3>
-            <mat-form-field appearance="outline" style="width: 50%; margin-top: 16px;">
+            <div class="black-box">Video</div>
+            <mat-form-field appearance="outline" class="centered-input">
               <mat-label>Enter your measurement</mat-label>
               <input matInput
                formControlName="value"
@@ -75,9 +79,10 @@
           </div>
 
           <!-- Step 5 -->
-          <div *ngSwitchCase="5" style="flex: 1;">
+          <div *ngSwitchCase="5" class="switch-container">
             <h3>Step 5: Measure Your Front Bodice</h3>
-            <mat-form-field appearance="outline" style="width: 50%; margin-top: 16px;">
+            <div class="black-box">Video</div>
+            <mat-form-field appearance="outline" class="centered-input">
               <mat-label>Enter your measurement</mat-label>
               <input matInput
                formControlName="value"
@@ -100,7 +105,14 @@
                <span *ngIf="isLoading">Saving...</span>
           </button>
           <!-- Finish button still only calls onSubmit -->
-          <button mat-raised-button color="primary" *ngIf="currentStep === totalSteps" (click)="onSubmit()" style="margin-left: auto;" [disabled]="isLoading || measurementForm.invalid || !currentUserId">
+          <button mat-raised-button
+           color="primary"
+            *ngIf="currentStep === totalSteps"
+             (click)="onSubmit()"
+              style="margin-left: auto;"
+              [disabled]="isLoading || measurementForm.invalid || !currentUserId"
+               routerLink="/onboarding"
+               queryParams="{ step: '2' }">
               <span *ngIf="!isLoading">Finish</span>
               <span *ngIf="isLoading">Saving...</span>
           </button>

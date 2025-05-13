@@ -1,7 +1,8 @@
 <div class="page-container">
     <!--Formfield for choosing sex-->
+    <div class="select-field">
     <h4>Sex</h4>
-    <mat-form-field appearance="outline" class="select-field">
+    <mat-form-field appearance="outline">
       <mat-label>Sex</mat-label>
       <mat-select>
         <mat-option value="option1">Female</mat-option>
@@ -9,6 +10,7 @@
         <mat-option value="option3">Other</mat-option>
       </mat-select>
     </mat-form-field>
+    </div>
 
     <div *ngIf="successMessage && !isLoading" class="message message-success">
       {{ successMessage }}
@@ -19,13 +21,14 @@
 
     <!-- Form -->
     <form [formGroup]="measurementForm" (ngSubmit)="onSubmit()" novalidate class="measurement-fields">
-
+      <div class="measurement-row">
       <!-- Weight Section -->
       <div class="measurement-group">
         <h4 class="group-title">Weight</h4>
         <mat-form-field appearance="outline" class="value-field">
           <mat-label>Value</mat-label>
           <input matInput type="number" formControlName="weightValue" placeholder="e.g., 75.5" required>
+          <span matTextSuffix="">kg</span>
           <mat-error *ngIf="weightValueControl?.hasError('required')">Value is required</mat-error>
           <mat-error *ngIf="weightValueControl?.hasError('pattern')">Must be a valid number</mat-error>
         </mat-form-field>
@@ -37,11 +40,12 @@
         <mat-form-field appearance="outline" class="value-field">
           <mat-label>Value</mat-label>
           <input matInput type="number" formControlName="heightValue" placeholder="e.g., 180" required>
+          <span matTextSuffix="">cm</span>
           <mat-error *ngIf="heightValueControl?.hasError('required')">Value is required</mat-error>
           <mat-error *ngIf="heightValueControl?.hasError('pattern')">Must be a valid number</mat-error>
         </mat-form-field>
       </div>
-
+      </div> <!-- End measurement-row -->
     </form> <!-- End form tag -->
 
     <!--Skin color picker-->

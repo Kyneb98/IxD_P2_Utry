@@ -1,12 +1,15 @@
-<h3 class="header">Select your body type</h3>
-<p class="paragraph">Choose the body type that best describes you.</p>
+<h4 class="header">Select your body type: {{ selectedShapeName }}</h4>
 
-<mat-radio-group [(ngModel)]="selectedShape" class="body-type-radio-group">
+<div class="body-type-grid">
   <div *ngFor="let shape of bodyShapes" class="body-type-option">
-    <mat-radio-button [value]="shape.id" class="body-type-radio">
+    <label class="custom-radio">
+      <input
+        type="radio"
+        [value]="shape.id"
+        [(ngModel)]="selectedShape"
+        class="hidden-radio"
+      />
       <img [src]="shape.image" alt="{{ shape.name }}" class="body-type-image" />
-    </mat-radio-button>
+    </label>
   </div>
-</mat-radio-group>
-
-<p *ngIf="selectedShape">You selected: {{ selectedShapeName }}</p>
+</div>

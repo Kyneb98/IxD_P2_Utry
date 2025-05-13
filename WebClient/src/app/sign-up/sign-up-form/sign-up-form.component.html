@@ -1,6 +1,9 @@
 <mat-card class="signup-card">
+  <h1>
+    <img class="logo" src="/logo.svg" />
+  </h1>
   <mat-card-header>
-    <mat-card-title>Sign Up</mat-card-title>
+    <mat-card-title class="signup-card-header">Sign Up</mat-card-title>
   </mat-card-header>
 
   <!-- Loading Indicator -->
@@ -17,6 +20,8 @@
       {{ errorMessage }}
     </div>
 
+
+
     <!-- Signup Form -->
     <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" novalidate class="signup-form-fields">
       <!-- Username Field -->
@@ -27,8 +32,9 @@
                placeholder="Choose a username"
                required
                autocomplete="username">
-<!-- Validation errors -->
+        <mat-icon matSuffix *ngIf="usernameControl?.valid && usernameControl?.value">check_circle</mat-icon>
 
+<!-- Validation errors -->
         <mat-error *ngIf="usernameControl?.hasError('required')">
           Username is required
         </mat-error>
@@ -46,6 +52,7 @@
                placeholder="your.email@example.com"
                required
                autocomplete="email">
+        <mat-icon matSuffix *ngIf="emailControl?.valid && emailControl?.value">check_circle</mat-icon>
         <mat-error *ngIf="emailControl?.hasError('required')">
           Email is required
         </mat-error>
@@ -63,6 +70,8 @@
                placeholder="Choose a secure password"
                required
                autocomplete="new-password">
+        <mat-icon matSuffix *ngIf="passwordControl?.valid && passwordControl?.value">check_circle</mat-icon>
+
 <!-- Validation errors -->
         <mat-error *ngIf="passwordControl?.hasError('required')">
           Password is required
@@ -86,4 +95,7 @@
       <span *ngIf="isLoading">Signing Up...</span>
     </button>
   </mat-card-actions>
+  <mat-card-footer class="signup-card-footer">
+    <p>Already have an account? <a routerLink="/login">Log in</a></p>
+  </mat-card-footer>
 </mat-card>

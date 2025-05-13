@@ -14,6 +14,7 @@ import { AuthService } from '../../../services/auth.service'; // Import AuthServ
 import { finalize, catchError } from 'rxjs/operators'; // Import finalize operator
 import { Subscription } from 'rxjs';
 import { ZalandoTopBarComponent } from "../../../home/zalando-top-bar/zalando-top-bar.component";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-measuring-guide',
@@ -22,6 +23,7 @@ import { ZalandoTopBarComponent } from "../../../home/zalando-top-bar/zalando-to
   templateUrl: './measuring-guide.component.html',
   styleUrl: './measuring-guide.component.css'
 })
+
 export class MeasuringGuideComponent {
   measurementForm: FormGroup; // Single form for the input field
   currentStep = 1; // Tracks the current step (1-based)
@@ -35,7 +37,8 @@ export class MeasuringGuideComponent {
   constructor(
     private fb: FormBuilder, // Inject FormBuilder
     private measurementService: MeasurementService, // Inject your service
-    private authService: AuthService // Inject AuthService to get user ID
+    private authService: AuthService, // Inject AuthService to get user ID
+    private router: Router // Inject Router for navigation
   ) {
     // Initialize the form group for the *shared* input field
     this.measurementForm = this.fb.group({
@@ -143,9 +146,10 @@ export class MeasuringGuideComponent {
             // This was the *last* step (Finish button)
             console.log("All measurements finished.");
             this.successMessage = "All measurements saved successfully!";
-            this.measurementForm.disable(); // Optionally disable form
+            this.measurementForm.disable(); // Diable form after last step
             // Handle final completion (e.g., navigate to dashboard)
             // this.router.navigate(['/dashboard']);
+            this.router.navigate(['/onboarding/step/3'])
           }
           // --- END TRIGGER ---
 
@@ -160,7 +164,7 @@ export class MeasuringGuideComponent {
 
   /**
    * Advances the step number and updates the UI.
-   * This is now called internally AFTER a successful save.
+   * This is called internally AFTER a successful save.
    */
   private goToNextStep(): void {
      if (this.currentStep < this.totalSteps) {
