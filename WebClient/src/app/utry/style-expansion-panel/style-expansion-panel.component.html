@@ -8,25 +8,49 @@
        aria-controls="panel-content-area"
        role="button"
        tabindex="0">
-    <!-- You can add a subtle background/border here if needed -->
-    <!-- The arrow icon is the primary visual indicator -->
     <mat-icon class="toggle-icon">{{ isExpanded ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</mat-icon>
   </div>
 
-
   <!-- Content Area - This part slides up/down -->
   <div class="panel-content-area" id="panel-content-area">
-    <!-- Your existing content structure -->
+    <!-- Main content container - becomes the two-column layout -->
     <div class="expansion-content">
-
-      <div class="contentleft">
-        <span class="panel-section-title">Match with items in your wardrobe</span>
-      </div> 
-
-      <div class="contentright">
+  
+      <!-- === Left Column === -->
+      <div class="left-column">
+        <h2 class="panel-section-title">Match with items in your wardrobe</h2>
+        <div class="wardrobe-search-container">
+          <mat-form-field appearance="outline" class="wardrobe-search-field">
+            <mat-icon matPrefix>search</mat-icon>
+            <input matInput placeholder="Search in wardrobe">
+          </mat-form-field>
+        </div>
+        <a href="#" class="go-to-wardrobe">
+          Go to wardrobe
+          <mat-icon>arrow_forward</mat-icon>
+        </a>
       </div>
+      <!-- === End Left Column === -->
+  
+  
+      <!-- === Right Column (Scrollable Gallery) === -->
+      <div class="right-column">
+        <div class="wardrobe-items-container">
+          <button *ngFor="let item of wardrobeItems"
+                  class="wardrobe-item"
+                  [class.selected]="item.selected"
+                  (click)="selectItem(item)">
+            <img [src]="item.img" [alt]="item.name">
+          </button>
+        </div>
+      </div>
+      <!-- === End Right Column === -->
+  
 
-    </div>
+        
+
+
+    </div> <!-- End expansion-content -->
   </div> <!-- End panel-content-area -->
 
 </div> <!-- End style-panel-wrapper -->

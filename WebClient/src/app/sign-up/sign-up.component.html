@@ -3,8 +3,21 @@
 
 <mat-grid-list cols="2" rowHeight="1:1">
   <!-- Left column -->
-  <mat-grid-tile>
-    <img src="/utryDamer.png" style="width: 100%; height: 100%;" />
+  <mat-grid-tile>¨
+  <div class="signup-model">
+    <model-viewer
+      src="/models/William.glb" alt="3D model of clothing"
+      camera-controls
+      touch-action="pan-y"            
+      
+      camera-orbit="140deg 80deg auto"
+      shadow-intensity="1"
+      class="utry-model-viewer">
+       <div class="progress-bar hide" slot="progress-bar">
+            <div class="update-bar"></div>
+        </div>
+  </model-viewer>
+</div>
   </mat-grid-tile>
 
   <!-- Right column -->
