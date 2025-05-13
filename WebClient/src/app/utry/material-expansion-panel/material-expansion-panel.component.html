@@ -20,29 +20,50 @@
       <!-- Column 1: Image -->
       <div class="fabric-picture-column">
         <div class="fabric-picture-container">
-          <img src="whiteFabric.jpg" alt="Fabric picture" class="fabric-img">
+          <img src="blackFabric.jpg" alt="Fabric picture" class="fabric-img">
         </div>
       </div>
 
       <!-- Column 2: Details -->
       <div class="fabric-details-column">
-        <p>Fabric description:</p>
+        <span class="panel-section-title">Fabric description</span>
         <p>Materials: <strong>100% Cotton</strong></p>
         <p>Material details: <strong>Jersey</strong></p>
       </div>
 
-      <!-- Column 3: Scratchiness -->
+        <!-- Column 3: Scratchiness and Stretch -->
       <div class="scratchiness-column">
-        <p>Scratchiness factor</p>
-        <mat-slider min="0" max="100" step="1" class="scratchiness-slider">
-        </mat-slider>
+        <!-- Scratchiness Title -->
+        <span class="panel-section-title scratchiness-title">
+          Scratchiness factor: <strong>0%</strong>
+          <mat-icon class="info-icon"
+                    matTooltip="Scratchiness factor is calculated based on other users rating of this item"
+                    matTooltipPosition="above"
+                    aria-label="info icon">info_outline</mat-icon>
+        </span>
+
+        <!-- Static Stretch Indicator -->
+        <div class="stretch-section">
+          <span class="panel-section-title stretch-title">Stretch:</span>
+          <div class="static-stretch-indicator">
+            <div class="stretch-track">
+              <!-- Dot for the static "Non" position -->
+              <div class="stretch-dot non"></div>
+            </div>
+            <div class="label-container stretch-labels">
+              <span [class.active-label]="itemStretchLevel === 'Non'">Non</span>
+              <span [class.active-label]="itemStretchLevel === 'Slight'">Slight</span>
+              <span [class.active-label]="itemStretchLevel === 'Medium'">Medium</span>
+              <span [class.active-label]="itemStretchLevel === 'High'">High</span>
+            </div>
+          </div>
         </div>
+        <!-- End Stretch Section -->
+        
+        
       </div>
-      
-
-      
-
     </div>
   </div> <!-- End panel-content-area -->
+</div> <!-- End material-panel-wrapper -->
  
   

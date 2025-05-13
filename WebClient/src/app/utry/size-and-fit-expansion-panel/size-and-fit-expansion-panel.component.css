@@ -109,8 +109,14 @@
 /* Styling for the slider element itself */
 .fit-slider {
   width: 100%; /* Make slider take full width */
+  color: #0d3080; /* Match active nav blue */
 }
 
+
+:host ::ng-deep .fit-slider .mdc-slider__thumb-knob {
+  background-color: #0d3080 !important; /* Your desired dot color */
+  border-color: #0d3080 !important;     /* Border of the dot */
+}
 
 
 

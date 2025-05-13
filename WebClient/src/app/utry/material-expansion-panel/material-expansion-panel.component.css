@@ -39,7 +39,7 @@
 }
 
 .panel-content-area {
-  padding: 15px 25px; /* Padding for the content */
+  padding: 10px 20px; /* Padding for the content */
   padding-top: 0; /* No top padding to align with header */
   box-sizing: border-box;
   
@@ -56,6 +56,15 @@
 
 
 /* --- Column 1: Image --- */
+.panel-section-title {
+  display: block;         /* Default to block for left side */
+  font-size: 1rem;        /* 16px */
+  font-weight: 500;       /* Medium weight */   /* Space below title */
+  color: #333;
+  margin-bottom: 8px;
+}
+
+
 .fabric-picture-column {
   flex-shrink: 0; /* Prevent shrinking */
   /* Size is controlled by container inside */
@@ -105,13 +114,113 @@
 }
 
 .scratchiness-column p {
-  margin: 0 0 5px 0; /* Space above slider */
+  margin: 0 0 10px 0; /* Space above slider */
+  
 }
 
 .scratchiness-slider {
   width: 100%;
 }
+.info-icon {
+  font-size: 18px;      /* Icon size */
+  width: 18px;
+  height: 18px;
+  color: #666;         /* Icon color */
+  cursor: help;         /* Indicate it provides help/info */
+  vertical-align: top; /* Align icon better with text */
+}
 
+
+
+
+/* --- Static Stretch Indicator --- */
+.static-stretch-indicator {
+  width: 100%;
+  display: flex;
+  flex-direction: column; /* Stack track and labels */
+  align-items: stretch; /* Make track and label container full width */
+  margin-top: 5px;
+}
+
+.stretch-track {
+  width: 100%;        /* Track takes full width */
+  height: 2px;        /* Thickness of the main line */
+  background-color: #666; /* Color of the track line */
+  position: relative; /* Context for the dot and ticks */
+  margin-bottom: 8px; /* Space between track and labels */
+}
+
+/* Dot is always at the "Non" position */
+.stretch-dot.non {
+  position: absolute;
+  top: 50%;
+  /* Position slightly IN from the left edge for better visual */
+  left: 10%; /* Or a small px value like 2px */
+  transform: translate(0%, -50%); /* Adjust X if needed for perfect alignment over start of track */
+  width: 12px; /* Smaller dot */
+  height: 12px;
+  background-color: #0d3080; /* Dark blue dot */
+  border-radius: 50%;
+  
+}
+
+
+/* Stretch Labels */
+.label-container.stretch-labels {
+  display: flex;
+  justify-content: space-between; /* Distribute labels */
+  width: 100%;
+  font-size: 0.75rem; /* Even smaller labels */
+  color: #555;
+  padding: 0;
+  box-sizing: border-box;
+  position: relative; /* Allows ticks to be positioned relative to this */
+}
+
+.stretch-labels span {
+  flex: 1 1 0px;
+  text-align: center;
+  position: relative; /* Context for its own tick mark */
+  font-weight: normal;
+  padding: 0 1px; /* Minimal padding */
+  box-sizing: border-box;
+  /* Ensure labels don't overlap excessively */
+  min-width: 40px; /* Example, adjust based on text length */
+}
+
+/* Tick marks for each label - now positioned to intersect the track */
+.stretch-labels span::before {
+  content: '';
+  position: absolute;
+  bottom: calc(100% + 2px); /* Position just above the label text, aligned with track */
+  /* (height of track / 2) + (height of tick / 2) for perfect centering on track.
+     For bottom: calc(100% + (height of track - height of tick / 2) )
+     Given track height 2px, tick height 8px, we want tick to go 3px into track and 5px above
+     So bottom: 100% (base of text) + 2px (space) = bottom of tick relative to text.
+     Let's try top instead.
+  */
+  top: -10px; /* Adjust this to align tick with the track. Track is above the labels. */
+              /* (track_margin_bottom (8px) + track_height(2px) + desired_overlap_or_space ) */
+
+
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;         /* Thickness of the tick */
+  height: 8px;        /* Height of the tick */
+  background-color: #666; /* Match track color */
+}
+
+/* Hide the "Non" tick if the dot represents it */
+.stretch-labels span:first-child::before {
+  display: none;
+}
+
+/* Highlight "Non" label (or based on itemStretchLevel) */
+.stretch-labels span.active-label {
+  font-weight: bold;
+  color: #0d3080;
+}
+/* --- End Static Stretch Indicator --- */
 
 
 

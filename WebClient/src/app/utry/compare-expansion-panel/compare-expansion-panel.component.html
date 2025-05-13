@@ -8,45 +8,67 @@
        aria-controls="panel-content-area"
        role="button"
        tabindex="0">
-    <!-- The arrow icon is the primary visual indicator -->
     <mat-icon class="toggle-icon">{{ isExpanded ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</mat-icon>
   </div>
 
   <!-- Content Area - This part slides up/down -->
   <div class="panel-content-area" id="panel-content-area">
-    <!-- Content structure -->
-    
     <div class="expansion-content">
-      
+
       <!-- Left Column -->
-      <div class="contentleft">
-        <mat-form-field>
-            <mat-label>Choose size: </mat-label>
-            <mat-select [(value)]="selected1">
-              <mat-option value="Regular fit">S</mat-option>
-              <mat-option value="Slighty loose fit">M</mat-option>
-              <mat-option value="Loose fit">L</mat-option>
-              <mat-option value="Very loose fit">XL</mat-option>
-            </mat-select>
-          </mat-form-field>
-          
-          <p>Choose this size if you want: {{selected1}}</p>
+      <div class="compare-column">
+        <mat-form-field appearance="outline" class="custom-size-select">
+          <mat-select [(ngModel)]="selectedDescriptionLeft" panelClass="compare-select-panel">
+            <!-- Custom trigger to display "Size X" -->
+            <mat-select-trigger class="select-trigger-display">
+              Size {{ sizeDisplayMap[selectedDescriptionLeft] || selectedDescriptionLeft.charAt(0) }}
+            </mat-select-trigger>
+            <!-- Options -->
+            <mat-option class="matOption" value="Regular fit">S </mat-option>
+            <mat-option class="matOption" value="Slighty loose fit">M</mat-option>
+            <mat-option class="matOption" value="Loose fit">L</mat-option>
+            <mat-option class="matOption" value="Very loose fit">XL</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div class="description-area" *ngIf="getDescription(selectedDescriptionLeft) as descLeft">
+          <p class="description-title">Choose this size if you want <strong class="description-value">{{ descLeft.title }}</strong>
+          </p>
+          <ul>
+            <li *ngFor="let point of descLeft.points">{{ point }}</li>
+          </ul>
         </div>
+        <div class="description-area placeholder" *ngIf="!getDescription(selectedDescriptionLeft)">
+          <!-- Placeholder if no description initially -->
+        </div>
+      </div>
 
-      <div class="contentright">
-        <mat-form-field>
-            <mat-label>Choose size: </mat-label>
-            <mat-select [(value)]="selected2">
-              <mat-option value="Regular fit">S</mat-option>
-              <mat-option value="Slighty loose fit">M</mat-option>
-              <mat-option value="Loose fit">L</mat-option>
-              <mat-option value="Very loose fit">XL</mat-option>
-            </mat-select>
-          </mat-form-field>
-          
-          <p>Choose this size if you want: {{selected2}}</p>
+      <!-- Right Column -->
+      <div class="compare-column">
+        <mat-form-field appearance="outline" class="custom-size-select">
+          <mat-select [(ngModel)]="selectedDescriptionRight" panelClass="compare-select-panel">
+            <mat-select-trigger class="select-trigger-display">
+              Size {{ sizeDisplayMap[selectedDescriptionRight] || selectedDescriptionRight.charAt(0) }}
+            </mat-select-trigger>
+            <mat-option value="Regular fit">S</mat-option>
+            <mat-option value="Slighty loose fit">M</mat-option>
+            <mat-option value="Loose fit">L</mat-option>
+            <mat-option value="Very loose fit">XL</mat-option>
+          </mat-select>
+        </mat-form-field>
 
-    </div>
+        <div class="description-area" *ngIf="getDescription(selectedDescriptionRight) as descRight">
+          <p class="description-title">Choose this size if you want <strong class="description-value">{{ descRight.title }}</strong></p>
+          <ul>
+            <li *ngFor="let point of descRight.points">{{ point }}</li>
+          </ul>
+        </div>
+         <div class="description-area placeholder" *ngIf="!getDescription(selectedDescriptionRight)">
+          <!-- Placeholder if no description initially -->
+        </div>
+      </div>
+
+    </div><!-- End expansion-content -->
   </div> <!-- End panel-content-area -->
 
 </div> <!-- End compare-panel-wrapper -->

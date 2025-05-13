@@ -72,6 +72,9 @@ togglePanel(): void {
 // Placeholder for slider value if needed
 fitValue: number = 50;
 
+
+
+
 isLoading = false;
   errorMessage: string | null = null;
   profileMeasurements: UserProfileMeasurements | null = null;

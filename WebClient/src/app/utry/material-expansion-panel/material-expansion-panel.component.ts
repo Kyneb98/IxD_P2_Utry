@@ -10,7 +10,8 @@ import { FormsModule } from '@angular/forms';
 
 
 
-
+// Define possible stretch levels
+export type StretchLevel = 'Non' | 'Slight' | 'Medium' | 'High';
 
 @Component({
   selector: 'app-material-expansion-panel',
@@ -50,5 +51,8 @@ isExpanded: boolean = true;
 togglePanel(): void {
   this.isExpanded = !this.isExpanded;
 }
+
+itemStretchLevel: StretchLevel = 'Non';
+// Static stretch level for this item example
 
 }
