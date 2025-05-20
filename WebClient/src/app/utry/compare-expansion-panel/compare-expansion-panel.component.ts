@@ -64,8 +64,8 @@ togglePanel(): void {
 
   // Data structure for descriptions based on the *value* of mat-option
   sizeDescriptions: { [key: string]: SizeDescription } = {
-    'Regular fit': { title: 'a regular fit', points: ['T-shirt fits nicely over the shoulders', 'Sleeves are the correct length'] },
-    'Slighty loose fit': { title: ' a looser fit', points: ['T-shirt fits oversize', 'T-shirt might be too long'] },
+    'Regular fit': { title: 'a regular fit', points: ['Fits nicely over the shoulders', 'Sleeves seem the correct length'] },
+    'Slighty loose fit': { title: ' a looser fit', points: ['Fits oversize', 'Might be too long'] },
     'Loose fit': { title: 'an oversized fit', points: ['Significantly larger fit', 'Likely too long'] },
     'Very loose fit': { title: 'a very oversized fit', points: ['Very loose', 'Much too long'] }
     // Add more descriptions as needed

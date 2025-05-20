@@ -7,6 +7,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { RouterLink } from '@angular/router';
 
 
 // Interface for wardrobe items
@@ -26,7 +27,8 @@ interface WardrobeItem {
     MatTabsModule,
     FormsModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    RouterLink,
   ],
   templateUrl: './style-expansion-panel.component.html',
   styleUrl: './style-expansion-panel.component.css',
@@ -69,17 +71,45 @@ togglePanel(): void {
   { id: 5, name: 'Denim Jacket', img: '/wardrobeItems/denimJacket.jpg', selected: false },
   { id: 6, name: 'Cargo Pants', img: '/wardrobeItems/cargoPants.jpg', selected: false },
   { id: 7, name: 'Beanie Hat', img: '/wardrobeItems/beanieHat.jpg', selected: false },
-  { id: 8, name: 'Scarf', img: '/wardrobeItems/scarf.jpg', selected: false }, // Example extra item
+  { id: 8, name: 'Scarf', img: '/wardrobeItems/scarf.jpg', selected: false }
 ];
 
-// Method to handle selecting an item
-selectItem(selectedItem: WardrobeItem): void {
-  this.wardrobeItems.forEach(item => item.selected = false);
-  selectedItem.selected = true;
-  console.log('Selected wardrobe item:', selectedItem.name);
-  // Add logic here if needed
+// --- Method to handle selecting/deselecting an item ---
+selectItem(clickedItem: WardrobeItem): void {
+  // Toggle the 'selected' state of the clicked item
+  clickedItem.selected = !clickedItem.selected;
 }
 
+// --- Property for the search term ---
+searchTerm: string = '';
+// ----------------------------------------
 
+// --- Property to hold the filtered items for display ---
+filteredWardrobeItems: WardrobeItem[] = [];
+// -----------------------------------------------------------
 
+ngOnInit(): void {
+  // Initialize filtered list with all items when component loads
+  this.filterItems();
+}
+
+// --- NEW: Method to filter items based on searchTerm ---
+filterItems(): void {
+  const lowerCaseSearchTerm = this.searchTerm.toLowerCase().trim();
+  if (!lowerCaseSearchTerm) {
+    this.filteredWardrobeItems = [...this.wardrobeItems]; // Show all if search is empty
+  } else {
+    this.filteredWardrobeItems = this.wardrobeItems.filter(item =>
+      item.name.toLowerCase().includes(lowerCaseSearchTerm)
+    );
+  }
+  console.log('Filtered items:', this.filteredWardrobeItems);
+}
+// -------------------------------------------------------
+
+// --- NEW: Method to call on input change (debouncing is often good here) ---
+onSearchChange(): void {
+  // For instant filtering:
+  this.filterItems();
+}
 }

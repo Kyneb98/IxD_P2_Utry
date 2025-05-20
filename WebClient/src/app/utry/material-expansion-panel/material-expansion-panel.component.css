@@ -42,7 +42,7 @@
   padding: 10px 20px; /* Padding for the content */
   padding-top: 0; /* No top padding to align with header */
   box-sizing: border-box;
-  
+  gap:0;
   background-color: inherit;
 }
 
