@@ -1,0 +1,42 @@
+.profile-update-form {
+  padding: 24px;
+  margin: 0 auto;
+  max-width: 400px;
+  border-radius: 8px;
+
+}
+
+.small-form-field {
+  width: 100%;
+  margin-bottom: 12px;
+  font-size: 0.95em;
+}
+
+.unit-suffix {
+  margin-left: 8px;
+  font-size: 0.95em;
+  color: #888;
+}
+
+/* This will force the suffix further from the edge */
+::ng-deep .mat-form-field-suffix {
+  padding-right: 24px !important;
+}
+
+button[type="submit"] {
+  margin-top: 12px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
+.success, .error {
+  margin-top: 12px;
+}
+
+.mat-form-field-suffix {
+  padding-right: 16px; /* Increase this value for more space */
+}

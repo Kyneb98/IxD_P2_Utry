@@ -1,0 +1,75 @@
+<!-- Assuming a mat-card wraps the content as in your signup -->
+<mat-card class="login-card"> <!-- Add a class for styling -->
+ <h1>
+    <img class="logo" src="/logo.svg" />
+  </h1>
+  <mat-card-header>
+    <mat-card-title class="login-card-header">Welcome back!</mat-card-title>
+  </mat-card-header>
+
+  <!-- Loading Indicator -->
+  <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+
+  <mat-card-content>
+    <!-- Error Message -->
+    <div *ngIf="errorMessage && !isLoading" class="message message-error">
+      <mat-icon matSuffix>error_outline</mat-icon> <!-- Optional icon -->
+      {{ errorMessage }}
+    </div>
+
+    <!-- Login Form -->
+    <!-- Use loginForm here, and (ngSubmit) is preferred for forms -->
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate class="login-form-fields">
+
+      <!-- Username Field -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Username</mat-label>
+        <input matInput
+               formControlName="username"
+               placeholder="Enter your username"
+               required
+               autocomplete="username"> <!-- Use "username" for autocomplete -->
+        <!-- Optional: Show checkmark if valid and has value -->
+        <mat-icon matSuffix *ngIf="usernameControl?.valid && usernameControl?.value">check_circle</mat-icon>
+        <!-- Validation errors -->
+        <mat-error *ngIf="usernameControl?.hasError('required') && usernameControl?.touched">
+          Username is required
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Password Field -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Password</mat-label>
+        <input matInput
+               type="password"
+               formControlName="password"
+               placeholder="Enter your password"
+               required
+               autocomplete="current-password"> <!-- Use "current-password" for autocomplete -->
+        <!-- Optional: Show checkmark if valid and has value -->
+        <mat-icon matSuffix *ngIf="passwordControl?.hasError('required') === false && passwordControl?.value">check_circle</mat-icon>
+        <!-- Validation errors -->
+        <mat-error *ngIf="passwordControl?.hasError('required') && passwordControl?.touched">
+          Password is required
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Submit button now inside the form for (ngSubmit) -->
+       <button mat-raised-button
+              color="primary"
+              type="submit"
+              class="login-button full-width"
+              [disabled]="loginForm.invalid || isLoading">
+        <span *ngIf="!isLoading">Login</span>
+        <span *ngIf="isLoading">Logging in...</span>
+      </button>
+    </form> <!-- End of form tag -->
+
+     <div class="login-card-footer">
+      Don't have an account? <a routerLink="/profile">Sign Up</a>
+    </div>
+
+  </mat-card-content>
+
+  <!-- Removed mat-card-actions if button is inside mat-card-content -->
+</mat-card>

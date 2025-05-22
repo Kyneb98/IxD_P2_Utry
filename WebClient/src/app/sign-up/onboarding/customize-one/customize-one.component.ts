@@ -52,7 +52,7 @@ export class CustomizeOneComponent {
 
     // Initialize form with controls for both measurements
     this.measurementForm = this.fb.group({
-      // Use different control names
+      // Control names
       weightValue: ['', [Validators.required, Validators.pattern(/^[0-9]+(\.[0-9]*)?$/)]],
       weightUnit: ['kg'], // Default unit or empty
       heightValue: ['', [Validators.required, Validators.pattern(/^[0-9]+(\.[0-9]*)?$/)]],
@@ -83,7 +83,6 @@ export class CustomizeOneComponent {
   }
 
   ngOnDestroy(): void {
-    // --- IMPORTANT: Unsubscribe to prevent memory leaks ---
     this.userIdSubscription?.unsubscribe();
     console.log('Component ngOnDestroy: Unsubscribed from userId.');
   }

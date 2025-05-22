@@ -69,4 +69,63 @@ router.post(
     }
 );
 
+// --- NEW LOGIN ROUTE ---
+router.post(
+    '/login',
+    [
+        // Validate incoming data
+        body('username', 'Username is required').notEmpty().trim().escape(),
+        body('password', 'Password is required').notEmpty(),
+    ],
+    (req, res) => {
+        // Check for validation errors
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
+        const { username, password } = req.body;
+        console.log(`Backend: Login attempt for username: ${username}`);
+
+        try {
+            // Find the user by username
+            const stmt = db.prepare('SELECT id, username, password_hash FROM users WHERE username = ?');
+            const user = stmt.get(username);
+
+            if (!user) {
+                // User not found
+                console.log(`Backend: User not found for username: ${username}`);
+                return res.status(401).json({ message: 'Invalid username or password.' }); // Generic message
+            }
+
+            // Compare the provided password with the stored hash
+            // bcrypt.compare is asynchronous
+            bcrypt.compare(password, user.password_hash, (err, isMatch) => {
+                if (err) {
+                    console.error('Backend: Error comparing password:', err);
+                    return res.status(500).json({ message: 'Server error during login.' });
+                }
+
+                if (isMatch) {
+                    // Passwords match - Login successful
+                    console.log(`Backend: Login successful for: ${user.username}, ID: ${user.id}`);
+                    res.status(200).json({
+                        message: 'Login successful!',
+                        userId: user.id,
+                        username: user.username // Optionally return username
+                        // In a more secure app, you'd generate and return a JWT token here
+                    });
+                } else {
+                    // Passwords do not match
+                    console.log(`Backend: Invalid password for: ${username}`);
+                    return res.status(401).json({ message: 'Invalid username or password.' }); // Generic message
+                }
+            });
+        } catch (dbError) {
+            console.error('Backend: Database error during login:', dbError);
+            res.status(500).json({ message: 'Database error during login.' });
+        }
+    }
+);
+
 module.exports = router;

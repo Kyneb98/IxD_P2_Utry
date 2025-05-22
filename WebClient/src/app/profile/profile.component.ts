@@ -12,6 +12,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { ProfileBottomNavBarComponent } from '../profile/profile-bottom-nav-bar/profile-bottom-nav-bar.component';
 import { ZalandoTopBarComponent } from '../home/zalando-top-bar/zalando-top-bar.component';
 import { ProfileGalleryComponent } from './profile-gallery/profile-gallery.component';
+import { ProfileUpdateComponent } from "./profile-update/profile-update.component";
 
 @Component({
   selector: 'app-profile',
@@ -27,14 +28,14 @@ import { ProfileGalleryComponent } from './profile-gallery/profile-gallery.compo
     MatSelectModule,
     MatButtonModule,
     MatExpansionModule,
-    MatTooltipModule,],
+    MatTooltipModule, ProfileUpdateComponent],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ProfileComponent {
 
-  
+
   // Now always visible – for profile, we default to the 'overview' section
   activeProfileSectionId: string = 'items';
 

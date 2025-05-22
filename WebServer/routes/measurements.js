@@ -25,7 +25,7 @@ router.post(
         const { userId, measurementType, value, unit } = req.body;
 
         try {
-            // Optional: Verify the user actually exists
+            //Verify the user actually exists
             const userCheckStmt = db.prepare('SELECT id FROM users WHERE id = ?');
             const userExists = userCheckStmt.get(userId);
             if (!userExists) {
@@ -78,7 +78,7 @@ router.get(
             'Chest',
             'Arms',
             'Shoulders',
-            'Front Bodice' // Match the exact strings used when saving!
+            'Front Bodice' // Match the exact strings used when saving
         ];
 
         // Initialize the response object with nulls for all expected properties
@@ -86,7 +86,7 @@ router.get(
             weight: null,
             height: null,
             waist: null,
-            chest: null,
+            chest: null,    
             arms: null,
             shoulders: null,
             front_bodice: null,
@@ -141,5 +141,45 @@ router.get(
     }
 );
 
+// --- Update an existing measurement ---
+router.put(
+    '/:measurementId',
+    [
+        param('measurementId', 'Measurement ID must be an integer').isInt(),
+        body('value', 'Value is required and must be a number').isNumeric(),
+        body('unit', 'Unit must be text if provided').optional().isString().trim().escape(),
+        body('userId', 'User ID is required and must be an integer').isInt(), // For ownership check (insecure, but matches your current pattern)
+    ],
+    (req, res) => {
+        // Validate input
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
+        const measurementId = parseInt(req.params.measurementId, 10);
+        const { value, unit, userId } = req.body;
+
+        try {
+            // Check if measurement exists and belongs to user
+            const checkStmt = db.prepare('SELECT * FROM measurements WHERE id = ? AND user_id = ?');
+            const measurement = checkStmt.get(measurementId, userId);
+            if (!measurement) {
+                return res.status(404).json({ message: 'Measurement not found or does not belong to user.' });
+            }
+
+            // Update the measurement
+            const updateStmt = db.prepare(
+                'UPDATE measurements SET value = ?, unit = ? WHERE id = ?'
+            );
+            updateStmt.run(parseFloat(value), unit || null, measurementId);
+
+            res.status(200).json({ message: 'Measurement updated successfully!', updatedMeasurement: { id: measurementId, value, unit } });
+        } catch (error) {
+            console.error('Database error updating measurement:', error);
+            res.status(500).json({ message: 'Database error updating measurement.' });
+        }
+    }
+);
 
 module.exports = router;

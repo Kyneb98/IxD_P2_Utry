@@ -43,7 +43,7 @@ export class SignUpFormComponent {
     private userService: UserService, // Inject the UserService
     private authService: AuthService // Inject the AuthService for authentication
   ) {
-     // Initialize the form
+     // Initialize form
      this.signupForm = this.fb.group({
       // Define controls with initial values and validators
       username: ['', [Validators.required, Validators.minLength(3)]],
@@ -69,7 +69,7 @@ export class SignUpFormComponent {
     }
 
     this.isLoading = true;
-    const signupData = this.signupForm.value as UserSignupData; // Use type assertion
+    const signupData = this.signupForm.value as UserSignupData; // Type assertion
 
     this.userService.signupUser(signupData).subscribe({
       // Handle the response from the signup API
@@ -81,7 +81,7 @@ export class SignUpFormComponent {
         // --- Code to save userId in localStorage ---
         if (response && typeof response.userId === 'number') {
           // --- Use AuthService to update state ---
-          this.authService.loginUser(response.userId); // <-- CALL SERVICE
+          this.authService.setCurrentUser(response.userId); // <-- CALL SERVICE
 
         } else {
           console.error("Signup response missing valid userId:", response);
