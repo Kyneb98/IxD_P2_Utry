@@ -26,7 +26,7 @@ app.get('/', (req, res) => {
 app.use('/api/auth', authRoutes); // All routes in auth.js will be prefixed with /api/auth
 app.use('/api/measurements', measurementRoutes); // All routes in measurements.js will be prefixed with /api/measurements
 
-// --- Basic Error Handling Middleware (Example) ---
+// --- Basic Error Handling Middleware ---
 // Catches errors passed via next(err)
 app.use((err, req, res, next) => {
     console.error(err.stack);

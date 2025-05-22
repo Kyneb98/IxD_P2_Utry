@@ -8,6 +8,8 @@ import {
   MeasurementInputData,
   TemporaryMeasurementInputData,
   UserProfileMeasurements,
+  MeasurementUpdateData,
+  UpdateMeasurementResponse,
 } from './measurement.model';
 
 @Injectable({
@@ -36,11 +38,10 @@ export class MeasurementService {
     };
     console.log('Temporary Payload:', temporaryPayload); // Debugging log
 
-
     //POST request to the backend endpoint
     return this.http.post<AddMeasurementResponse>(this.measurementApiUrl, temporaryPayload, this.httpOptions)
       .pipe(
-        // Apply error handling using the private helper method
+        // Error handling using the private helper method
         catchError(this.handleError)
       );
   }
@@ -58,6 +59,30 @@ export class MeasurementService {
         catchError(this.handleError)
       );
   }
+
+    // --- UPDATE METHOD ---
+  /**
+   * Updates an existing measurement.
+   * @param measurementId The ID of the measurement to update.
+   * @param updateData The data to update (value, unit, and insecure userId).
+   * @returns An Observable with the success response or an error.
+   */
+  updateMeasurement(measurementId: number, updateData: MeasurementUpdateData): Observable<UpdateMeasurementResponse> {
+    const updateUrl = `${this.measurementApiUrl}/${measurementId}`; // e.g., /api/measurements/123
+
+    // --- SECURITY WARNING ---
+    // The 'updateData' object currently includes 'userId' for the backend's insecure ownership check.
+    // In a secure app, the backend would use a token, and 'userId' wouldn't be in 'updateData'.
+    console.warn(`SECURITY WARNING: Sending userId (${updateData.userId}) explicitly in PUT measurement payload.`);
+    console.log(`Service updating measurement ID ${measurementId} with data:`, updateData);
+    // --- END WARNING ---
+
+    return this.http.put<UpdateMeasurementResponse>(updateUrl, updateData, this.httpOptions)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+  // --- END NEW UPDATE METHOD ---
 
   /**
    * Private helper method to process HTTP errors consistently.

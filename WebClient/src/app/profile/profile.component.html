@@ -7,7 +7,7 @@
      <model-viewer
       src="/models/William.glb" alt="3D model of clothing"
       camera-controls
-      touch-action="pan-y"            
+      touch-action="pan-y"
       camera-orbit="140deg 80deg auto"
       shadow-intensity="1"
       class="utry-model-viewer">
@@ -18,11 +18,12 @@
     </div>
 
     <div class="right-content">
-        <!-- ============================= -->
-<!-- Profile Content Area          -->
-<!-- ============================= -->
-<div class="profile-content-area" [ngSwitch]="activeProfileSectionId">
-    <!-- Empty content sections; fill in as desired -->
+              <!-- ============================= -->
+              <!-- Profile Content Area          -->
+              <!-- ============================= -->
+  <div class="profile-card">
+    <div class="profile-content-area" [ngSwitch]="activeProfileSectionId">
+        <!-- Empty content sections; fill in as desired -->
     <div *ngSwitchCase="'items'">
         <app-profile-gallery></app-profile-gallery>
       <!-- Profile Overview Section (empty) -->
@@ -31,28 +32,24 @@
       <!-- Profile Posts Section (empty) -->
     </div>
     <div *ngSwitchCase="'measurements'">
-      <!-- Profile Media Section (empty) -->
+      <app-profile-update></app-profile-update>
     </div>
     <div *ngSwitchCase="'account'">
       <!-- Profile Settings Section (empty) -->
     </div>
   </div>
-  
+
   <!-- ============================= -->
   <!-- Profile Bottom Navigation Bar -->
   <!-- ============================= -->
   <div class="profile-footer">
-    <app-profile-bottom-nav 
+    <app-profile-bottom-nav
       [activeSectionId]="activeProfileSectionId"
       (sectionSelected)="onProfileSectionSelected($event)">
     </app-profile-bottom-nav>
   </div>
-  
-    </div>
-        
-
-
-
+  </div>
+</div>
 
 </main>
 

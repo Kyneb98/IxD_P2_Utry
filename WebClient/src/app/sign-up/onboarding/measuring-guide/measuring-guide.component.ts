@@ -15,13 +15,15 @@ import { finalize, catchError } from 'rxjs/operators'; // Import finalize operat
 import { Subscription } from 'rxjs';
 import { ZalandoTopBarComponent } from "../../../home/zalando-top-bar/zalando-top-bar.component";
 import { Router } from '@angular/router';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 @Component({
   selector: 'app-measuring-guide',
   imports: [MatGridListModule, MatCardModule, CommonModule, MatButtonModule, MatFormFieldModule,
     MatInput, ReactiveFormsModule, ZalandoTopBarComponent],
   templateUrl: './measuring-guide.component.html',
-  styleUrl: './measuring-guide.component.css'
+  styleUrl: './measuring-guide.component.css',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 
 export class MeasuringGuideComponent {

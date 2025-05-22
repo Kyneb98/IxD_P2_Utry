@@ -1,0 +1,30 @@
+<div class="page-container">
+<app-zalando-top-bar></app-zalando-top-bar>
+
+<mat-grid-list cols="2" rowHeight="1:1">
+  <!-- Left column -->
+  <mat-grid-tile>¨
+  <div class="signup-model">
+    <model-viewer
+      src="/models/William.glb" alt="3D model of clothing"
+      camera-controls
+      touch-action="pan-y"
+
+      camera-orbit="140deg 80deg auto"
+      shadow-intensity="1"
+      class="utry-model-viewer">
+       <div class="progress-bar hide" slot="progress-bar">
+            <div class="update-bar"></div>
+        </div>
+  </model-viewer>
+</div>
+  </mat-grid-tile>
+
+  <!-- Right column -->
+  <mat-grid-tile>
+    <div class="right-container">
+      <app-login-in></app-login-in>
+    </div>
+  </mat-grid-tile>
+</mat-grid-list>
+</div>

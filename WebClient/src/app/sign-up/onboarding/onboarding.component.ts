@@ -14,6 +14,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ZalandoTopBarComponent } from '../../home/zalando-top-bar/zalando-top-bar.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { RouterLink } from '@angular/router';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 @Component({
   selector: 'app-onboarding',
@@ -22,7 +23,8 @@ import { RouterLink } from '@angular/router';
     CommonModule, MatButtonModule, BodytypeFemaleComponent, MeasurementsComponent,
   ZalandoTopBarComponent, MatProgressBarModule, RouterLink],
   templateUrl: './onboarding.component.html',
-  styleUrl: './onboarding.component.css'
+  styleUrl: './onboarding.component.css',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class OnboardingComponent implements OnInit {
   currentStep: number = 1; // Tracks the current step (1-based)

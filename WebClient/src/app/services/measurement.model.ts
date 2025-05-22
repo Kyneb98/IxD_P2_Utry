@@ -74,5 +74,20 @@ export interface UserProfileMeasurements {
   chest: ProfileMeasurementValue | null;
   arms: ProfileMeasurementValue | null; // Assuming 'arms' is one value, adjust if left/right needed
   shoulders: ProfileMeasurementValue | null;
+  front_bodice: ProfileMeasurementValue | null; // Assuming 'front_bodice' is one value, adjust if left/right needed
   // Add other core measurements if needed
+}
+
+// Interface for the data needed to update a measurement
+export interface MeasurementUpdateData {
+  value: number;
+  unit?: string | null;
+  // IMPORTANT FOR INSECURE VERSION:
+  userId: number; // Send the current user's ID for the backend ownership check
+}
+
+// Interface for the successful update response
+export interface UpdateMeasurementResponse {
+    message: string;
+    updatedMeasurement?: Partial<Measurement>; // Optionally return the updated measurement
 }

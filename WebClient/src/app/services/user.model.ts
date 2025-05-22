@@ -6,12 +6,10 @@ export interface UserSignupData {
   email: string;
   password?: string;
 }
-
 export interface SignupResponse {
   message: string;
   userId: number;
 }
-
 export interface ApiErrorResponse {
     message?: string; // For general server errors
     errors?: { // For express-validator errors
@@ -20,4 +18,13 @@ export interface ApiErrorResponse {
         location: string;
         value?: any;
     }[];
+}
+export interface UserLoginData {
+  username: string;
+  password?: string;
+}
+export interface LoginResponse {
+  message: string;
+  userId: number;
+  username?: string;
 }

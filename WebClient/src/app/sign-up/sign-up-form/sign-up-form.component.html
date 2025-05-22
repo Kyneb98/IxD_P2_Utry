@@ -89,6 +89,7 @@
             routerLink="/onboarding"
             color="primary"
             type="submit"
+            class="signup-button full-width"
             [disabled]="signupForm.invalid || isLoading"
             (click)="onSubmit()">
       <span *ngIf="!isLoading">Sign Up</span>
