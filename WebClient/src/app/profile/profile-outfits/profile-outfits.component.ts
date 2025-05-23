@@ -7,9 +7,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-  selector: 'app-profile-gallery',
-  templateUrl: './profile-gallery.component.html',
-  styleUrls: ['./profile-gallery.component.css'],
+  selector: 'app-outfits',
+  templateUrl: './profile-outfits.component.html',
+  styleUrls: ['./profile-outfits.component.css'],
   imports: [
     CommonModule,
     MatCardModule,
@@ -19,22 +19,14 @@ import { MatIconModule } from '@angular/material/icon';
     MatIconModule,
   ],
 })
-export class ProfileGalleryComponent implements OnInit {
+export class ProfileOutfitsComponent implements OnInit {
   // Initial image paths.
   images: string[] = [
-  '/wardrobeItems/cardiganBeige.jpg',
-  '/wardrobeItems/denimPants.jpg',
-  '/wardrobeItems/greyHoodie.jpg',
-  '/wardrobeItems/whiteSneakers.png',
-  '/wardrobeItems/denimJacket.jpg',
-  '/wardrobeItems/cargoPants.jpg',
-  '/wardrobeItems/beanieHat.jpg',
-  '/wardrobeItems/scarf.jpg',
-  '/wardrobeItems/whiteSneakers.png',
-  '/wardrobeItems/denimJacket.jpg',
-  '/wardrobeItems/cargoPants.jpg',
-  '/wardrobeItems/beanieHat.jpg',
-  '/wardrobeItems/scarf.jpg',
+  '/wardrobeItems/cargoHoodie.png',
+  '/wardrobeItems/denimhoodie.png',
+  '/wardrobeItems/cargoPants(2).png',
+  '/wardrobeItems/blackHoodie.png',
+  '/wardrobeItems/blackCardigan.png',
 ];
   
 
