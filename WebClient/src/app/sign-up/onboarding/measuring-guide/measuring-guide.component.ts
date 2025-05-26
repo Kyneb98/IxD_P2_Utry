@@ -151,7 +151,7 @@ export class MeasuringGuideComponent {
             this.measurementForm.disable(); // Diable form after last step
             // Handle final completion (e.g., navigate to dashboard)
             // this.router.navigate(['/dashboard']);
-            this.router.navigate(['/onboarding/step/3'])
+            this.router.navigate(['/profile'])
           }
           // --- END TRIGGER ---
 
