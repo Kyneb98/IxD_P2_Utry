@@ -29,7 +29,8 @@ Before starting, ensure you have the following installed:
    npm install -g @angular/cli
 
 2. **Angular Material** 
-   Add Angular Material using:
+   Add Angular Material and use all the default settings including the azure blue theme.
+   Add Angular Meterial in the webclient directory using:
    ```bash
    ng add @angular/material
 
