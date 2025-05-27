@@ -148,9 +148,8 @@ export class MeasuringGuideComponent {
             // This was the *last* step (Finish button)
             console.log("All measurements finished.");
             this.successMessage = "All measurements saved successfully!";
-            this.measurementForm.disable(); // Diable form after last step
+            this.measurementForm.disable(); // Disable form after last step
             // Handle final completion (e.g., navigate to dashboard)
-            // this.router.navigate(['/dashboard']);
             this.router.navigate(['/profile'])
           }
           // --- END TRIGGER ---

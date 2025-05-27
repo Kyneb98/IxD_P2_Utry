@@ -124,8 +124,7 @@
              (click)="onSubmit()"
               style="margin-left: auto;"
               [disabled]="isLoading || measurementForm.invalid || !currentUserId"
-               routerLink="/onboarding"
-               queryParams="{ step: '2' }">
+               routerLink="/profile">
               <span *ngIf="!isLoading">Finish</span>
               <span *ngIf="isLoading">Saving...</span>
           </button>
