@@ -7,9 +7,10 @@
     "three": "^0.175.0"
   },
   
-  "scripts": {
-    "utry": "cd WebClient && ng serve --open && cd ../WebServer && node server.js"
-  }
+ "scripts": {
+  "utry": "concurrently \"cd WebServer && node server.js\" \"cd WebClient && ng serve --open\""
+}
+
 
 
 }
