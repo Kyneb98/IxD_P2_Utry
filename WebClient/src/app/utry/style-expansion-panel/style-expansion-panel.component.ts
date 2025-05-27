@@ -28,7 +28,7 @@ interface WardrobeItem {
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
-    RouterLink,
+    RouterLink
   ],
   templateUrl: './style-expansion-panel.component.html',
   styleUrl: './style-expansion-panel.component.css',
