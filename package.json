@@ -1,8 +1,15 @@
 {
   "devDependencies": {
-    "@types/three": "^0.175.0"
+    "@types/three": "^0.175.0",
+    "concurrently": "^9.1.2"
   },
   "dependencies": {
     "three": "^0.175.0"
+  },
+  
+  "scripts": {
+    "utry": "cd WebClient && ng serve --open && cd ../WebServer && node server.js"
   }
+
+
 }
