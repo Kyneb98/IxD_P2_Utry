@@ -6,10 +6,16 @@
 
 }
 
+.profile-update-container {
+  max-height: 75vh;
+  overflow-y: auto; 
+}
+
 .small-form-field {
   width: 100%;
-  margin-bottom: 12px;
-  font-size: 0.95em;
+  margin-bottom: 8px;
+  font-size: 0.80em;
+  
 }
 
 .unit-suffix {

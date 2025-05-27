@@ -8,7 +8,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
 
-
+interface SizeDescription {
+  title: string;
+  points: string[];
+}
 
 @Component({
   selector: 'app-compare-expansion-panel',
@@ -52,6 +55,33 @@ togglePanel(): void {
 }
 
 
-selected1: string = 'Choose a size to compare';
-selected2: string = 'Choose a size to compare';
+  // Use distinct ngModel variables
+  selectedSizeLeft: string = 'S'; // Default for left select
+  selectedDescriptionLeft: string = 'Regular fit'; // Default value matching mat-option
+
+  selectedSizeRight: string = 'M'; // Default for right select
+  selectedDescriptionRight: string = 'Slighty loose fit'; // Default value matching mat-option
+
+  // Data structure for descriptions based on the *value* of mat-option
+  sizeDescriptions: { [key: string]: SizeDescription } = {
+    'Regular fit': { title: 'a regular fit', points: ['Fits nicely over the shoulders', 'Sleeves seem the correct length'] },
+    'Slighty loose fit': { title: ' a looser fit', points: ['Fits oversize', 'Might be too long'] },
+    'Loose fit': { title: 'an oversized fit', points: ['Significantly larger fit', 'Likely too long'] },
+    'Very loose fit': { title: 'a very oversized fit', points: ['Very loose', 'Much too long'] }
+    // Add more descriptions as needed
+  };
+
+  // Mapping for display value in select trigger
+  sizeDisplayMap: { [key: string]: string } = {
+    'Regular fit': 'S',
+    'Slighty loose fit': 'M',
+    'Loose fit': 'L',
+    'Very loose fit': 'XL'
+  };
+
+
+  getDescription(selectedValue: string): SizeDescription | undefined {
+    return this.sizeDescriptions[selectedValue];
+  }
+
 }

@@ -22,7 +22,10 @@
         <div class="wardrobe-search-container">
           <mat-form-field appearance="outline" class="wardrobe-search-field">
             <mat-icon matPrefix>search</mat-icon>
-            <input matInput placeholder="Search in wardrobe">
+            <input matInput
+                 placeholder="Search in wardrobe"
+                 [(ngModel)]="searchTerm"
+                 (ngModelChange)="onSearchChange()">
           </mat-form-field>
         </div>
         <a href="#" class="go-to-wardrobe">
@@ -36,12 +39,16 @@
       <!-- === Right Column (Scrollable Gallery) === -->
       <div class="right-column">
         <div class="wardrobe-items-container">
-          <button *ngFor="let item of wardrobeItems"
+          <button *ngFor="let item of filteredWardrobeItems"
                   class="wardrobe-item"
                   [class.selected]="item.selected"
                   (click)="selectItem(item)">
             <img [src]="item.img" [alt]="item.name">
           </button>
+          <!-- Message if no items match -->
+          <p *ngIf="filteredWardrobeItems.length === 0 && searchTerm" class="no-results">
+            No items match "{{ searchTerm }}".
+          </p>
         </div>
       </div>
       <!-- === End Right Column === -->

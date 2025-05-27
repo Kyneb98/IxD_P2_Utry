@@ -71,8 +71,10 @@ togglePanel(): void {
   this.isExpanded = !this.isExpanded;
 }
 
-// Placeholder for slider value if needed
-fitValue: number = 50;
+
+
+
+
 
 isLoading = false;
   errorMessage: string | null = null;
@@ -202,7 +204,7 @@ isLoading = false;
       if (chestMatch && rule.waistCmMin !== undefined && rule.waistCmMax !== undefined) {
         if (adjustedWaistValue !== null && adjustedWaistValue !== undefined) {
             if (!(adjustedWaistValue >= rule.waistCmMin && adjustedWaistValue <= rule.waistCmMax)) {
-                waistMatch = false; // Adjusted waist doesn't fit this rule
+                waistMatch = true; // Adjusted waist doesn't fit this rule
                 console.log(`    -> Adjusted Waist (${adjustedWaistValue}) MATCHES Rule ${rule.size}`);
             }
         } else {

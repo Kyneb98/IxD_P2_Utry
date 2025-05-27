@@ -13,6 +13,9 @@ import { ProfileBottomNavBarComponent } from '../profile/profile-bottom-nav-bar/
 import { ZalandoTopBarComponent } from '../home/zalando-top-bar/zalando-top-bar.component';
 import { ProfileGalleryComponent } from './profile-gallery/profile-gallery.component';
 import { ProfileUpdateComponent } from "./profile-update/profile-update.component";
+import { ProfileOutfitsComponent } from "./profile-outfits/profile-outfits.component";
+import { ProfileAccountComponent } from './profile-account/profile-account.component';
+
 
 @Component({
   selector: 'app-profile',
@@ -28,7 +31,8 @@ import { ProfileUpdateComponent } from "./profile-update/profile-update.componen
     MatSelectModule,
     MatButtonModule,
     MatExpansionModule,
-    MatTooltipModule, ProfileUpdateComponent],
+    ProfileAccountComponent,
+    MatTooltipModule, ProfileUpdateComponent, ProfileOutfitsComponent],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

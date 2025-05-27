@@ -1,65 +1,109 @@
 :host {
-    display: block; /* Ensure component takes up space */
-    position: absolute; /* Position relative to parent (.utry-content-area) */
-    bottom: 0;          /* Stick to the bottom of the parent utry-content-area*/
-    left: 0;
-    right: 0;
-    z-index: 10;        /* Above other static content, below models */
-  }
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+}
+
+.compare-panel-wrapper {
+  width: 100%;
+  background-color: rgba(230, 232, 233, 0.98); /* Light grey from example */
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+.panel-header {
+  height: 40px;
+  display: flex;
+  justify-content: flex-end; /* Arrow on right */
+  align-items: center;
+  cursor: pointer;
+  padding: 0 15px;
+  box-sizing: border-box;
+  background-color: inherit;
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+}
+
+.toggle-icon {
+  color: #333; /* Darker arrow */
+}
+
+.panel-content-area {
+  padding: 10px 30px; /* Adjust padding */
+  box-sizing: border-box;
+  background-color: inherit;
+}
+
+.expansion-content {
+  display: flex;
+  align-items: flex-start; /* Align columns to the top */
+  gap: 70px; /* Space between columns */
+}
+
+.compare-column {
+  flex: 1; /* Each column takes equal space */
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* Main form field flex container */
+:host ::ng-deep .custom-size-select .mat-mdc-form-field-flex {
+  padding: 0 !important; /* Remove default padding */
+  height: 40px !important; /* Desired height for the pill */
+  align-items: center !important;
+  border-radius: 20px !important; /* Pill shape */
+  background-color: transparent !important; /* Ensure wrapper is transparent */
+}
+
+
+
+
+
+
+
+.description-title {
+  margin-top: 0;
+  margin-bottom: 8px;
+  font-size: 0.98rem; /* 14px */
   
-  .compare-panel-wrapper {
-    /* This wrapper is what animates */
-    width: 100%;
-    background-color: rgba(240, 240, 240, 0.98); /* Panel background */
-    border-top-left-radius: 12px;  /* Rounded corners */
-    border-top-right-radius: 12px; /* Rounded corners */
-    box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.1);
-    box-sizing: border-box;
-  
-    /* Start below viewport (adjust value based on header height) */
-  }
-  
-  .panel-header {
-    height: 40px; /* Height of the visible collapsed part */
-    display: flex;
-    justify-content: right; /* arrow placed on the right */
-    align-items: center;
-    cursor: pointer;
-    
-    box-sizing: border-box;
-    background-color: inherit; /* Inherit wrapper background */
-    /* Ensure rounded corners match wrapper */
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
-  }
-  
-  .toggle-icon {
-    color: #555;
-    margin-right: 15px;
-  }
-  
-  .panel-content-area {
-    padding: 10px 25px; /* Padding for the actual content */
-    padding-top: 0; /* No top padding to align with header */
-    box-sizing: border-box;
-    /* Content is only visible when expanded due to parent transform/overflow */
-  }
-  
-  /* Styles for your internal content */
+}
+
+.matOption{
+  font-weight: 500;
+}
+
+.description-area ul {
+  list-style: disc;
+  margin: 4px;
+  padding-left: 30px;
+}
+
+
+.description-area li {
+  margin-bottom: 4px;
+}
+
+
+
+
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
   .expansion-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 30px;
-    margin-bottom: 5px;
+    flex-direction: column;
+    align-items: stretch; /* Stretch columns full width */
+    gap: 20px;
   }
-
-  p {
-    margin: 0;
+  .compare-column {
+    flex-basis: auto; /* Reset basis */
   }
-
-  mat-form-field {
-    height: 70px;;
+  .custom-size-select {
+    width: 100%; /* Make select full width on small screens */
   }
-  
-  .contentleft, .contentright { flex-basis: 40%; }
+}
