@@ -15,7 +15,7 @@
   <div class="panel-content-area" id="panel-content-area">
     <!-- Main content container - becomes the two-column layout -->
     <div class="expansion-content">
-  
+
       <!-- === Left Column === -->
       <div class="left-column">
         <h2 class="panel-section-title">Match with items in your wardrobe</h2>
@@ -28,14 +28,14 @@
                  (ngModelChange)="onSearchChange()">
           </mat-form-field>
         </div>
-        <a href="#" class="go-to-wardrobe">
+        <a routerLink="/profile" class="go-to-wardrobe">
           Go to wardrobe
           <mat-icon>arrow_forward</mat-icon>
         </a>
       </div>
       <!-- === End Left Column === -->
-  
-  
+
+
       <!-- === Right Column (Scrollable Gallery) === -->
       <div class="right-column">
         <div class="wardrobe-items-container">
@@ -52,9 +52,9 @@
         </div>
       </div>
       <!-- === End Right Column === -->
-  
 
-        
+
+
 
 
     </div> <!-- End expansion-content -->

@@ -55,5 +55,4 @@ togglePanel(): void {
 
 itemStretchLevel: StretchLevel = 'Non';
 // Static stretch level for this item example
-
-
+}
