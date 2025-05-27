@@ -148,7 +148,7 @@ router.put(
         param('measurementId', 'Measurement ID must be an integer').isInt(),
         body('value', 'Value is required and must be a number').isNumeric(),
         body('unit', 'Unit must be text if provided').optional().isString().trim().escape(),
-        body('userId', 'User ID is required and must be an integer').isInt(), // For ownership check (insecure, but matches your current pattern)
+        body('userId', 'User ID is required and must be an integer').isInt(), // For ownership check
     ],
     (req, res) => {
         // Validate input

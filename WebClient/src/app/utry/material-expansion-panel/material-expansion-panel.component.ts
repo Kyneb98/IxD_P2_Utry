@@ -52,7 +52,8 @@ togglePanel(): void {
   this.isExpanded = !this.isExpanded;
 }
 
+
 itemStretchLevel: StretchLevel = 'Non';
 // Static stretch level for this item example
 
-}
+
